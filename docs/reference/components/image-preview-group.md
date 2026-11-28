@@ -52,14 +52,22 @@ User navigation resets it without a scale transition.
 CountRender(current, total) receives one-based current. Render info for
 imageRender and actionsRender contains zero-based current, total, and actions.
 Info.actions.onActive(offset) takes a relative offset as in rc-image runtime.
+The `info.icons` snippets render the operation buttons. With at least two
+images, `prevIcon` and `nextIcon` navigate the group and follow the RTL artwork.
 Refs, DOM, and focus management belong to the shared viewer. Closing returns
-focus to the thumbnail that opened the group.
+focus to the thumbnail that opened the group. [Preview action buttons](image.md#preview-action-buttons)
 
 Removing images or items updates the list and leaves the owner responsible for a
 valid current index. The viewer can be closed even with an empty list. In another
 preserved rc-image 1.10.0 case, preview=false on the group clears its configuration
 and skips the provider's container. A child Image can still open the fullscreen
 viewer. Set Image.preview=false to disable a particular thumbnail.
+
+In this child-opened mode, a top-level `ImagePreviewGroup.icons` record replaces
+the default artwork. Its `prev` and `next` entries follow the navigation action
+in either direction. Omit the prop to retain the defaults. An explicit
+`undefined` or an empty record leaves the controls without glyphs. The buttons
+retain their accessible names and actions. [React measurements](../../../tests/browser/fixtures/ant-design-image-action-icons-reference.json)
 
 `preview.getContainer` uses the same types and local-before-provider resolution as
 the single viewer. Changing the destination while open recreates the panel and

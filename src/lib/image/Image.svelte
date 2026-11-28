@@ -14,6 +14,7 @@
   import { useImageGroup } from './image-group-context';
   import { checkImageSource } from './image-status.dom';
   import ImagePreview from './ImagePreview.svelte';
+  import { defaultImagePreviewIcons } from './ImagePreviewIcons.svelte';
   import ImageProgress from './ImageProgress.svelte';
 
   let {
@@ -71,6 +72,7 @@
     tabindex,
     preview: preview ? {
       ...config,
+      icons: defaultImagePreviewIcons,
       getContainer: config.getContainer ?? context.getPopupContainer,
       cover: config.cover ?? true,
       mask: appearance.mask.enabled,

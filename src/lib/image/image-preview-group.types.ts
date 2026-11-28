@@ -1,5 +1,7 @@
 import type { Snippet } from 'svelte';
-import type { ImageElementData, ImagePreviewConfig, ImageSemantic } from './image.types';
+import type {
+  ImageElementData, ImagePreviewConfig, ImagePreviewIcons, ImageSemantic
+} from './image.types';
 export type ImagePreviewGroupItem = string | ImageElementData;
 /** Setting the total viewer ImagePreviewGroup and the managed image index. */
 export interface ImagePreviewGroupConfig extends Omit<
@@ -19,6 +21,8 @@ export interface ImagePreviewGroupProps {
   previewPrefixCls?: string;
   /** An explicit list, including an empty one, takes precedence over registering child Image. */
   items?: readonly ImagePreviewGroupItem[];
+  /** Replaces the artwork record used by the child-opened viewer when preview is false. */
+  icons?: ImagePreviewIcons;
   /** @defaultValue true */
   preview?: boolean | ImagePreviewGroupConfig;
   classNames?: ImageSemantic<ImagePreviewGroupSemanticProps>;

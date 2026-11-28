@@ -33,6 +33,13 @@ export interface ImageInfo {
   width?: string | number;
   height?: string | number;
 }
+
+/** Artwork for preview controls. An empty value leaves the control without a glyph. */
+export type ImagePreviewIcons = Partial<Record<
+  'rotateLeft' | 'rotateRight' | 'zoomIn' | 'zoomOut' | 'close' | 'prev' | 'next' | 'flipX' | 'flipY',
+  Snippet | false | null
+>>;
+
 /** Actions viewer; onActive adopts a relative offset of the index in the group. */
 export interface ImagePreviewActions {
   onActive: (offset: number) => void;
@@ -45,7 +52,21 @@ export interface ImagePreviewActions {
   onClose: () => void;
   onReset: () => void;
 }
+
+/** Renderable preview buttons with their current action, label, and disabled state. */
+export interface ImagePreviewActionIcons {
+  prevIcon?: Snippet;
+  nextIcon?: Snippet;
+  flipYIcon: Snippet;
+  flipXIcon: Snippet;
+  rotateLeftIcon: Snippet;
+  rotateRightIcon: Snippet;
+  zoomOutIcon: Snippet;
+  zoomInIcon: Snippet;
+}
+
 export interface ImagePreviewRenderInfo {
+  icons: ImagePreviewActionIcons;
   transform: ImageTransform;
   current: number;
   total: number;
@@ -71,6 +92,8 @@ export interface ImagePreviewConfig {
   focusTrap?: boolean;
   mask?: boolean | { enabled?: boolean; blur?: boolean; closable?: boolean; };
   closeIcon?: Snippet | boolean | null;
+  /** Accepted by Ant Design's preview config, whose wrapper supplies the built-in artwork. */
+  icons?: ImagePreviewIcons;
   cover?: boolean | Snippet | { coverNode?: Snippet; placement?: 'top' | 'bottom' | 'center'; };
   zIndex?: number;
   /** Snippet receives the original action bar and viewer context. */
@@ -112,9 +135,12 @@ export interface ImageSlots {
   popup?: ImagePopupSlots;
 }
 
-/** Image resolvers receive the effective preview, with mask visibility resolved to a boolean. */
+/** Image resolvers receive the effective preview with resolved mask visibility and artwork. */
 export type ImageSemanticProps = Omit<ImageProps, 'preview' | 'nativeElement' | 'imageElement'> & {
-  preview: (Omit<ImagePreviewConfig, 'mask'> & { mask: boolean; }) | null;
+  preview: (Omit<ImagePreviewConfig, 'mask' | 'icons'> & {
+    mask: boolean;
+    icons: Readonly<Record<keyof ImagePreviewIcons, Snippet>>;
+  }) | null;
 };
 
 export type ImageSemantic<Props = ImageSemanticProps> = ImageSlots

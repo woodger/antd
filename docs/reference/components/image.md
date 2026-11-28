@@ -111,6 +111,34 @@ contains transform and image, and toolbar info also has current, total, and
 actions. Call info.actions.onReset to reset. Native Pointer Events and capture
 handle mouse and touch interaction and clean up on unmount.
 
+## Preview action buttons
+
+`actionsRender(original, info)` receives the six toolbar buttons as snippets in
+`info.icons`. The snippets retain the button labels, actions, and disabled states.
+`prevIcon` and `nextIcon` are available for groups with at least two images.
+Render `original()` to use the complete toolbar with its semantic styles.
+
+```svelte
+<script lang="ts">
+  import { Image, type ImagePreviewRenderInfo } from '@woodger/antd';
+  import type { Snippet } from 'svelte';
+</script>
+
+{#snippet toolbar(_original: Snippet, info: ImagePreviewRenderInfo)}
+  <div>
+    {@render info.icons.zoomOutIcon()}
+    {@render info.icons.zoomInIcon()}
+  </div>
+{/snippet}
+
+<Image src="/photo.jpg" alt="Photo" preview={{ actionsRender: toolbar }} />
+```
+
+The standard Image and ImagePreviewGroup wrappers replace `preview.icons` with
+their built-in artwork, as in Ant Design 6.6.8. Image semantic resolvers receive
+that effective record. Use `closeIcon` to customize the close control and
+`actionsRender` to customize the toolbar. [React measurements](../../../tests/browser/fixtures/ant-design-image-action-icons-reference.json)
+
 The preview supports themes, RTL, Russian and English accessible labels, and
 reduced motion. The image recipe extracts 58 rules and four progress keyframes.
 Preview rc-motion remains outside the port. Icons come from Ant Design Icons SVG
@@ -167,5 +195,4 @@ resolver can receive either shape. Use the top-level semantic fields for setting
 that affect the viewer. In the pinned React capture, the semantic fields under
 `ConfigProvider.image.preview` have no effect. [React measurements](../../../tests/browser/fixtures/ant-design-image-semantics-reference.json)
 
-Remaining work covers preview icons and React `info.icons`
-wrappers, and upstream fade, appear, leave, and mouse-position motion.
+Remaining work covers upstream fade, appear, leave, and mouse-position motion.

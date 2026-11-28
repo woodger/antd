@@ -18291,12 +18291,32 @@
           "note": "Twelve Ant Design 6.6.8 measurements cover the body default, provider and local precedence, zero-argument getters while closed, selector/element/callback/false, missing and same-update targets, and group preview=false. A new destination recreates the panel and reports afterOpenChange(true) while keeping transforms, current, and the original opener. The same destination keeps the panel and focus. SSR defers getters and panel rendering. Svelte retains the closed native panel and uses its nearest host dialog by default when nested. Group preview=false skips the provider and keeps the existing fullscreen panel. Detached targets and ShadowRoot use the shared connection, theme and scroll-lock lifecycle."
         },
         {
+          "id": "preview-action-icons",
+          "title": "Image preview artwork and reusable actionsRender buttons",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/image.types.ts",
+            "src/lib/image/image-preview-group.types.ts",
+            "src/lib/image/ImagePreviewIcons.svelte",
+            "src/lib/image/ImagePreview.svelte",
+            "src/lib/image/Image.svelte",
+            "src/lib/image/ImagePreviewGroup.svelte",
+            "tests/browser/fixtures/ant-design-image-action-icons-reference.json",
+            "tests/browser/image/image-action-icons.spec.ts",
+            "tests/package/image/image-action-icons.ssr.test.ts",
+            "docs/reference/components/image.md",
+            "docs/reference/components/image-preview-group.md"
+          ],
+          "note": "Twelve Ant Design 6.6.8 UMD cases establish the actionsRender info.icons buttons, render order, zoom bounds, group navigation and RTL glyphs. Svelte exposes the same controls as snippets, with previous and next available for groups of at least two images. The effective preview supplies built-in artwork. Top-level group icons replace that artwork in child-opened preview=false mode, with omitted, explicit undefined and partial records handled as in the source. Built-in navigation uses prev/next without deprecated left/right aliases."
+        },
+        {
           "id": "extended-api",
-          "title": "Preview icon API and preview motion",
+          "title": "Preview fade and transform-origin motion",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Remaining work includes icons and React info.icons wrappers, plus preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases and uses Svelte snippets for imageRender and actionsRender."
+          "note": "Remaining work includes preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases."
         },
         {
           "id": "component-prefix",

@@ -6,6 +6,7 @@
     ImageElementData,
     ImageInfo,
     ImagePopupSlots,
+    ImagePreviewIcons,
     ImagePreviewConfig,
     ImagePreviewRenderInfo,
     ImageTransform,
@@ -26,7 +27,9 @@
   import { getPopupActiveElement } from '../popup/popup.dom';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
-  import ImagePreviewIcon from './ImagePreviewIcon.svelte';
+  import { defaultImagePreviewIcons } from './ImagePreviewIcons.svelte';
+
+  type PreviewOperation = Exclude<keyof ImagePreviewIcons, 'close'>;
 
   let {
     open,
@@ -35,6 +38,7 @@
     image,
     config: preview = {},
     inheritContainer = true,
+    icons: customIcons,
     appearance,
     fallback,
     imageAttributes = {},
@@ -53,6 +57,7 @@
     image: ImageInfo;
     config?: ImagePreviewConfig;
     inheritContainer?: boolean;
+    icons?: ImagePreviewIcons;
     appearance: ResolvedImagePreviewAppearance;
     classNames?: ImagePopupSlots;
     styles?: ImagePopupSlots;
@@ -66,6 +71,10 @@
     countRender?: import('svelte').Snippet<[number, number]>;
   } = $props();
   const context = useConfig();
+  const artwork = $derived<ImagePreviewIcons>(customIcons ?? (context.direction === 'rtl'
+    ? { ...defaultImagePreviewIcons, prev: defaultImagePreviewIcons.next, next: defaultImagePreviewIcons.prev }
+    : defaultImagePreviewIcons));
+  const showSwitch = $derived(group && count > 1);
   let previewPrefix = $derived(customizePreviewPrefix ?? `${imagePrefix}-preview`);
   const componentTheme = useComponentTheme('Image');
   const layer = useZIndex('preview', () => preview.zIndex);
@@ -314,6 +323,16 @@
     });
   }
   let info = $derived<ImagePreviewRenderInfo>({
+    icons: {
+      prevIcon: showSwitch ? prevIcon : undefined,
+      nextIcon: showSwitch ? nextIcon : undefined,
+      flipYIcon,
+      flipXIcon,
+      rotateLeftIcon,
+      rotateRightIcon,
+      zoomOutIcon,
+      zoomInIcon
+    },
     transform,
     current,
     total: count,
@@ -380,51 +399,29 @@
           failed = true;
       }} />{/key}
 {/snippet}
+{#snippet actionButton(action: PreviewOperation, perform: () => void, disabled = false)}
+  {@const glyph = artwork[action]}
+  <button data-ant-image-preview-action type="button" aria-label={action} class={[
+      `${previewPrefix}-actions-action`,
+      `${previewPrefix}-actions-action-${action}`,
+      disabled && `${previewPrefix}-actions-action-disabled`
+    ]} {disabled} onclick={perform}>
+    {#if glyph}{@render glyph()}{/if}
+  </button>
+{/snippet}
+{#snippet prevIcon()}{@render actionButton('prev', () => activate(-1), current === 0)}{/snippet}
+{#snippet nextIcon()}{@render actionButton('next', () => activate(1), current === count - 1)}{/snippet}
+{#snippet flipYIcon()}{@render actionButton('flipY', info.actions.onFlipY)}{/snippet}
+{#snippet flipXIcon()}{@render actionButton('flipX', info.actions.onFlipX)}{/snippet}
+{#snippet rotateLeftIcon()}{@render actionButton('rotateLeft', info.actions.onRotateLeft)}{/snippet}
+{#snippet rotateRightIcon()}{@render actionButton('rotateRight', info.actions.onRotateRight)}{/snippet}
+{#snippet zoomOutIcon()}{@render actionButton('zoomOut', info.actions.onZoomOut, transform.scale <= min)}{/snippet}
+{#snippet zoomInIcon()}{@render actionButton('zoomIn', info.actions.onZoomIn, transform.scale === max)}{/snippet}
 {#snippet defaultActions()}
   <div class={[`${previewPrefix}-actions`, classNames?.actions]} style={styles?.actions}>
-    {#each [
-        'flipY',
-        'flipX',
-        'rotateLeft',
-        'rotateRight',
-        'zoomOut',
-        'zoomIn'
-      ] as action}
-      <button data-ant-image-preview-action type="button" aria-label={action} class={[
-          `${previewPrefix}-actions-action`,
-          `${previewPrefix}-actions-action-${action}`,
-          (action === 'zoomOut'
-            && transform.scale <= min
-            || action === 'zoomIn'
-            && transform.scale === max)
-          && `${previewPrefix}-actions-action-disabled`
-        ]}
-        disabled={action === 'zoomOut'
-            && transform.scale <= min
-            || action === 'zoomIn'
-            && transform.scale === max}
-        onclick={() => {
-            if (action === 'flipY')
-              info.actions.onFlipY();
-            else if (action === 'flipX')
-              info.actions.onFlipX();
-              else if (action === 'rotateLeft')
-              info.actions.onRotateLeft();
-              else if (action === 'rotateRight')
-              info.actions.onRotateRight();
-              else if (action === 'zoomOut')
-              info.actions.onZoomOut();
-              else info.actions.onZoomIn();
-          }}>
-        <ImagePreviewIcon name={action as
-            'flipY'
-            | 'flipX'
-            | 'rotateLeft'
-            | 'rotateRight'
-            | 'zoomOut'
-            | 'zoomIn'} />
-      </button>
-    {/each}
+    {@render flipYIcon()}{@render flipXIcon()}
+    {@render rotateLeftIcon()}{@render rotateRightIcon()}
+    {@render zoomOutIcon()}{@render zoomInIcon()}
   </div>
 {/snippet}
 {#if mounted}{#key container.key}
@@ -462,20 +459,24 @@
           style={styles?.close} aria-label={context.locale.closeText} onclick={onClose}>
           {#if typeof appearance.closeIcon === 'function'}
             {@render appearance.closeIcon()}
-          {:else}
-            <ImagePreviewIcon name="close" />
+          {:else if artwork.close}
+            {@render artwork.close()}
           {/if}
         </button>
       {/if}
-      {#if group && count > 1}
+      {#if showSwitch}
         <button type="button" class={[
             `${previewPrefix}-switch ${previewPrefix}-switch-prev`,
             current === 0 && `${previewPrefix}-switch-disabled`
-          ]} aria-label="prev" disabled={current === 0} onclick={() => activate(-1)}><ImagePreviewIcon name={context.direction === 'rtl' ? 'next' : 'prev'} /></button>
+          ]} aria-label="prev" disabled={current === 0} onclick={() => activate(-1)}>
+          {#if artwork.prev}{@render artwork.prev()}{/if}
+        </button>
         <button type="button" class={[
             `${previewPrefix}-switch ${previewPrefix}-switch-next`,
             current === count - 1 && `${previewPrefix}-switch-disabled`
-          ]} aria-label="next" disabled={current === count - 1} onclick={() => activate(1)}><ImagePreviewIcon name={context.direction === 'rtl' ? 'prev' : 'next'} /></button>
+          ]} aria-label="next" disabled={current === count - 1} onclick={() => activate(1)}>
+          {#if artwork.next}{@render artwork.next()}{/if}
+        </button>
       {/if}
       <div class={[`${previewPrefix}-footer`, classNames?.footer]} style={styles?.footer}>
         {#if group && count >= 1}<div class={`${previewPrefix}-progress`}>{#if countRender}{@render countRender(current + 1, count)}{:else}<bdi>{current + 1} / {count}</bdi>{/if}</div>{/if}

@@ -44,6 +44,8 @@ export type {
   ImageSemanticProps,
   ImageSlots,
   ImagePreviewConfig,
+  ImagePreviewIcons,
+  ImagePreviewActionIcons,
   ImageTransform,
   ImageTransformAction,
   ImageInfo,

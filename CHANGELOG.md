@@ -15,6 +15,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   support semantic classes and styles on the viewer and callback resolvers.
 - Image and ImagePreviewGroup support `preview.getContainer` and inherit
   `ConfigProvider.getPopupContainer`.
+- Image and ImagePreviewGroup expose reusable preview buttons through
+  `actionsRender` and support the upstream artwork selection rules.
 
 ### Fixed
 

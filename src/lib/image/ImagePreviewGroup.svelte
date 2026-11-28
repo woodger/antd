@@ -17,8 +17,11 @@
   import ImagePreview from './ImagePreview.svelte';
 
   let {
-    items, preview = true, fallback, children, classNames, styles, previewPrefixCls
+    items, preview = true, fallback, children, classNames, styles, previewPrefixCls, ...rest
   }: ImagePreviewGroupProps = $props();
+  const icons = $derived(rest.icons);
+  const ownsIcons = $derived(Object.hasOwn(rest, 'icons'));
+  const viewerIcons = $derived(preview === false && ownsIcons ? icons ?? {} : undefined);
   const context = useConfig();
   let componentPrefix = $derived(context.getPrefixCls('image', previewPrefixCls));
   let prefixCss = $derived(getImagePrefixCss(componentPrefix));
@@ -27,7 +30,7 @@
     config, preview ? context.image?.preview : undefined
   ));
   let semanticProps = $derived<ImagePreviewGroupSemanticProps>({
-    items, fallback, children, classNames, styles
+    items, fallback, children, classNames, styles, ...(ownsIcons ? { icons } : {})
   });
   let semantics = $derived(resolveImageSemantics(context.image, classNames, styles, semanticProps));
   let registered = $state.raw<ReadonlyMap<string, ImageGroupEntry>>(new Map());
@@ -89,5 +92,6 @@
 </script>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}`} />{/if}{#if children}{@render children()}{/if}<ImagePreview imagePrefix={componentPrefix} open={opened} image={{ url: data.src ?? undefined, alt: data.alt ?? undefined }} config={viewerConfig}
-  inheritContainer={preview !== false} {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
+  inheritContainer={preview !== false} icons={viewerIcons}
+  {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
   imageAttributes={data} onClose={() => requestOpen(false)} {current} count={entries.length} group onChange={change} countRender={config.countRender} />

@@ -1,0 +1,735 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "rcImage": "1.10.0",
+    "browser": "158.0.8127.36"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "toolbar": {
+    "fields": [
+      "actions",
+      "current",
+      "icons",
+      "image",
+      "total",
+      "transform"
+    ],
+    "keys": [
+      "prevIcon",
+      "nextIcon",
+      "flipYIcon",
+      "flipXIcon",
+      "rotateLeftIcon",
+      "rotateRightIcon",
+      "zoomOutIcon",
+      "zoomInIcon"
+    ],
+    "order": [
+      "flipY",
+      "flipX",
+      "rotateLeft",
+      "rotateRight",
+      "zoomOut",
+      "zoomIn"
+    ],
+    "standard": {
+      "prevIcon": null,
+      "nextIcon": null,
+      "flipYIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "flipY",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipY",
+        "disabled": false
+      },
+      "flipXIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "flipX",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipX",
+        "disabled": false
+      },
+      "rotateLeftIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "rotateLeft",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateLeft",
+        "disabled": false
+      },
+      "rotateRightIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "rotateRight",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateRight",
+        "disabled": false
+      },
+      "zoomOutIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "zoomOut",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomOut ant-image-preview-actions-action-disabled",
+        "disabled": true
+      },
+      "zoomInIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "zoomIn",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomIn",
+        "disabled": false
+      }
+    },
+    "multiple": {
+      "prevIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "prev",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-prev ant-image-preview-actions-action-disabled",
+        "disabled": true
+      },
+      "nextIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "next",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-next",
+        "disabled": false
+      },
+      "flipYIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "flipY",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipY",
+        "disabled": false
+      },
+      "flipXIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "flipX",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipX",
+        "disabled": false
+      },
+      "rotateLeftIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "rotateLeft",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateLeft",
+        "disabled": false
+      },
+      "rotateRightIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "rotateRight",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateRight",
+        "disabled": false
+      },
+      "zoomOutIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "zoomOut",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomOut ant-image-preview-actions-action-disabled",
+        "disabled": true
+      },
+      "zoomInIcon": {
+        "tag": "button",
+        "type": "button",
+        "label": "zoomIn",
+        "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomIn",
+        "disabled": false
+      }
+    }
+  },
+  "cases": [
+    {
+      "name": "single",
+      "info": {
+        "current": 0,
+        "total": 1
+      },
+      "semanticIcons": {
+        "keys": [
+          "rotateLeft",
+          "rotateRight",
+          "zoomIn",
+          "zoomOut",
+          "close",
+          "left",
+          "right",
+          "flipX",
+          "flipY"
+        ],
+        "suppliedZoomIn": false
+      },
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": null,
+        "next": null,
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      },
+      "result": {
+        "current": 0,
+        "controls": {
+          "prevIcon": null,
+          "nextIcon": null,
+          "flipYIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "flipY",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipY",
+            "disabled": false
+          },
+          "flipXIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "flipX",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipX",
+            "disabled": false
+          },
+          "rotateLeftIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "rotateLeft",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateLeft",
+            "disabled": false
+          },
+          "rotateRightIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "rotateRight",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateRight",
+            "disabled": false
+          },
+          "zoomOutIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "zoomOut",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomOut ant-image-preview-actions-action-disabled",
+            "disabled": true
+          },
+          "zoomInIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "zoomIn",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomIn",
+            "disabled": false
+          }
+        },
+        "actions": [
+          [
+            "flipY",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1,
+              "flipX": false,
+              "flipY": true
+            }
+          ],
+          [
+            "flipX",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1,
+              "flipX": true,
+              "flipY": true
+            }
+          ],
+          [
+            "rotateLeft",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": -90,
+              "scale": 1,
+              "flipX": true,
+              "flipY": true
+            }
+          ],
+          [
+            "rotateRight",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1,
+              "flipX": true,
+              "flipY": true
+            }
+          ],
+          [
+            "zoomIn",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1.5,
+              "flipX": true,
+              "flipY": true
+            }
+          ],
+          [
+            "zoomOut",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1,
+              "flipX": true,
+              "flipY": true
+            }
+          ]
+        ],
+        "changes": []
+      }
+    },
+    {
+      "name": "group-empty",
+      "group": true,
+      "count": 0,
+      "info": {
+        "current": 0,
+        "total": 0
+      },
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": null,
+        "next": null,
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      }
+    },
+    {
+      "name": "group-one",
+      "group": true,
+      "count": 1,
+      "info": {
+        "current": 0,
+        "total": 1
+      },
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": null,
+        "next": null,
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      }
+    },
+    {
+      "name": "group-two",
+      "group": true,
+      "count": 2,
+      "topIcons": true,
+      "info": {
+        "current": 0,
+        "total": 2
+      },
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": {
+          "custom": null,
+          "artwork": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6"
+        },
+        "next": {
+          "custom": null,
+          "artwork": "M765.7 486.8L314.9 134.7A7.97 7.97 0"
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      },
+      "result": {
+        "current": 1,
+        "controls": {
+          "prevIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "prev",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-prev",
+            "disabled": false
+          },
+          "nextIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "next",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-next ant-image-preview-actions-action-disabled",
+            "disabled": true
+          },
+          "flipYIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "flipY",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipY",
+            "disabled": false
+          },
+          "flipXIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "flipX",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-flipX",
+            "disabled": false
+          },
+          "rotateLeftIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "rotateLeft",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateLeft",
+            "disabled": false
+          },
+          "rotateRightIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "rotateRight",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-rotateRight",
+            "disabled": false
+          },
+          "zoomOutIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "zoomOut",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomOut ant-image-preview-actions-action-disabled",
+            "disabled": true
+          },
+          "zoomInIcon": {
+            "tag": "button",
+            "type": "button",
+            "label": "zoomIn",
+            "className": "ant-image-preview-actions-action ant-image-preview-actions-action-zoomIn",
+            "disabled": false
+          }
+        },
+        "actions": [
+          [
+            "zoomIn",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1.5,
+              "flipX": false,
+              "flipY": false
+            }
+          ],
+          [
+            "next",
+            {
+              "x": 0,
+              "y": 0,
+              "rotate": 0,
+              "scale": 1,
+              "flipX": false,
+              "flipY": false
+            }
+          ]
+        ],
+        "changes": [
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "name": "group-rtl",
+      "group": true,
+      "count": 2,
+      "rtl": true,
+      "info": {
+        "current": 0,
+        "total": 2
+      },
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": {
+          "custom": null,
+          "artwork": "M765.7 486.8L314.9 134.7A7.97 7.97 0"
+        },
+        "next": {
+          "custom": null,
+          "artwork": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6"
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      }
+    },
+    {
+      "name": "group-default",
+      "group": true,
+      "topIcons": true,
+      "config": "default",
+      "info": null,
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": {
+          "custom": null,
+          "artwork": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6"
+        },
+        "next": {
+          "custom": null,
+          "artwork": "M765.7 486.8L314.9 134.7A7.97 7.97 0"
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      }
+    },
+    {
+      "name": "group-true",
+      "group": true,
+      "topIcons": true,
+      "config": "true",
+      "info": null,
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": {
+          "custom": null,
+          "artwork": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6"
+        },
+        "next": {
+          "custom": null,
+          "artwork": "M765.7 486.8L314.9 134.7A7.97 7.97 0"
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      }
+    },
+    {
+      "name": "group-false",
+      "group": true,
+      "topIcons": true,
+      "config": "disabled",
+      "info": null,
+      "artwork": {
+        "custom": [
+          "close",
+          "prev",
+          "next",
+          "rotateLeft",
+          "zoomIn"
+        ],
+        "close": {
+          "custom": "close",
+          "artwork": null
+        },
+        "prev": {
+          "custom": "prev",
+          "artwork": null
+        },
+        "next": {
+          "custom": "next",
+          "artwork": null
+        },
+        "zoomIn": {
+          "custom": "zoomIn",
+          "artwork": null
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": null
+        }
+      }
+    },
+    {
+      "name": "group-false-rtl",
+      "group": true,
+      "topIcons": true,
+      "config": "disabled",
+      "rtl": true,
+      "info": null,
+      "artwork": {
+        "custom": [
+          "close",
+          "prev",
+          "next",
+          "rotateLeft",
+          "zoomIn"
+        ],
+        "close": {
+          "custom": "close",
+          "artwork": null
+        },
+        "prev": {
+          "custom": "prev",
+          "artwork": null
+        },
+        "next": {
+          "custom": "next",
+          "artwork": null
+        },
+        "zoomIn": {
+          "custom": "zoomIn",
+          "artwork": null
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": null
+        }
+      }
+    },
+    {
+      "name": "group-false-builtin",
+      "group": true,
+      "config": "disabled",
+      "info": null,
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": "M799.86 166.31c.02 0 .04.02.08.06l57"
+        },
+        "prev": {
+          "custom": null,
+          "artwork": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6"
+        },
+        "next": {
+          "custom": null,
+          "artwork": "M765.7 486.8L314.9 134.7A7.97 7.97 0"
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": "M637 443H519V309c0-4.4-3.6-8-8-8h-60"
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2."
+        }
+      }
+    },
+    {
+      "name": "group-false-undefined",
+      "group": true,
+      "topIcons": "undefined",
+      "config": "disabled",
+      "info": null,
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": null
+        },
+        "prev": {
+          "custom": null,
+          "artwork": null
+        },
+        "next": {
+          "custom": null,
+          "artwork": null
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": null
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": null
+        }
+      }
+    },
+    {
+      "name": "group-false-empty",
+      "group": true,
+      "topIcons": "empty",
+      "config": "disabled",
+      "info": null,
+      "artwork": {
+        "custom": [],
+        "close": {
+          "custom": null,
+          "artwork": null
+        },
+        "prev": {
+          "custom": null,
+          "artwork": null
+        },
+        "next": {
+          "custom": null,
+          "artwork": null
+        },
+        "zoomIn": {
+          "custom": null,
+          "artwork": null
+        },
+        "untouchedGlyph": {
+          "custom": null,
+          "artwork": null
+        }
+      }
+    }
+  ]
+}
