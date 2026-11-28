@@ -34,6 +34,9 @@ export type {
 export { default as Image } from './image/Image.svelte';
 export type {
   ImageProps,
+  ImageProgressConfig,
+  ImageProgressClassNames,
+  ImageProgressStyles,
   ImagePreviewConfig,
   ImageTransform,
   ImageTransformAction,

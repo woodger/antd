@@ -1,0 +1,149 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "browser": "158.0.8127.36"
+  },
+  "cases": [
+    {
+      "id": "busy",
+      "role": null,
+      "label": null,
+      "now": null,
+      "busy": "true",
+      "liveText": "Loading",
+      "content": "",
+      "percentStyle": null,
+      "images": 0,
+      "styles": {
+        "width": "220px",
+        "height": "112px",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backdropFilter": "blur(8px)",
+        "inkName": "css-1y106cm-antImageInkFlow1",
+        "inkDuration": "3s",
+        "railHeight": null,
+        "railAnimation": null
+      }
+    },
+    {
+      "id": "rounded",
+      "role": "progressbar",
+      "label": "33%",
+      "now": "33",
+      "busy": null,
+      "liveText": null,
+      "content": "33%",
+      "percentStyle": "33%",
+      "images": 0,
+      "styles": {
+        "width": "220px",
+        "height": "112px",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backdropFilter": "blur(8px)",
+        "inkName": "css-1y106cm-antImageInkFlow1",
+        "inkDuration": "3s",
+        "railHeight": "6px",
+        "railAnimation": "css-1y106cm-antImageProgressActive"
+      }
+    },
+    {
+      "id": "under",
+      "role": "progressbar",
+      "label": "0%",
+      "now": "0",
+      "busy": null,
+      "liveText": null,
+      "content": "0%",
+      "percentStyle": "0%",
+      "images": 0,
+      "styles": {
+        "width": "220px",
+        "height": "112px",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backdropFilter": "blur(8px)",
+        "inkName": "css-1y106cm-antImageInkFlow1",
+        "inkDuration": "3s",
+        "railHeight": "6px",
+        "railAnimation": "css-1y106cm-antImageProgressActive"
+      }
+    },
+    {
+      "id": "over",
+      "role": "progressbar",
+      "label": "100%",
+      "now": "100",
+      "busy": null,
+      "liveText": null,
+      "content": "100%",
+      "percentStyle": "100%",
+      "images": 0,
+      "styles": {
+        "width": "220px",
+        "height": "112px",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backdropFilter": "blur(8px)",
+        "inkName": "css-1y106cm-antImageInkFlow1",
+        "inkDuration": "3s",
+        "railHeight": "6px",
+        "railAnimation": "css-1y106cm-antImageProgressActive"
+      }
+    },
+    {
+      "id": "invalid",
+      "role": null,
+      "label": null,
+      "now": null,
+      "busy": "true",
+      "liveText": "Loading",
+      "content": "",
+      "percentStyle": null,
+      "images": 0,
+      "styles": {
+        "width": "220px",
+        "height": "112px",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backdropFilter": "blur(8px)",
+        "inkName": "css-1y106cm-antImageInkFlow1",
+        "inkDuration": "3s",
+        "railHeight": null,
+        "railAnimation": null
+      }
+    },
+    {
+      "id": "custom",
+      "role": "progressbar",
+      "label": "13%",
+      "now": "13",
+      "busy": null,
+      "liveText": null,
+      "content": "Loaded 13",
+      "percentStyle": "13%",
+      "images": 0,
+      "styles": {
+        "width": "192px",
+        "height": "112px",
+        "display": "inline-block",
+        "overflow": "hidden",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backdropFilter": "blur(8px)",
+        "inkName": "css-1y106cm-antImageInkFlow1",
+        "inkDuration": "3s",
+        "railHeight": "9px",
+        "railAnimation": "css-1y106cm-antImageProgressActive"
+      }
+    }
+  ]
+}

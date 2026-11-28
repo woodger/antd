@@ -42,6 +42,22 @@ Placeholder=true uses the upstream img background. A snippet renders until load
 and can render on its own without preview when src is missing. After mount,
 a cached complete img is handled so the placeholder can clear.
 
+`placeholder={{ progress: true }}` replaces the thumbnail and preview with an
+indeterminate loading surface. The owner enables the thumbnail request by
+setting `progress` to `false` or removing the progress configuration.
+An ordinary placeholder snippet can cover the resumed request until the image loads.
+`progress.percent` rounds finite values and clamps them to 0–100. A finite
+value gives the surface a progressbar role and a percentage label. An omitted
+or non-finite value sets `aria-busy` and announces `Loading` in a polite status.
+
+`progress.render` takes a snippet with the default rail and the rounded
+percentage. The rail snippet renders when a finite percentage is available.
+For indeterminate progress, the render snippet receives `0`. The `root`,
+`content`, `rail`, and `indicator` slots accept
+`classNames.placeholder.progress` and CSS strings in `styles.placeholder.progress`.
+The progress root takes `width`, `height`, `styles.root`, and `style`, followed
+by `styles.placeholder.progress.root`. [React measurements](../../../tests/browser/fixtures/ant-design-image-progress-reference.json)
+
 Preview configuration includes src, open, onOpenChange, afterOpenChange, cover,
 closeIcon, mask, focusTrap, movable, wheel, scaleStep, minScale, maxScale, and
 onTransform. Preview.src can differ from the thumbnail. Open remains controlled
@@ -78,10 +94,10 @@ contains transform and image, and toolbar info also has current, total, and
 actions. Call info.actions.onReset to reset. Native Pointer Events and capture
 handle mouse and touch interaction and clean up on unmount.
 
-Themes, RTL, Russian and English accessible labels, and reduced motion are
-supported. The image recipe extracts 48 rules and excludes the progress wrapper
-and rc-motion. Icons come from Ant Design Icons SVG 4.6.0 with the existing
-MIT license. The fixture is `?fixture=image`.
+The preview supports themes, RTL, Russian and English accessible labels, and
+reduced motion. The image recipe extracts 58 rules and four progress keyframes.
+Preview rc-motion remains outside the port. Icons come from Ant Design Icons SVG
+4.6.0 with the existing MIT license. The fixture is `?fixture=image`.
 
 ConfigProvider.theme.components.Image sets zIndexPopup, previewOperationSize,
 previewOperationColor, previewOperationHoverColor, previewOperationColorDisabled,
@@ -89,18 +105,19 @@ and progressAnimationDuration. The shared theme applies to the thumbnail and
 viewer, including ImagePreviewGroup. Aliases, algorithms, cssVar prefix and key,
 and nested providers are supported. `styles.root` takes priority over thumbnail
 variables. A theme change preserves the viewer, transforms, current, and focus.
-ProgressAnimationDuration is currently available as a CSS variable.
-Placeholder.progress and its animation remain outside the port.
+`progressAnimationDuration` controls the ink and rail animations. The browser
+fixture `?fixture=image-progress` checks animation, progress updates, and the
+return to the interactive thumbnail.
 
 The viewer adds 1 to the owner layer. An explicit `preview.zIndex` sets the layer,
 including 0. A root viewer without an explicit value uses `zIndexPopup`. The
 browser orders native dialogs in the top layer. With `preview.zIndex=0`, React
 6.6.8 uses the Image CSS token, and Svelte applies 0. [Owner layer](../theme-context.md#layering-nested-panels)
 
-The port supports styles.root on Image and classNames.popup.root on Image and
-ImagePreviewGroup. The remaining semantic slots, placeholder progress and render,
-ConfigProvider.image, getContainer, icons and React info.icons wrappers, and
-upstream fade, appear, leave, and mousePosition motion are still outside the port.
+The port supports styles.root and progress semantic slots on Image and
+classNames.popup.root on Image and ImagePreviewGroup. Remaining work covers
+the other semantic slots, ConfigProvider.image, getContainer, icons and React
+info.icons wrappers, and upstream fade, appear, leave, and mousePosition motion.
 Deprecated aliases are excluded. The pinned UMD measurements confirm styles.root
 and classNames.popup.root. Upstream omits nested preview.classNames from its
 current preview type and ignores it. [Supported styling measurements](../../../tests/reference/ant-design-image-current-styling-observation.json)

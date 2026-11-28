@@ -946,6 +946,11 @@
     "root": "image-fixture"
   },
   {
+    "id": "image-progress",
+    "module": "./ImageProgressFixtures.svelte",
+    "root": "image-progress-fixture"
+  },
+  {
     "id": "image-preview-group",
     "module": "./ImageGroupFixtures.svelte",
     "root": "image-group-fixture"

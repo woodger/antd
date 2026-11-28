@@ -76,6 +76,18 @@ export interface ImagePreviewConfig {
     [Snippet, { transform: ImageTransform; image: ImageInfo; current?: number; }]
   >;
 }
+
+/** The owner supplies progress independently of the image request. */
+export interface ImageProgressConfig {
+  percent?: number;
+  /** Receives the default rail and the current rounded percentage. */
+  render?: Snippet<[Snippet, number]>;
+}
+
+type ImageProgressSlot = 'root' | 'content' | 'rail' | 'indicator';
+export type ImageProgressClassNames = Partial<Record<ImageProgressSlot, string>>;
+export type ImageProgressStyles = Partial<Record<ImageProgressSlot, string>>;
+
 /** Native image with fallback/placeholder and interactive preview. */
 export interface ImageProps extends Omit<
   HTMLImgAttributes,
@@ -99,12 +111,18 @@ export interface ImageProps extends Omit<
   /** @defaultValue true */
   preview?: boolean | ImagePreviewConfig;
   fallback?: string;
-  placeholder?: boolean | Snippet;
+  /** Active progress occupies the Image root until the owner disables it. */
+  placeholder?: boolean | Snippet | { progress?: boolean | ImageProgressConfig; };
   rootClassName?: string;
-  /** Preview root class; other semantic slots have not yet been moved. */
-  classNames?: { popup?: { root?: string; }; };
-  /** Root wrapper CSS. style still applies to the img. */
-  styles?: { root?: string; };
+  classNames?: {
+    popup?: { root?: string; };
+    placeholder?: { progress?: ImageProgressClassNames; };
+  };
+  /** Root and progress CSS. The ordinary thumbnail takes `style` on its img. */
+  styles?: {
+    root?: string;
+    placeholder?: { progress?: ImageProgressStyles; };
+  };
   class?: string;
   style?: string;
   onError?: (event: Event) => void;

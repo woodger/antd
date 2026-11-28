@@ -10,6 +10,7 @@
   import { useImageGroup } from './image-group-context';
   import { checkImageSource } from './image-status.dom';
   import ImagePreview from './ImagePreview.svelte';
+  import ImageProgress from './ImageProgress.svelte';
 
   let {
     prefixCls: customizePrefixCls,
@@ -42,7 +43,16 @@
   const group = useImageGroup();
   const id = $props.id();
   let config = $derived<ImagePreviewConfig>(typeof preview === 'object' ? preview : {});
-  let canPreview = $derived(Boolean(preview) && !(typeof placeholder === 'function' && !src));
+  let progress = $derived(typeof placeholder === 'object' ? placeholder?.progress : undefined);
+  let canPreview = $derived(
+    !progress && Boolean(preview) && !(typeof placeholder === 'function' && !src)
+  );
+  let rootStyle = $derived([
+    componentTheme.style,
+    width !== undefined && `width:${dimension(width)}`,
+    height !== undefined && `height:${dimension(height)}`,
+    styles?.root
+  ].filter(Boolean).join(';'));
   let previewSource = $derived(config.src ?? src ?? undefined);
   let internalOpen = $state(untrack(() => Boolean(config.open)));
   let actualOpen = $derived(config.open ?? internalOpen);
@@ -51,6 +61,7 @@
   );
   let displayed = $derived(status === 'error' && fallback ? fallback : src);
   let previousSource = untrack(() => src);
+  let sourceSuspended = false;
   let previousOpen = untrack(() => config.open);
   let unregister: (() => void) | undefined;
   let common = $derived<ImageElementData>({
@@ -68,12 +79,18 @@
   });
   $effect(() => {
     const next = src;
+    if (progress) {
+      sourceSuspended = true;
+      status = 'normal';
+      return;
+    }
     if (!nativeElement) {
       return;
     }
-    if (previousSource !== next) {
+    if (sourceSuspended || previousSource !== next) {
       status = typeof placeholder === 'function' ? 'loading' : 'normal';
       previousSource = next;
+      sourceSuspended = false;
     }
     return checkImageSource(next ?? undefined, nativeElement.ownerDocument, () => {
       status = 'error';
@@ -81,8 +98,9 @@
   });
   $effect(() => {
     const next = config.open;
-    if (next !== previousOpen)
+    if (next !== previousOpen || progress) {
       internalOpen = Boolean(next);
+    }
     previousOpen = next;
   });
   $effect(() => {
@@ -145,61 +163,68 @@
   }
 </style>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}:${previewPrefixCls ?? `${componentPrefix}-preview`}`} />{/if}<svelte:element this={canPreview ? 'button' : 'div'} data-ant-image-prefix={componentPrefix} bind:this={nativeElement} type={canPreview ? 'button' : undefined} role={canPreview ? 'button' : undefined}
-  class={[
+{#if prefixCss}<ThemeScopeStyle css={prefixCss}
+  scope={`image-prefix:${componentPrefix}:${previewPrefixCls ?? `${componentPrefix}-preview`}`} />{/if}{#if progress}
+  <ImageProgress bind:nativeElement prefix={componentPrefix}
+    config={typeof progress === 'object' ? progress : undefined}
+    class={[componentTheme.className, rootClassName, className].filter(Boolean).join(' ')}
+    style={[rootStyle, style].filter(Boolean).join(';')}
+    classNames={classNames?.placeholder?.progress} styles={styles?.placeholder?.progress} />
+{:else}
+  <svelte:element this={canPreview ? 'button' : 'div'} data-ant-image-prefix={componentPrefix}
+    bind:this={nativeElement} type={canPreview ? 'button' : undefined}
+    role={canPreview ? 'button' : undefined}
+    class={[
       `image-trigger ${componentPrefix} ant-image-css-var`,
       componentTheme.className,
       rootClassName,
       status === 'error' && `${componentPrefix}-error`
     ]}
-  style={[
-      componentTheme.style,
-      width !== undefined && `width:${dimension(width)}`,
-      height !== undefined && `height:${dimension(height)}`,
-      styles?.root
-    ].filter(
-      Boolean
-    ).join(
-      ';'
-    )}
-  tabindex={canPreview ? tabindex ?? 0 : tabindex} aria-label={canPreview
+    style={rootStyle}
+    tabindex={canPreview ? tabindex ?? 0 : tabindex} aria-label={canPreview
       ? attributes['aria-label'] ?? alt ?? context.locale.image?.preview ?? 'Image preview'
       : attributes['aria-label']}
-  onclick={click} onkeydown={keydown}>
-  {#if !(typeof placeholder === 'function' && !src)}
-    {#key displayed}<img {...attributes} bind:this={imageElement} src={displayed || undefined} {alt} {width} {height}
-      class={[
-          `${componentPrefix}-img`,
-          placeholder === true && `${componentPrefix}-img-placeholder`,
-          className
-        ]} style={[height !== undefined
-            && `height:${dimension(height)}`, style].filter(
-              Boolean
-            ).join(
-              ';'
-            )}
-      onload={event => {
-          if (event.currentTarget !== imageElement || !event.currentTarget.isConnected) return;
-          if (!(status === 'error' && fallback))
-            status = 'normal';
-          onLoad?.(event);
-        }}
-      onerror={event => {
-          if (event.currentTarget !== imageElement || !event.currentTarget.isConnected) return;
-          status = 'error';
-          onError?.(event);
-        }} />{/key}
-  {/if}
-  {#if typeof placeholder === 'function' && (!src || status === 'loading')}<div class={`${componentPrefix}-placeholder`} aria-hidden="true">{@render placeholder()}</div>{/if}
-  {#if canPreview && config.cover !== false}
-    <div class={[
+    onclick={click} onkeydown={keydown}>
+    {#if !(typeof placeholder === 'function' && !src)}
+      {#key displayed}
+        <img {...attributes} bind:this={imageElement} src={displayed || undefined}
+          {alt} {width} {height}
+          class={[
+            `${componentPrefix}-img`,
+            placeholder === true && `${componentPrefix}-img-placeholder`,
+            className
+          ]} style={[height !== undefined && `height:${dimension(height)}`, style]
+            .filter(Boolean).join(';')}
+          onload={event => {
+            if (event.currentTarget !== imageElement || !event.currentTarget.isConnected) return;
+            if (!(status === 'error' && fallback))
+              status = 'normal';
+            onLoad?.(event);
+          }}
+          onerror={event => {
+            if (event.currentTarget !== imageElement || !event.currentTarget.isConnected) return;
+            status = 'error';
+            onError?.(event);
+          }} />
+      {/key}
+    {/if}
+    {#if typeof placeholder === 'function' && (!src || status === 'loading')}
+      <div class={`${componentPrefix}-placeholder`} aria-hidden="true">{@render placeholder()}</div>
+    {/if}
+    {#if canPreview && config.cover !== false}
+      <div class={[
         `${componentPrefix}-cover`,
         `${componentPrefix}-cover-${typeof config.cover === 'object'
           ? config.cover.placement ?? 'center'
           : 'center'}`
       ]} aria-hidden="true">
-      {#if typeof config.cover === 'function'}{@render config.cover()}{:else if typeof config.cover === 'object' && config.cover.coverNode}{@render config.cover.coverNode()}{/if}
-    </div>
-  {/if}
-</svelte:element>
+        {#if typeof config.cover === 'function'}
+          {@render config.cover()}
+        {:else if typeof config.cover === 'object' && config.cover.coverNode}
+          {@render config.cover.coverNode()}
+        {/if}
+      </div>
+    {/if}
+  </svelte:element>
+{/if}
 {#if canPreview && !group}<ImagePreview imagePrefix={componentPrefix} previewPrefix={previewPrefixCls} open={actualOpen} image={{ url: previewSource, alt: alt ?? undefined, width, height }} config={config} className={classNames?.popup?.root} {fallback} imageAttributes={common} onClose={() => requestOpen(false)} />{/if}

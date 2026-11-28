@@ -18233,15 +18233,32 @@
             "tests/browser/image/image-theme.spec.ts",
             "tests/browser/fixtures/ant-design-image-theme-reference.json"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: исходная подготовка zIndexPopup, previewOperationSize, трёх operation colors и progressAnimationDuration через общий token engine. Цвета получают абсолютную alpha 0.65/0.85/0.25; zIndexPopup без px. Component variables применяются отдельно к thumbnail и viewer Image/ImagePreviewGroup, до styles.root/preview.zIndex. Проверяются aliases/algorithms/dark/compact, zero/undefined, именованные cssVar, single/group/RTL/nested/reset/sibling scopes и реактивная смена без потери DOM/transforms/current/focus/refs. Native dialog stack поверх Modal сохранён. ProgressAnimationDuration проверен только как CSS variable: placeholder.progress/render и фактическая progress-анимация остаются в extended-api."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: исходная подготовка zIndexPopup, previewOperationSize, трёх operation colors и progressAnimationDuration через общий token engine. Цвета получают абсолютную alpha 0.65/0.85/0.25; zIndexPopup без px. Component variables применяются отдельно к thumbnail и viewer Image/ImagePreviewGroup, до styles.root/preview.zIndex. Проверяются aliases/algorithms/dark/compact, zero/undefined, именованные cssVar, single/group/RTL/nested/reset/sibling scopes и реактивная смена без потери DOM/transforms/current/focus/refs. Native dialog stack поверх Modal сохранён. The placeholder-progress feature verifies progressAnimationDuration on the rendered ink layers."
+        },
+        {
+          "id": "placeholder-progress",
+          "title": "Image loading progress, render snippet, and semantic styles",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/ImageProgress.svelte",
+            "src/lib/image/image.types.ts",
+            "src/lib/vendor/image.css",
+            "src/lib/vendor/image-prefix.css.js",
+            "tests/package/image/image.ssr.test.ts",
+            "tests/browser/image/image-progress.spec.ts",
+            "tests/browser/fixtures/ant-design-image-progress-reference.json",
+            "docs/reference/components/image.md"
+          ],
+          "note": "Pinned Ant Design 6.6.8 replaces the thumbnail while progress is active. Finite values are rounded and clamped and receive progressbar semantics. Indeterminate progress exposes a polite Loading status. The Svelte render snippet receives the default rail and percentage, and semantic slots take CSS strings. The official CSS supplies the ink and rail keyframes for the canonical and local prefixes. Existing boolean and snippet placeholders retain their Svelte behavior."
         },
         {
           "id": "extended-api",
-          "title": "Progress placeholder, full semantic, configuration, and icon API, container, and motion",
+          "title": "Remaining semantic, configuration, and icon API, container, and preview motion",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет placeholder.progress/render, остальных slots classNames/styles, ConfigProvider.image, getContainer, icons и React info.icons node wrappers. Deprecated aliases исключены из переноса. ImageRender/actionsRender имеют native Snippet adaptation. Rc-motion fade/appear/leave и mousePosition transform origin ещё не перенесены."
+          "note": "Remaining work includes the other classNames/styles slots, ConfigProvider.image, getContainer, icons and React info.icons wrappers, plus preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases and uses Svelte snippets for imageRender and actionsRender."
         },
         {
           "id": "component-prefix",

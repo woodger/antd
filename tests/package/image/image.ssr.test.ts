@@ -59,4 +59,42 @@ describe('Image SSR', () => {
     expect(body.match(/Image loading/g)?.length).toBe(2);
     expect(body).not.toContain('ant-image-preview-actions-action');
   });
+
+  it('renders progress in place of the thumbnail when an owner supplies a percentage', () => {
+    const body = render(Image, { props: {
+      src: 'photo.svg',
+      width: 120,
+      height: 80,
+      preview: { open: true },
+      placeholder: { progress: { percent: 32.6 } }
+    } }).body;
+
+    expect(body).toContain('ant-image-progress-wrapper');
+    expect(body).toContain('width:120px;height:80px');
+    expect(body).toContain('role="progressbar"');
+    expect(body).toContain('aria-label="33%"');
+    expect(body).toContain('aria-valuenow="33"');
+    expect(body).toContain('--progress-percent:33%');
+    expect(body).not.toContain('<img');
+    expect(body).not.toContain('<dialog');
+  });
+
+  it('announces indeterminate progress through a polite status', () => {
+    const body = render(Image, { props: { placeholder: { progress: true } } }).body;
+
+    expect(body).toContain('aria-busy="true"');
+    expect(body).toContain('role="status" aria-live="polite">Loading');
+    expect(body).not.toContain('role="progressbar"');
+    expect(body).not.toContain('ant-image-progress-rail');
+  });
+
+  it('renders the ordinary image when progress is explicitly disabled', () => {
+    const body = render(Image, {
+      props: { src: 'photo.svg', placeholder: { progress: false } }
+    }).body;
+
+    expect(body).toContain('<img');
+    expect(body).toContain('src="photo.svg"');
+    expect(body).not.toContain('ant-image-progress-wrapper');
+  });
 });

@@ -7,6 +7,11 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 
 ## [Unreleased]
 
+### Added
+
+- Image supports controlled progress placeholders, default and custom rendering,
+  and progress semantic styles.
+
 ## [0.1.1]
 
 ### Changed
