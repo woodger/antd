@@ -2,6 +2,37 @@ import type { Page } from '@playwright/test';
 import { test, expect } from '../test';
 import reference from '../fixtures/ant-design-tabs-overflow-metrics.json' with { type: 'json' };
 
+type MoreMetrics = (typeof reference.cases)[number]['metrics']['more'];
+
+// Text-only More buttons in the reference use the browser's min-content width.
+function measureMoreTextWidth(page: Page, text: string, metrics: MoreMetrics) {
+  return page.evaluate(({ text, metrics }) => {
+    const probe = document.createElement('button');
+    probe.type = 'button';
+    probe.textContent = text;
+    Object.assign(probe.style, {
+      position: 'fixed',
+      visibility: 'hidden',
+      width: 'min-content',
+      boxSizing: 'border-box',
+      border: '0',
+      paddingLeft: metrics.paddingLeft,
+      paddingRight: metrics.paddingRight,
+      fontFamily: metrics.fontFamily,
+      fontSize: metrics.fontSize,
+      lineHeight: metrics.lineHeight
+    });
+    document.body.append(probe);
+
+    try {
+      return getComputedStyle(probe).width;
+    }
+    finally {
+      probe.remove();
+    }
+  }, { text, metrics });
+}
+
 async function check(page: Page, name: string, value = true) {
   await page.getByLabel(name, { exact: true }).evaluate(
     (element, checked) => {
@@ -39,6 +70,9 @@ for (const sample of reference.cases) {
       text: element.textContent,
       paths: [...element.querySelectorAll('path')].map(path => path.getAttribute('d'))
     }))).toEqual(sample.icon);
+    const textWidth = sample.icon.text && !sample.icon.paths.length
+      ? await measureMoreTextWidth(page, sample.icon.text, sample.metrics.more)
+      : undefined;
     const selectors = {
       more,
       operations: root.locator('.ant-tabs-nav-operations'),
@@ -48,11 +82,13 @@ for (const sample of reference.cases) {
         .locator('.ant-tabs-dropdown-menu-item-remove')
     };
     for (const key of ['more', 'operations', 'menu', 'item', 'remove'] as const) {
-      const expected = sample.metrics[key];
-      if (!expected) {
+      const recorded = sample.metrics[key];
+      if (!recorded) {
         await expect(selectors[key]).toHaveCount(0);
         continue;
       }
+      const width = key === 'more' || key === 'operations' ? textWidth : undefined;
+      const expected = width === undefined ? recorded : { ...recorded, width };
       await expect.poll(
         () => selectors[key].evaluate(
           (element, fields) => {

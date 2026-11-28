@@ -531,6 +531,12 @@ precedence, RTL, and locale. It covers the keyboard,
 controlled ownership and callbacks, `popupRender`, the portal,
 nested surfaces, and focus.
 
+For the six text-only More cases, the check measures min-content width in the
+current browser with the recorded font and padding. The pinned React UMD and
+the Svelte build both measured `More` at `64.9219px` in Chromium 158. The earlier
+Chromium 156 capture measured `66px`. The other CSS metrics and hidden tabs
+follow the recorded reference.
+
 `?fixture=tabs-more-runtime` checks lifecycle, overlay
 precedence, independent actions and touch, `visible=undefined`,
 and motion phases against 33 UMD references. It also checks

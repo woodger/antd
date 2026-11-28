@@ -4487,7 +4487,8 @@
             "tests/package/tabs/tabs-overflow.ssr.test.ts",
             "tests/browser/tabs/tabs-overflow.spec.ts",
             "tests/browser/fixtures/TabsOverflowFixtures.svelte",
-            "tests/browser/fixtures/ant-design-tabs-overflow-metrics.json"
+            "tests/browser/fixtures/ant-design-tabs-overflow-metrics.json",
+            "docs/reference/components/tabs.md"
           ],
           "note": "Перенесены source visible range с floor на trailing edge, hidden tabs/operations, More icon precedence, locale listbox, hover/click/focus/contextMenu, delays, placement, visible/onVisibleChange, popupRender(menu,{restTabs,onClose}), overlay style/class/callback, container, autofocus и min-overlay width. Native scroll сохраняется; тот же Add переносится в operations с placeholder и исходным card gutter. More keyboard повторяет source Up/Down, включая первый Up к предпоследнему; popup menu имеет native option/close sibling buttons и Home/End. Mouse option закрывает menu, More hover keyboard сохраняет его, close только запрашивает edit. Официальный UMD задаёт 35 эталонов icon/layout/RTL/locale и 3 сценария выбора/scroll. Native adaptations: MouseEvent/PointerEvent для keyboard activation, encoded panel IDs, доступное имя пустой More, отсутствие stale aria-activedescendant и owned focus из portal. Контролируемая visible перекрывает internal requests/onClose; onVisibleChange заменяет pointer/dismiss callback, keyboard и aria-expanded используют internal open как в rc-tabs. Raw overlay, autoDestroy, openClassName, раздельные actions/touch и motion описаны отдельной feature. Arrow, align/alignPoint, placements/builtinPlacements и onPopupAlign описаны отдельной feature. Raw prefixCls пока не перенесён. Source tokens/semantic/config и наследование ConfigProvider.getPopupContainer описаны отдельными features."
         },
