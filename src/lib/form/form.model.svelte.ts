@@ -2,7 +2,9 @@
 // verification numbers separately protect against outdated responses.
 import { tick, untrack } from 'svelte';
 import { FormValidationError } from './FormValidationError';
-import { setFormHooks, type FormCallbackProvider, type FormFieldRegistration } from './form-internal';
+import {
+  setFormHooks, type FormCallbackProvider, type FormFieldRegistration, type FormRemovalPath
+} from './form-internal';
 import { focusFormField, getFormFieldElement, scrollFormField } from './form-field.dom';
 import type { FormScrollOptions, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
@@ -184,6 +186,11 @@ interface ValidationRequest {
   changedList?: StoredField;
 }
 
+interface PendingFieldRemoval {
+  resolvePath: FormRemovalPath;
+  isListField?: boolean;
+}
+
 type FieldBinding = FieldSelection & { field: StoredField; };
 
 /** Matches configured event names without treating false as a trigger. */
@@ -194,7 +201,7 @@ function allowsValidationTrigger(triggers: FormValidateTrigger, event: string): 
 }
 
 /** Preserves numeric path segments, including infinities and the strict equality rule for NaN. */
-function fieldSelectionKey(path: FieldSelection['path']): string | symbol {
+function fieldSelectionKey(path: readonly (string | number)[]): string | symbol {
   if (path.some(part => typeof part === 'number' && Number.isNaN(part))) {
     return Symbol();
   }
@@ -249,12 +256,17 @@ export function createForm<Values extends FormValues>({
   let valuesRevision = $state(0);
   let validationSequence = 0;
   let latestValidationRun = 0;
+  let submissionRevision = 0;
+  let mountedForms = 0;
+  let storeLifetime = 0;
+  let restoreDefaultsOnMount = false;
   let registrationOrder = 0;
   let initialValueOrder = 0;
   let values = $state<Values>(copyFormValue(defaults));
   let resetKey = $state.raw<object>({});
   // At teardown Svelte reads the previous $state; the registry stores up-to-date registrations.
   const fieldRegistry = new Set<StoredField>();
+  const pendingRemovals: PendingFieldRemoval[] = [];
   const validationDelays = new Map<StoredField, () => void>();
   const messageProviders = new Set<() => ValidateMessages | undefined>();
   const callbackProviders = new Set<FormCallbackProvider<Values>>();
@@ -358,7 +370,7 @@ export function createForm<Values extends FormValues>({
   }
 
   // Follow the live paths and stop at pristine fields. Visit each registration once even in cycles.
-  function dependentFields(name: NamePath): FieldBinding[] {
+  function dependentFields(names: readonly NamePath[]): FieldBinding[] {
     const byDependency = new Map<string | symbol, StoredField[]>();
     for (const field of fields) {
       for (const path of field.registration?.dependencies ?? []) {
@@ -375,7 +387,9 @@ export function createForm<Values extends FormValues>({
 
     const visited = new Set<StoredField>();
     const result: FieldBinding[] = [];
-    visit(formNamePath(name));
+    for (const name of names) {
+      visit(formNamePath(name));
+    }
 
     return result;
 
@@ -872,14 +886,20 @@ export function createForm<Values extends FormValues>({
     }
   }
 
-  // Dependent fields enter validation before either value-change callback sees the new store.
-  function publishControlEdit(name: NamePath) {
-    const dependents = untrack(() => dependentFields(name));
+  // Returns the affected paths so a control edit can include them in its field-change callback.
+  function startDependentValidation(names: readonly NamePath[]) {
+    const dependents = untrack(() => dependentFields(names));
     if (dependents.length) {
       validateAutomatically(dependents.map(({ field }) => field), { source: 'dependency' });
     }
 
-    publishValueChange(name, dependents.map(({ path }) => path));
+    return dependents.map(({ path }) => path);
+  }
+
+  // Dependent fields enter validation before either value-change callback sees the new store.
+  function publishControlEdit(name: NamePath) {
+    const dependents = startDependentValidation([name]);
+    publishValueChange(name, dependents);
   }
 
   // Compatibility for manually wired fields, including list paths that change after a flush.
@@ -936,6 +956,106 @@ export function createForm<Values extends FormValues>({
     field.validating = false;
     field.run = ++validationSequence;
     notifyFieldMeta(field);
+  }
+
+  // Resets flags and messages and releases work owned by the previous field lifetime.
+  function resetFieldMetadata(field: StoredField) {
+    cancelValidationDelay(field);
+    field.errors = undefined;
+    field.warnings = undefined;
+    field.touched = false;
+    field.dirty = false;
+    field.validating = false;
+    field.validated = false;
+    field.run = ++validationSequence;
+  }
+
+  // Discard after the Svelte flush so sibling registrations and keyed list moves are visible.
+  function scheduleFieldRemoval(registration: FormFieldRegistration) {
+    if (registration.preserve !== false) {
+      return;
+    }
+
+    const path = formNamePath(registration.name);
+    const resolvePath = registration.isListField ? registration.getRemovalPath : () => path;
+    if (!resolvePath) {
+      return;
+    }
+
+    if (!pendingRemovals.length) {
+      queueMicrotask(discardUnmountedValues);
+    }
+    pendingRemovals.push({ resolvePath, isListField: registration.isListField });
+  }
+
+  // A restored parent represents its whole initial value, including nested list entries.
+  function discardUnmountedValues() {
+    const removals = pendingRemovals.splice(0);
+    if (!removals.length) {
+      return;
+    }
+
+    const mountedPaths = new Set<string | symbol>();
+    for (const field of fieldRegistry) {
+      if (field.registration) {
+        mountedPaths.add(fieldSelectionKey(fieldPath(field)));
+      }
+    }
+
+    const updates = new Map<string | symbol, { path: readonly (string | number)[]; value: unknown }>();
+    for (const { resolvePath, isListField } of removals) {
+      const path = resolvePath((name) => getFormValue(values, name));
+      if (!path?.length) {
+        continue;
+      }
+
+      const key = fieldSelectionKey(path);
+      if (mountedPaths.has(key)) {
+        continue;
+      }
+
+      const value = isListField ? undefined : getFormValue(defaults, path);
+      if (!Object.is(getFormValue(values, path), value)) {
+        updates.set(key, { path, value });
+      }
+    }
+
+    let next = values;
+    const restored: NamePath[] = [];
+    const ordered = [...updates.values()].sort((first, second) => first.path.length - second.path.length);
+    for (const { path, value } of ordered) {
+      if (!restored.some((parent) => containsFormPath(parent, path))) {
+        next = setFormValue(next, path, value, true) as Values;
+        restored.push(path);
+      }
+    }
+    if (next === values) {
+      return;
+    }
+
+    updateValues(next);
+    valuesRevision++;
+    submissionError = undefined;
+    if (mountedForms) {
+      startDependentValidation(ordered.map(({ path }) => path));
+    }
+  }
+
+  // Clearing the last owner invalidates work from that attachment and defers defaults until remount.
+  function clearDetachedForm() {
+    storeLifetime++;
+    pendingRemovals.length = 0;
+    latestValidationRun = ++validationSequence;
+    for (const field of fieldRegistry) {
+      resetFieldMetadata(field);
+    }
+
+    values = {} as Values;
+    valuesRevision++;
+    submissionRevision++;
+    isSubmitting = false;
+    submissionError = undefined;
+    restoreDefaultsOnMount = true;
   }
 
   const form: FormModel<Values> = {
@@ -1165,14 +1285,7 @@ export function createForm<Values extends FormValues>({
       }
 
       for (const field of selected) {
-        cancelValidationDelay(field);
-        field.errors = undefined;
-        field.warnings = undefined;
-        field.touched = false;
-        field.dirty = false;
-        field.validating = false;
-        field.validated = false;
-        field.run = ++validationSequence;
+        resetFieldMetadata(field);
         notifyFieldMeta(field);
       }
 
@@ -1190,6 +1303,7 @@ export function createForm<Values extends FormValues>({
       }
 
       const callbacks = currentCallbackProvider();
+      const revision = ++submissionRevision;
       isSubmitting = true;
       submissionError = undefined;
 
@@ -1200,6 +1314,10 @@ export function createForm<Values extends FormValues>({
 
       try {
         const result = await validateFields();
+        if (revision !== submissionRevision) {
+          const error = new FormValidationError(result, {}, true);
+          return { status: 'invalid', error };
+        }
         if (callbacks && callbacks === currentCallbackProvider()) {
           callbacks()?.onProviderFinish?.(result);
         }
@@ -1212,11 +1330,15 @@ export function createForm<Values extends FormValues>({
           return { status: 'invalid', error };
         }
 
-        submissionError = error;
+        if (revision === submissionRevision) {
+          submissionError = error;
+        }
 
         return { status: 'failed', error };
       } finally {
-        isSubmitting = false;
+        if (revision === submissionRevision) {
+          isSubmitting = false;
+        }
       }
     }
   };
@@ -1234,6 +1356,23 @@ export function createForm<Values extends FormValues>({
   setFormHooks(form, {
     get resetKey() {
       return resetKey;
+    },
+    attachForm(getClearOnDestroy) {
+      untrack(() => {
+        mountedForms++;
+        if (restoreDefaultsOnMount) {
+          values = mergeFormValues(defaults, values);
+          valuesRevision++;
+          restoreDefaultsOnMount = false;
+        }
+      });
+
+      return () => {
+        mountedForms--;
+        if (!mountedForms && getClearOnDestroy()) {
+          clearDetachedForm();
+        }
+      };
     },
     registerValidateMessages(getMessages) {
       messageProviders.add(getMessages);
@@ -1297,6 +1436,7 @@ export function createForm<Values extends FormValues>({
     registerField(registration) {
       return untrack(() => {
         initializeFieldValue(registration.name, registration.initialValue);
+        const registeredLifetime = storeLifetime;
 
         let field = findField(registration.name);
 
@@ -1321,14 +1461,8 @@ export function createForm<Values extends FormValues>({
           }
 
           if (registered.persistent) {
-            if (registration.rules !== undefined) {
-              registered.run = ++validationSequence;
-              registered.errors = undefined;
-              registered.warnings = undefined;
-              registered.touched = false;
-              registered.dirty = false;
-              registered.validating = false;
-              registered.validated = false;
+            if (registration.rules !== undefined || registration.preserve === false) {
+              resetFieldMetadata(registered);
             }
 
             registered.registration = undefined;
@@ -1337,6 +1471,10 @@ export function createForm<Values extends FormValues>({
             registered.run = ++validationSequence;
             fieldRegistry.delete(registered);
             fields = [...fieldRegistry];
+          }
+
+          if (registeredLifetime === storeLifetime) {
+            scheduleFieldRemoval(registration);
           }
         };
       });

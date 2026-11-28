@@ -1,0 +1,86 @@
+{
+  "upstream": {"release":"6.6.8","revision":"984592267de88fbf9cdaecc96a56629e721c709d","archiveSha256":"8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa","formPackage":"@rc-component/form@1.8.6","react":"18.3.1"},
+  "cases": {
+    "initial": {
+      "values": {"inherited":"initial","kept":"kept","zero":0,"nullable":null,"nested":{"sibling":"stay","extra":"nested initial"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"second initial"},"itemOnly":"item initial"},
+      "fields": {"inherited":"initial","kept":"kept","itemOnly":"item initial","nested":{"extra":"nested initial"},"zero":0,"nullable":null,"duplicate":"duplicate initial","rename":{"first":"first initial"}}
+    },
+    "fieldUnmount": {
+      "values": {"inherited":"initial","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"second initial"},"itemOnly":{"missing":true}},
+      "fields": {"duplicate":"duplicate initial","rename":{"first":"first initial"}}
+    },
+    "fieldRemount": {
+      "values": {"inherited":"initial","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay","extra":"nested initial"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"second initial"},"itemOnly":"item initial"},
+      "fields": {"duplicate":"duplicate initial","rename":{"first":"first initial"},"inherited":"initial","kept":"kept draft","itemOnly":"item initial","nested":{"extra":"nested initial"},"zero":0,"nullable":null}
+    },
+    "formPreserveToggle": {
+      "values": {"inherited":"retained after toggle","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"second initial"},"itemOnly":{"missing":true}},
+      "fields": {"duplicate":"duplicate initial","rename":{"first":"first initial"}}
+    },
+    "duplicateRemains": {
+      "values": {"inherited":"retained after toggle","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay"},"duplicate":"duplicate draft","rename":{"first":"first initial","second":"second initial"},"itemOnly":{"missing":true}},
+      "fields": {"duplicate":"duplicate draft","rename":{"first":"first initial"}}
+    },
+    "lastDuplicateLeaves": {
+      "values": {"inherited":"retained after toggle","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"second initial"},"itemOnly":{"missing":true}},
+      "fields": {"rename":{"first":"first initial"}}
+    },
+    "renamed": {
+      "values": {"inherited":"retained after toggle","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"draft second"},"itemOnly":{"missing":true}},
+      "fields": {"rename":{"second":"draft second"}}
+    },
+    "fieldPreserveToggle": {
+      "values": {"inherited":"retained after toggle","kept":"kept draft","zero":0,"nullable":null,"nested":{"sibling":"stay"},"duplicate":"duplicate initial","rename":{"first":"first initial","second":"draft second"},"itemOnly":{"missing":true}},
+      "fields": {"rename":{"first":"first initial"}}
+    },
+    "removalDependencies": {
+      "values": {"driver":"initial","dependent":"watch"},
+      "fields": {"dependent":"watch"},
+      "events": [["fields",[[["dependent"],true]]],["read","initial"],["fields",[[["dependent"],false]]]]
+    },
+    "detachPreserved": {
+      "values": {"title":"title draft","hidden":"unregistered","description":"description draft","free":"unregistered draft"},
+      "fields": {}
+    },
+    "detachCleared": {
+      "values": {},
+      "fields": {}
+    },
+    "attachCleared": {
+      "values": {"title":"detached write","hidden":"unregistered","free":"new unregistered","description":"item initial"},
+      "fields": {"title":"detached write","description":"item initial"}
+    },
+    "detachAfterPropChange": {
+      "values": {"title":"title draft","hidden":"unregistered","description":"description draft","free":"unregistered draft"},
+      "fields": {}
+    },
+    "oneSharedOwnerLeaves": {
+      "values": {},
+      "fields": {"value":{"missing":true}}
+    },
+    "bothSharedOwnersLeave": {
+      "values": {},
+      "fields": {}
+    },
+    "directListField": {
+      "values": {"rows":[{"id":"A","nested":{"text":"A initial"},"plain":"A keep","sub":[{"title":"sub A"}]},{"id":"B","nested":{"text":"B initial"},"plain":"B keep","sub":[{"title":"sub B"}]}]},
+      "fields": {"rows":[{"nested":{"text":"A initial"}}]}
+    },
+    "movedFieldUnmount": {
+      "values": {"rows":[{"id":"B","nested":{},"plain":"B keep","sub":[{"title":"sub B"}]},{"id":"A","nested":{"text":"A initial"},"plain":"A keep","sub":[{"title":"sub A"}]}]},
+      "fields": {"rows":[]}
+    },
+    "listUnmount": {
+      "values": {"rows":[{"id":"A","nested":{"text":"A initial"},"plain":"A keep","sub":[{"title":"sub A"}]},{"id":"B","nested":{},"plain":"B keep","sub":[{"title":"sub B"}]}]},
+      "fields": {}
+    },
+    "nestedListUnmount": {
+      "values": {"rows":[{"id":"B","nested":{"text":"B live"},"plain":"B keep","sub":[{}]},{"id":"A","nested":{"text":"A live"},"plain":"A keep","sub":[{"title":"nested A"}]}]},
+      "fields": {"rows":[{"missing":true},{"nested":{"text":"A live"}}]}
+    },
+    "rowRemoval": {
+      "values": {"rows":[{"id":"B","nested":{},"plain":"B keep","sub":[{}]}]},
+      "fields": {"rows":[]}
+    }
+  }
+}

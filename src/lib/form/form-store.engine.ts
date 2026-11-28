@@ -117,9 +117,23 @@ export function getFormValue(store: unknown, name: NamePath): unknown {
   return current;
 }
 
-// Copies containers only along the path and copies the recorded value.
-export function setFormValue(store: unknown, name: NamePath, value: unknown): unknown {
+// Copies containers only along the path. Field removal can delete an undefined nested value.
+export function setFormValue(
+  store: unknown,
+  name: NamePath,
+  value: unknown,
+  removeIfUndefined = false
+): unknown {
   const path = formNamePath(name);
+  const remove = removeIfUndefined && value === undefined && path.length > 1;
+  if (remove) {
+    const parent = getFormValue(store, path.slice(0, -1));
+    if ((!Array.isArray(parent) && !isPlainObject(parent))
+      || !Object.hasOwn(parent, path[path.length - 1])) {
+      return store;
+    }
+  }
+
   return setAtPath(store, 0);
 
   // In the missing container, the type of the next segment selects an array or object.
@@ -131,13 +145,19 @@ export function setFormValue(store: unknown, name: NamePath, value: unknown): un
     const part = path[index];
     let copy: unknown[] | Record<string, unknown>;
     if (Array.isArray(current)) {
-      copy = [...current];
+      // Disposing a field must leave holes for all unmounted list rows.
+      copy = removeIfUndefined ? current.slice() : [...current];
     }
     else if (isPlainObject(current)) {
       copy = { ...current };
     }
     else {
       copy = typeof part === 'number' ? [] : {};
+    }
+
+    if (remove && index === path.length - 1) {
+      Reflect.deleteProperty(copy, part);
+      return copy;
     }
 
     const previous = getFormValue(current, [part]);

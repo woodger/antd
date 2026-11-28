@@ -35,6 +35,8 @@
     feedbackIcons,
     validateMessages,
     validateTrigger,
+    preserve,
+    clearOnDestroy,
     component = 'form',
     disabled,
     onValuesChange,
@@ -50,6 +52,9 @@
     style,
     ...attributes
   } = $derived(props);
+
+  // Restore a cleared model before child registrations read their initial values.
+  $effect.pre(() => getFormHooks(form)?.attachForm(() => clearOnDestroy));
 
   const config = useConfig();
   const designTokens = useDesignTokenContext();
@@ -169,6 +174,9 @@
     },
     get validateTrigger() {
       return validateTrigger;
+    },
+    get preserve() {
+      return preserve;
     },
     get resetKey() {
       return getFormHooks(form)?.resetKey ?? form.values;

@@ -53,7 +53,7 @@ segments with `_`. Supply a custom name when needed.
 `createForm` rules. `createForm.rules` accepts top-level fields only. Use
 `FormItem.rules` or nested rules for a nested path. Model rules apply even
 without a FormItem in the DOM. Unmounting the field removes local rules and
-keeps the value. When `name` changes, errors and `touched` from model rules
+keeps the value by default. When `name` changes, errors and `touched` from model rules
 stay associated with the old name. In FormList, local field state follows the
 row's `key`. [Nested rules](#nested-rules)
 
@@ -85,6 +85,40 @@ Initialize a `FormList` array through the list's `initialValue` or the model's
 `initialValues`. A list field's `initialValue` applies when it is created.
 Resetting just that field does not restore the list field default. Resetting
 the entire list remounts rows and reapplies their initial values.
+
+### Field retention and form disposal
+
+`Form.preserve` defaults to `true`. A `FormItem` can override it. With
+`preserve={false}`, removing a field restores that path from the model's
+`initialValues`. If the model has no default for the path, a top-level field
+becomes `undefined` and a nested field is removed from its container. A field's
+own `initialValue` fills the path again when the field mounts. Changing
+`name` releases the previous path while keeping the editor. Another mounted
+field at the exact same path keeps the current value.
+
+Direct fields inside a list row keep the value owned by the list operations.
+For a nested field in a row that remains in the list, `preserve={false}` removes
+the field value at the row's current index. Removing a row through `FormList`
+also removes its values. A top-level `FormList` inherits `Form.preserve` and
+restores its model default when it unmounts with retention disabled.
+
+Discarding a field may revalidate fields that depend on it in the mounted form.
+It does not send `onValuesChange`. In Svelte the discard follows the flush that
+removes the field, so other registrations and list moves in that update are
+already visible.
+
+`clearOnDestroy` defaults to `false`. With it enabled, a `Form` clears all
+values, including unregistered ones, when it is the last owner to detach from
+its `createForm` model. Detaching can also happen when the `form` prop switches
+to another model. Reattaching a cleared model restores its initial values and
+applies any writes made while it was detached. Pending validation and
+submission state from the cleared attachment cannot affect the next one.
+
+The pinned React build uses the initial `clearOnDestroy` value at unmount,
+can empty a model still used by another form, and can clear a neighboring
+row when it releases a field after a move. Svelte uses the current option,
+tracks mounted model owners and resolves removed fields using their row keys.
+[React observations](../../tests/browser/fixtures/ant-design-form-lifecycle-observation.json)
 
 ### Nameless fields
 
@@ -436,8 +470,8 @@ FormItem and nested FormList names are relative to the nearest list.
 `setFieldValue` and `getFieldValue` take full paths from the form root.
 A nested independent form starts a new path. The array in model initialValues
 takes precedence, including []. A missing array can use list initialValue.
-Reset uses model initialValues or the list's current initialValue. Hiding a
-list preserves its values and removes its local rules.
+Reset uses model initialValues or the list's current initialValue. Unmounting
+a list removes its local rules and preserves its values by default.
 
 `add(defaultValue, insertIndex)` inserts a row at the supplied index or appends
 when the index is missing or invalid. Remove takes an index or an array of

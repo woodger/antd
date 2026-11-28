@@ -135,6 +135,10 @@ export interface FormProps<Values extends FormValues> extends Omit<
   validateMessages?: ValidateMessages;
   /** Default validation events for this form's fields. */
   validateTrigger?: FormValidateTrigger;
+  /** Keeps field values after removal by default. Individual fields can override it. */
+  preserve?: boolean;
+  /** Clears model values when the last Form using this model detaches. */
+  clearOnDestroy?: boolean;
   /** By default, form; false leaves context without native wrapper and DOM attributes. */
   component?: 'form' | false;
   /** Defaults disabled for children; the nearest ConfigProvider and prop control priority. */

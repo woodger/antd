@@ -5,6 +5,11 @@ import type { FormFieldMeta, FormInstance } from './form.model.svelte';
 import type { FormProps, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
 
+/** Resolves a removed row field against the model that owned its registration. */
+export type FormRemovalPath = (
+  readValue: (name: NamePath) => unknown
+) => readonly (string | number)[] | undefined;
+
 export interface FormFieldRegistration {
   readonly name: NamePath;
   // Symbol preserves when identity registration is stored inside Svelte proxy.
@@ -16,6 +21,8 @@ export interface FormFieldRegistration {
   readonly validateDebounce?: number;
   readonly isList?: boolean;
   readonly isListField?: boolean;
+  readonly preserve?: boolean;
+  readonly getRemovalPath?: FormRemovalPath;
   readonly initialValue?: unknown;
   readonly messageVariables?: Readonly<Record<string, string>>;
   /** Snapshot metadata for UI collector; undefined removes the former binding. */
@@ -34,6 +41,7 @@ export type FormCallbackProvider<Values extends FormValues> = () => (
 
 export interface FormHooks<Values extends FormValues> {
   readonly resetKey: object;
+  attachForm(getClearOnDestroy: () => boolean | undefined): () => void;
   registerValidateMessages(getMessages: () => ValidateMessages | undefined): () => void;
   registerCallbacks(getCallbacks: FormCallbackProvider<Values>): () => void;
   getFieldMeta(name: NamePath): FormFieldMeta | undefined;

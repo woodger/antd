@@ -7987,6 +7987,25 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): Form and local event name/array/false with inheritance, rule filters, silent programmatic writes and explicit validation, list inheritance and indexed paths, absolute dependencies and dirty transitive traversal, pending callbacks before onValuesChange, rule factories after the UI update without event debounce. Custom Svelte controls send events through changeFieldValue or validateFieldOn. The writeDuringBlur capture shows that the source applies an old value's error after a blur callback replaces the value. The cycle capture shows the edited field's validator running again after the direct check has superseded it. The port cancels both stale checks and also cancels pending dependency frames on reset or removal. Svelte snippets read reactive values for render-only dependencies."
         },
         {
+          "id": "field-preserve-and-clear-on-destroy",
+          "title": "Form preserve and model disposal",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/FormItem.svelte",
+            "src/lib/form/FormList.svelte",
+            "src/lib/form/form.model.svelte.ts",
+            "src/lib/form/form-store.engine.ts",
+            "tests/browser/fixtures/FormLifecycleFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-lifecycle-observation.json",
+            "tests/browser/form/form-lifecycle.spec.ts",
+            "tests/package/form/form-lifecycle.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): form and field preserve precedence, local defaults on remount, duplicate paths, removal-triggered dependency checks, clearOnDestroy and reattachment over model defaults. The pinned build closes over the initial clearOnDestroy flag (detachAfterPropChange), clears data on a still-attached shared model (oneSharedOwnerLeaves), and uses obsolete indexes after keyed list moves (movedFieldUnmount, listUnmount, nestedListUnmount, rowRemoval). Svelte uses current disposal options, clears after the last owner, resolves row paths by key, and restores an entire list's default without pruning its restored descendants. Model replacement preserves the Svelte editor and invalidates old submissions."
+        },
+        {
           "id": "dayjs-values",
           "title": "Immutable Dayjs|null и диапазоны без преобразования в строку",
           "state": "supported",

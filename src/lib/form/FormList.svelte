@@ -6,6 +6,7 @@
   import { provideFormList, useFormList } from './form-list-context';
   import { changeFormList, syncFormListKeys } from './form-list.engine';
   import { formNamePath } from './form-store.engine';
+  import type { FormRemovalPath } from './form-internal';
   import type { FormListOperation, FormListProps } from './form-list.types';
 
   let { name, initialValue, rules, children, prefixCls }: FormListProps = $props();
@@ -42,13 +43,40 @@
   let fieldResetKey = $state.raw<object>({});
   let resetKey = $derived({ form: form.resetKey, field: fieldResetKey });
 
+  // A row's index may change after registration. Skip rows already removed by a list operation.
+  function captureRemovalPath(relative: readonly (string | number)[]): FormRemovalPath {
+    const resolveParent = parent?.captureRemovalPath(formNamePath(name));
+    const [position, ...rest] = relative;
+    const rowKey = typeof position === 'number' ? keys.keys[position] : undefined;
+
+    return (readValue) => {
+      const listPath = resolveParent ? resolveParent(readValue) : prefixName;
+      if (!listPath) {
+        return;
+      }
+      if (typeof position !== 'number') {
+        return [...listPath, ...relative];
+      }
+      if (rowKey === undefined) {
+        return;
+      }
+
+      const index = keys.keys.indexOf(rowKey);
+      const rows = readValue(listPath);
+      if (index >= 0 && Array.isArray(rows) && Object.hasOwn(rows, index)) {
+        return [...listPath, index, ...rest];
+      }
+    };
+  }
+
   provideFormList({
     get prefixCls() {
       return config.getPrefixCls('form', prefixCls);
     },
     get prefixName() {
       return prefixName;
-    }
+    },
+    captureRemovalPath
   });
 
   $effect.pre(() => form.registerField?.({
@@ -60,6 +88,9 @@
     },
     get validateTrigger() {
       return form.validateTrigger;
+    },
+    get preserve() {
+      return form.preserve;
     },
     get initialValue() {
       return initialValue;

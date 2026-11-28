@@ -27,6 +27,7 @@ export interface FormContext {
   readonly tooltip?: FormTooltipProps;
   readonly feedbackIcons?: FormFeedbackIcons;
   readonly validateTrigger?: FormValidateTrigger;
+  readonly preserve?: boolean;
   readonly resetKey?: object;
   getFieldError(name: NamePath): readonly string[];
   getFieldWarning(name: NamePath): readonly string[];

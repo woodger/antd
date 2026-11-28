@@ -30,6 +30,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   submissions across named forms.
 - Form, FormItem, and validation rules support configurable validation events.
   FormItem can revalidate from edits to its declared field dependencies.
+- Form and FormItem support field value retention. Form can clear a detached
+  model and restore its initial values on reattachment.
 
 ### Fixed
 

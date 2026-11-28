@@ -74,6 +74,8 @@
     rules?: readonly FormRule[];
     /** Absolute paths whose control edits can revalidate this field. */
     dependencies?: readonly NamePath[];
+    /** Overrides the Form's value retention when this field is removed. */
+    preserve?: boolean;
     /** Overrides the Form's validation events. Empty or false disables control-triggered checks. */
     validateTrigger?: FormValidateTrigger;
     /** Overrides label, name, and other ${variables} in messages for this field. */
@@ -121,6 +123,7 @@
     colon,
     rules,
     dependencies,
+    preserve,
     validateTrigger,
     messageVariables,
     validateFirst,
@@ -317,6 +320,10 @@
 
     // List metadata follows the row key. A regular field stores it under its model name.
     const registeredName = list ? undefined : path;
+    const getRemovalPath = list && untrack(() => {
+      const relative = formNamePath(name ?? []);
+      return relative.length > 1 ? list.captureRemovalPath(relative) : undefined;
+    });
 
     registration = {
       mountKey: Symbol('ant-design-field-mount'),
@@ -329,6 +336,10 @@
       get dependencies() {
         return dependencies;
       },
+      get preserve() {
+        return preserve ?? form?.preserve;
+      },
+      getRemovalPath,
       get validateTrigger() {
         return validateTrigger ?? form?.validateTrigger;
       },
