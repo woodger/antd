@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createForm } from './form.model.svelte';
+import { createForm, type FormInstance } from './form.model.svelte';
 import { getFormHooks, type FormFieldRegistration } from './form-internal';
-import type { ValidationRule } from './validation.engine';
+import type { FormValues, ValidationRule } from './validation.engine';
 
 const registrations: (() => void)[] = [];
 
-function register(form: object, field: FormFieldRegistration) {
+function register(form: FormInstance<FormValues>, field: FormFieldRegistration) {
   const cleanup = getFormHooks(form)!.registerField(field);
   registrations.push(cleanup);
 

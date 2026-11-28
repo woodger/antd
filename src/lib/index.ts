@@ -537,14 +537,17 @@ export { default as Form } from './form/Form.svelte';
 export { default as FormItem } from './form/FormItem.svelte';
 export { default as FormList } from './form/FormList.svelte';
 export { default as FormErrorList } from './form/FormErrorList.svelte';
+export { default as FormProvider } from './form/FormProvider.svelte';
 export {
   createForm,
   type FormInstance,
+  type FormModel,
   type FormValidateOptions,
   type FormFieldMeta,
   type FormFilterFunc,
   type FormGetFieldsValueConfig,
   type FormFieldData,
+  type FormFieldSnapshot,
   type SubmissionResult
 } from './form/form.model.svelte.js';
 export { FormValidationError } from './form/FormValidationError';
@@ -1038,6 +1041,7 @@ export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, Select
 export type { SelectComponents, SelectRootAttributes, SelectInputAttributes, SelectInputOwnProps, SelectRootRegistration, SelectInputRegistration, SelectRootContext, SelectInputContext, SelectRootComponent, SelectInputComponent } from './select/select-components.types';
 export type {
   FormProps, FormConfig, FormScrollOptions, FormRequiredMark, FormRequiredMarkInfo, FormLocale,
+  FormProviderProps, FormProviderForms, FormProviderChangeInfo, FormProviderFinishInfo,
   FormSemanticSlots, FormSemantic, FormTooltipProps, FormItemTooltip, FormFeedbackIcons, FormFeedbackInfo
 } from './form/form.types';
 export type {
@@ -1079,7 +1083,7 @@ export type {
   FormValues
 } from './form/validation.engine';
 export type { FieldError } from './form/validation.engine';
-export type { NamePath, NamePathValue, PartialFormValues } from './form/form-store.engine';
+export type { NamePath, NamePathValue, PartialFormValues, FormValueProjection } from './form/form-store.engine';
 export type { AntDesignLocale } from './locale.types';
 export {
   ruRU,

@@ -8,6 +8,7 @@ handles arrays of fields.
 
 - [Values and fields](#values-and-fields)
 - [Validation](#validation)
+- [Change events and FormProvider](#change-events-and-formprovider)
 - [Submission](#submission)
 - [Reset](#reset)
 - [Field arrays with FormList](#formlist)
@@ -192,7 +193,79 @@ contributes to the accessible description and leaves aria-invalid unset. Stale
 validation results stay discarded after an edit, reset, or field removal.
 Blur marks a field touched. Changing any field revalidates touched fields,
 including validators that depend on other values. The dependencies prop is
-outside the current API.
+outside the current API. Once a control uses `changeFieldValue`, its edits start
+validation on change and blur preserves the result.
+
+## Change events and FormProvider
+
+Connect a control's value event to `form.changeFieldValue(name, value)` to
+publish user edits. It marks the field touched and runs the edited field's
+rules, with the same `validateDebounce` as other automatic checks. Existing
+bindings that call `setFieldValue` keep their validation behavior.
+
+```svelte
+<FormProvider onFormFinish={(name, { values, forms }) => {
+  if (name === 'editor') forms.summary?.setFieldValue('title', values.title);
+}}>
+  <Form
+    form={editor}
+    name="editor"
+    onValuesChange={(changed, all) => updateDraft(changed, all)}
+    onFieldsChange={(changed, all) => updateFieldStatus(changed, all)}
+  >
+    <FormItem name="title">
+      <Input
+        value={editor.values.title}
+        onValueChange={(title) => editor.changeFieldValue('title', title)}
+      />
+    </FormItem>
+    <Button htmlType="submit">Save</Button>
+  </Form>
+
+  <Form form={summary} name="summary">
+    <FormItem name="title">
+      <Input value={summary.values.title} readonly />
+    </FormItem>
+  </Form>
+</FormProvider>
+```
+
+`onValuesChange` receives the changed path and the values of the form's
+registered fields, with the edited path included in both. Nested paths retain
+their object or array structure. `onFieldsChange` receives the changed field
+snapshots and the form's field snapshots. Each includes the path, value, touched
+and validation flags, errors, and warnings. The changed entries are also
+entries of the second array.
+
+When a control's value changes, values are published first, then field metadata.
+The start and completion of validation publish field metadata again.
+Explicit `validateFields` also
+publishes field events, including a `validateOnly` check that leaves metadata
+unchanged. Superseded results stay out of the callbacks. `FormList` operations
+publish their array path, and automatic list validation waits for keyed rows to
+settle. Initialization, reset, `setFields`, `setFieldValue`, and `setFieldsValue`
+are silent.
+
+`FormProvider` adds no element to the DOM. Its `onFormChange` and
+`onFormFinish` receive the form name and the named models mounted inside that
+provider. Empty and omitted names still send events. Registration names change
+with the `Form` name or its model, and models leave the registry when the form
+unmounts. A name shared by several mounted forms points to the most recent
+registration. When that registration leaves, the previous live form is restored.
+
+Events reach the nearest provider first, then enclosing providers, then the
+form's own callback. Successful submission uses the same values snapshot for
+these callbacks, including any unregistered values kept by the Svelte model.
+Calling `form.submit(onFinish)` on a mounted model also notifies providers and
+uses the supplied callback. Validation errors and obsolete results leave
+`onFormFinish` uncalled.
+
+The source comparison covers nested scopes, empty names, asynchronous
+validation, and registration changes. Ant Design 6.6.8 can report an older
+validator's rejection for a newer field value, and it drops a live registry
+entry when an independently mounted form with the same name unmounts. The
+Svelte model discards the stale result and releases only the departing
+registration. [React observations](../../tests/browser/fixtures/ant-design-form-events-observation.json)
 
 ## Submission
 

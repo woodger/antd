@@ -1,7 +1,8 @@
 import type { Snippet } from 'svelte';
 import type { HTMLFormAttributes } from 'svelte/elements';
 import type { FormValidationError } from './FormValidationError';
-import type { FormInstance } from './form.model.svelte.js';
+import type { FormFieldSnapshot, FormInstance } from './form.model.svelte.js';
+import type { FormValueProjection } from './form-store.engine';
 import type { ColProps } from '../grid/grid.types';
 import type { FormValues } from './validation.engine';
 import type { ComponentSize, RenderEmptyContent, Variant } from '../types';
@@ -71,6 +72,30 @@ export interface FormSemanticSlots {
 export type FormSemantic = FormSemanticSlots
   | (<Values extends FormValues>(info: { props: FormProps<Values> }) => FormSemanticSlots | undefined);
 
+/** The currently mounted named models in a FormProvider subtree. */
+export type FormProviderForms = Readonly<Partial<Record<string, FormInstance<FormValues>>>>;
+
+export interface FormProviderChangeInfo {
+  changedFields: FormFieldSnapshot[];
+  forms: FormProviderForms;
+}
+
+export interface FormProviderFinishInfo {
+  values: FormValues;
+  forms: FormProviderForms;
+}
+
+/** Observes descendant forms without adding a DOM wrapper. */
+export interface FormProviderProps {
+  children?: Snippet;
+  /** Accepted by the source provider, where it also has no effect. */
+  prefixCls?: string;
+  /** Receives edits and validation events, including for forms with an empty or omitted name. */
+  onFormChange?: (name: string | undefined, info: FormProviderChangeInfo) => void;
+  /** Receives successful submissions before the form's finish callback. */
+  onFormFinish?: (name: string | undefined, info: FormProviderFinishInfo) => void;
+}
+
 /** Native form for reactive model, validation and asynchronous onFinish. */
 export interface FormProps<Values extends FormValues> extends Omit<
   HTMLFormAttributes,
@@ -109,6 +134,13 @@ export interface FormProps<Values extends FormValues> extends Omit<
   component?: 'form' | false;
   /** Defaults disabled for children; the nearest ConfigProvider and prop control priority. */
   disabled?: boolean;
+  /** A control edit supplies the changed path and the values of the registered fields. */
+  onValuesChange?: (
+    changedValues: FormValueProjection<Values>,
+    allValues: FormValueProjection<Values>
+  ) => void;
+  /** Control edits and validation report the changed fields and the snapshot they came from. */
+  onFieldsChange?: (changedFields: FormFieldSnapshot[], allFields: FormFieldSnapshot[]) => void;
   /** Is called after successful validation; Promise keeps submitting until completion. */
   onFinish?: (values: Values) => void | Promise<void>;
   /** Errors validation; outOfDate is distinguished by an outdated verification result. */

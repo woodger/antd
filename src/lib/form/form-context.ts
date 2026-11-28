@@ -31,7 +31,7 @@ export interface FormContext {
     & Partial<Pick<FormFieldMeta, 'validated'>>) | undefined;
   isFieldRequired(name: NamePath): boolean;
   hasRequiredRules(rules: readonly FormRule[]): boolean;
-  touchField(name: NamePath): void;
+  handleFieldBlur(name: NamePath): void;
   registerField?(field: FormFieldRegistration): (() => void) | undefined;
   markFieldMounted(mountKey: symbol): void;
   getFieldValue(name: NamePath): unknown;

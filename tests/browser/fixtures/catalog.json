@@ -159,6 +159,11 @@
     "root": "form-get-fields-value-fixture"
   },
   {
+    "id": "form-events",
+    "module": "./FormEventsFixtures.svelte",
+    "root": "form-events-fixture"
+  },
+  {
     "id": "form-set-fields",
     "module": "./FormSetFieldsFixtures.svelte",
     "root": "form-set-fields-fixture"

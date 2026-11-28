@@ -25,6 +25,9 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   to Svelte components.
 - `ConfigProvider.theme.zeroRuntime` uses prebuilt component styles and keeps
   scoped theme variables active.
+- Form publishes value and field changes from explicitly wired control events
+  and FormList operations. FormProvider coordinates changes and successful
+  submissions across named forms.
 
 ### Fixed
 

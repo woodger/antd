@@ -410,7 +410,7 @@
       return () => { controls.delete(getInstance); };
     },
     onBlur() {
-      if (hasName) form?.touchField(path);
+      if (hasName) form?.handleFieldBlur(path);
     }
   };
 

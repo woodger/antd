@@ -7459,6 +7459,12 @@
           ]
         },
         {
+          "upstream": "Form.Provider",
+          "local": [
+            "FormProvider"
+          ]
+        },
+        {
           "upstream": "Form.Item.useStatus",
           "local": [
             "useFormItemStatus"
@@ -7940,6 +7946,26 @@
             "tests/package/form/form-validation-options.ssr.test.ts"
           ],
           "note": "NamePath и FormList core перенесены: массивы, add/remove/move, stable keys, вложенный prefix, initialValue/reset и custom validators, warningOnly и FormErrorList с prefixCls списка, validateOnly/recursive/dirty. Полный API остаётся partial: полный набор правил и field lifecycle, field adapters и остальные настройки Form ещё не перенесены."
+        },
+        {
+          "id": "change-events-and-provider",
+          "title": "Form change callbacks and Form.Provider",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/form/Form.svelte",
+            "src/lib/form/FormProvider.svelte",
+            "src/lib/form/form-provider-context.ts",
+            "src/lib/form/form.model.svelte.ts",
+            "docs/reference/forms.md",
+            "tests/browser/fixtures/FormEventsFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-events-observation.json",
+            "tests/browser/form/form-events.spec.ts",
+            "tests/browser/form/form-events-hydration.spec.ts",
+            "tests/package/form/form-events.ssr.test.ts",
+            "tests/package/form/form-events.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6) receives value, field, and validation events and forwards descendant fields and successful submissions through nested providers in inside-out order. Svelte controls use changeFieldValue, while programmatic setters stay silent. Existing submit passes the full model snapshot and marks fields touched. The firstValidationFinished and duplicatePreviousUnmounted observations show two upstream defects: reject the first validator after a second edit has validated successfully to see the rejection reported against the newer value, or unmount a previous form from its own subtree to see the same-name peer disappear from the ancestor registry. Svelte suppresses the stale completion and retains live registrations."
         },
         {
           "id": "dayjs-values",

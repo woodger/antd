@@ -6,11 +6,13 @@
   import { getFormPrefixCss, getFormPrefixScope } from './form-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { provideForm } from './form-context';
+  import { useFormProvider } from './form-provider-context';
   import { getFormHooks } from './form-internal';
   import { provideFormList } from './form-list-context';
   import { provideFormItemStatus, useFormItemStatusContext } from './form-item-status';
   import { provideFormFeedback, useFormFeedback } from './form-feedback-context';
   import type { FormProps, FormSemanticSlots } from './form.types';
+  import type { FormFieldSnapshot } from './form.model.svelte';
   import { resolveValidationRules, type FormValues } from './validation.engine';
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { mergeValidationMessages } from './validation-message.engine';
@@ -34,6 +36,8 @@
     validateMessages,
     component = 'form',
     disabled,
+    onValuesChange,
+    onFieldsChange,
     onFinish,
     onFinishFailed,
     scrollToFirstError,
@@ -77,9 +81,28 @@
     config.form, semanticProps, ['root', 'label', 'content', 'help', 'helpItem', 'extra']
   ));
   let active = true;
+  const provider = useFormProvider();
 
   onDestroy(() => {
     active = false;
+  });
+
+  const formName = $derived(attributes.name ?? undefined);
+  $effect(() => provider?.registerForm(formName, form));
+
+  $effect(() => {
+    const boundForm = form;
+    return getFormHooks(boundForm)?.registerCallbacks(() => {
+      if (!active || form !== boundForm) {
+        return;
+      }
+
+      return {
+        onValuesChange,
+        onFieldsChange: provider || onFieldsChange ? notifyFieldsChange : undefined,
+        onProviderFinish: provider ? notifyProviderFinish : undefined
+      };
+    });
   });
 
   provideFormList(undefined);
@@ -158,7 +181,15 @@
     isFieldRequired: (name) => form.isFieldRequired(name),
     hasRequiredRules: rules => resolveValidationRules(rules, form)
       .some(rule => rule.required && !rule.warningOnly),
-    touchField: (name) => form.touchField(name),
+    handleFieldBlur(name) {
+      const hooks = getFormHooks(form);
+      if (hooks) {
+        hooks.handleFieldBlur(name);
+      }
+      else {
+        form.touchField(name);
+      }
+    },
     registerField: (field) => getFormHooks(form)?.registerField(field),
     markFieldMounted: (mountKey) => getFormHooks(form)?.markFieldMounted(mountKey),
     getFieldValue: (name) => form.getFieldValue(name),
@@ -174,6 +205,16 @@
     }
   });
 
+  function notifyFieldsChange(changedFields: FormFieldSnapshot[], allFields: FormFieldSnapshot[]) {
+    const listener = onFieldsChange;
+    provider?.notifyChange(formName, changedFields);
+    listener?.(changedFields, allFields);
+  }
+
+  function notifyProviderFinish(values: Values) {
+    provider?.notifyFinish(formName, values);
+  }
+
   async function handleSubmit(
     event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement; }
   ) {
@@ -185,9 +226,13 @@
     }
 
     const submittedForm = form;
+    const hasModelHooks = Boolean(getFormHooks(submittedForm));
     const finish = onFinish;
     const result = await submittedForm.submit((values) => {
       if (active && form === submittedForm) {
+        if (!hasModelHooks) {
+          notifyProviderFinish(values);
+        }
         return finish?.(values);
       }
     });
