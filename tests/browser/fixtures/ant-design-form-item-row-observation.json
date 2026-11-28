@@ -1,0 +1,173 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "chromium": "158.0.8127.36",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "version": "6.6.8",
+  "stableRow": true,
+  "initial": {
+    "hasRow": true,
+    "hasChild": true,
+    "field": {
+      "tag": "DIV",
+      "class": true,
+      "hidden": false,
+      "data": null,
+      "title": null,
+      "color": "rgb(12, 34, 56)"
+    },
+    "row": {
+      "tag": "DIV",
+      "role": "group",
+      "label": "initial row",
+      "ariaHidden": "true",
+      "title": "Attachment",
+      "data": "initial",
+      "custom": "preserved",
+      "dir": "ltr",
+      "tabIndex": -1,
+      "color": "",
+      "margin": "-10px",
+      "gap": "6px",
+      "columnPadding": "10px",
+      "classes": [
+        "ant-row",
+        "ant-row-no-wrap",
+        "ant-row-space-between",
+        "ant-row-middle"
+      ],
+      "legacy": []
+    },
+    "clicks": [
+      [
+        "initial",
+        true,
+        "BUTTON"
+      ]
+    ]
+  },
+  "changed": {
+    "hasRow": true,
+    "hasChild": true,
+    "field": {
+      "tag": "DIV",
+      "class": true,
+      "hidden": false,
+      "data": null,
+      "title": null,
+      "color": "rgb(12, 34, 56)"
+    },
+    "row": {
+      "tag": "DIV",
+      "role": "group",
+      "label": "changed row",
+      "ariaHidden": "false",
+      "title": null,
+      "data": "changed",
+      "custom": "preserved",
+      "dir": "ltr",
+      "tabIndex": -1,
+      "color": "",
+      "margin": "-12px",
+      "gap": "8px",
+      "columnPadding": "12px",
+      "classes": [
+        "ui-row",
+        "ui-row-no-wrap",
+        "ui-row-space-between",
+        "ui-row-top",
+        "ui-row-rtl"
+      ],
+      "legacy": []
+    },
+    "clicks": [
+      [
+        "initial",
+        true,
+        "BUTTON"
+      ],
+      [
+        "changed",
+        true,
+        "BUTTON"
+      ]
+    ]
+  },
+  "unstyled": {
+    "hasRow": false,
+    "hasChild": true,
+    "field": null,
+    "row": null,
+    "clicks": [
+      [
+        "initial",
+        true,
+        "BUTTON"
+      ],
+      [
+        "changed",
+        true,
+        "BUTTON"
+      ]
+    ]
+  },
+  "hidden": {
+    "hasRow": true,
+    "hasChild": true,
+    "field": {
+      "tag": "DIV",
+      "class": true,
+      "hidden": true,
+      "data": null,
+      "title": null,
+      "color": "rgb(12, 34, 56)"
+    },
+    "row": {
+      "tag": "DIV",
+      "role": "group",
+      "label": "hidden row",
+      "ariaHidden": "false",
+      "title": null,
+      "data": "hidden",
+      "custom": "preserved",
+      "dir": "ltr",
+      "tabIndex": -1,
+      "color": "",
+      "margin": "-12px",
+      "gap": "8px",
+      "columnPadding": "12px",
+      "classes": [
+        "ui-row",
+        "ui-row-no-wrap",
+        "ui-row-space-between",
+        "ui-row-top",
+        "ui-row-rtl"
+      ],
+      "legacy": []
+    },
+    "clicks": [
+      [
+        "initial",
+        true,
+        "BUTTON"
+      ],
+      [
+        "changed",
+        true,
+        "BUTTON"
+      ],
+      [
+        "hidden",
+        true,
+        "BUTTON"
+      ]
+    ]
+  }
+}

@@ -1132,6 +1132,12 @@ out in a wrapping row. The default is vertical. A local FormItem.layout
 (horizontal or vertical) takes precedence. Undefined restores inheritance.
 Layout changes preserve field DOM, values, state, focus, and selection.
 
+A styled FormItem forwards HTML and ARIA attributes, native events, and Grid
+settings such as gutter, align, justify, and wrap to its inner row. Class,
+rootClassName, and style apply to the outer item. A noStyle item forwards
+these attributes only when hidden restores its layout. Use htmlFor to
+associate the label with a custom control.
+
 ### Size and disabled state
 
 `Form.size` sets small, medium, or large for the form and its components.

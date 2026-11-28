@@ -21,6 +21,7 @@
     wrap,
     class: className = '',
     style,
+    dir,
     nativeElement = $bindable(),
     ...rest
   }: RowProps = $props();
@@ -53,7 +54,7 @@
   $effect(() => breakpoint.connect(window, mediaQueries));
 </script>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`grid-row-prefix:${componentPrefix}`} />{/if}<div {...rest} bind:this={nativeElement} dir={config.direction}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`grid-row-prefix:${componentPrefix}`} />{/if}<div {...rest} bind:this={nativeElement} dir={dir ?? config.direction}
   data-ant-grid-row-prefix={hasCustomPrefix ? componentPrefix : undefined}
   class={[
       `${componentPrefix} ant-grid-css-var`,

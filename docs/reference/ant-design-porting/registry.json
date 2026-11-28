@@ -8125,6 +8125,22 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): native, intrinsic, custom and omitted roots, optional native ref forwarding, root ID and explicit overrides, full-store render callback, ref and model submit with the same mounted callbacks, native submit interception and reset callback order. Svelte uses a named render snippet, a nativeElement binding for custom hosts, and a stable FormRef that follows the active model and host. It retains the native name, generated field IDs, full-store submission snapshot, asynchronous submission guard and explicit submit callback overload. SSR, hydration, native and custom submit/reset events, model replacement and detachment are verified."
         },
         {
+          "id": "item-row-attributes",
+          "title": "FormItem Grid row attributes, events, and layout",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/FormItem.svelte",
+            "src/lib/grid/Row.svelte",
+            "tests/browser/fixtures/FormItemRowFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-item-row-observation.json",
+            "tests/browser/form/form-item-row.spec.ts",
+            "tests/package/form/form-item-row.ssr.test.ts"
+          ],
+          "note": "The styled Grid row receives native attributes, custom data, events, and Grid layout props. The outer item retains class, rootClassName, and style, and Form's scoping attributes keep priority. noStyle omits the row until hidden restores it. A local row dir takes precedence over the Svelte Grid direction default. Independent Ant Design 6.6.8 observations cover initial props, live updates with a custom prefix and RTL, row event targets, noStyle, and hidden. Public props and the rendered package are checked separately."
+        },
+        {
           "id": "dayjs-values",
           "title": "Immutable Dayjs|null и диапазоны без преобразования в строку",
           "state": "supported",

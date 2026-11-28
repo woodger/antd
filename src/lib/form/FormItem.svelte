@@ -24,7 +24,7 @@
   import Row from '../grid/Row.svelte';
   import Col from '../grid/Col.svelte';
   import NoFormItemColumns from './NoFormItemColumns.svelte';
-  import type { ColProps } from '../grid/grid.types';
+  import type { ColProps, RowProps } from '../grid/grid.types';
   import { resolveFormWrapperCol } from './form-columns.engine';
   import type {
     FormFeedbackIcons, FormItemControl, FormItemRenderContext, FormItemShouldUpdate,
@@ -46,7 +46,9 @@
     from './form-no-style.engine';
 
   /** Connects a Form model field to its label, validation status, and accessible error description. */
-  export interface FormItemProps extends FormItemValueAdapter {
+  export interface FormItemProps extends FormItemValueAdapter, Omit<
+    RowProps, 'children' | 'class' | 'style' | 'prefixCls' | 'nativeElement' | 'id' | 'hidden'
+  > {
     /** CSS prefix for Item and its parts. Empty and undefined values inherit from ConfigProvider independently of Form. */
     prefixCls?: string;
     /** Key or path from FormList. Without name, this is layout only, with no model binding, rules, or native name. */
@@ -170,9 +172,22 @@
     controlRef,
     rootClassName,
     style,
-    class: className = ''
+    class: className = '',
+    ...attributes
   }: FormItemProps | FormItemControlProps | FormItemRenderProps = $props();
 
+  const rowAttributes = $derived.by(() => {
+    const row = { ...attributes };
+    // Keep Form's private and retired props out of the rendered Grid row.
+    for (const name of [
+      '_internalItemRender', 'fieldKey', 'id', 'isListField', 'labelWrap', 'requiredMark',
+      'className', 'nativeElement'
+    ]) {
+      Reflect.deleteProperty(row, name);
+    }
+
+    return row;
+  });
   const form = useForm();
   const config = useConfig();
   const designTokens = useDesignTokenContext();
@@ -629,7 +644,8 @@
       (withVisibleHelp ?? Boolean(errors.length || warnings.length))
         && `${componentPrefix}-item-with-help`
     ]} style={itemStyle}>
-    <Row {...prefixAttributes} class={[`${componentPrefix}-item-row`, componentTheme.className].filter(Boolean).join(' ')}>
+    <Row {...rowAttributes} {...prefixAttributes}
+      class={[`${componentPrefix}-item-row`, componentTheme.className].filter(Boolean).join(' ')}>
       {#if hasLabel}
         <Col {...prefixAttributes} {...resolvedLabelCol} class={[
           `${componentPrefix}-item-label`,

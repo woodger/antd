@@ -204,6 +204,11 @@
     "root": "form-item-messages-fixture"
   },
   {
+    "id": "form-item-row",
+    "module": "./FormItemRowFixtures.svelte",
+    "root": "form-item-row-fixture"
+  },
+  {
     "id": "form-initial-values",
     "module": "./FormInitialValuesFixtures.svelte",
     "root": "form-initial-values-fixture"

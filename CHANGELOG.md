@@ -57,6 +57,7 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 - The public `UploadDragger` declarations pass strict TypeScript checking.
 - TypeScript resolves stylesheet imports with strict side-effect import checking.
 - Form includes CSS scroll margins when scrolling to a field or to the first error.
+- FormItem passes native attributes, events, and Grid settings to the inner row.
 
 ## [0.1.1]
 
