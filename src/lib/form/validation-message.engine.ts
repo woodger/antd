@@ -1,12 +1,57 @@
-// Collects Form messages from locales and settings. At first, the positional arguments, then the
-// variable rules.
+// Resolves rule messages, formats string templates, and projects model metadata.
+// The message list owns snippet rendering.
 import type { FormValues, ValidationRule } from './validation.engine';
-import type { ValidateMessages } from './validation-messages.types';
+import type {
+  FormFieldMessages, FormValidationMessage, ValidateMessages
+} from './validation-messages.types';
 
 export interface ValidationMessageContext {
   readonly name?: string;
   readonly variables?: Readonly<Record<string, string>>;
   readonly messages?: ValidateMessages;
+}
+
+/** Preserves the string API without evaluating a snippet outside component rendering. */
+export function validationMessageTexts(messages: readonly FormValidationMessage[]): readonly string[] {
+  if (messages.every(message => typeof message === 'string')) {
+    return messages;
+  }
+
+  return messages.map(message => {
+    if (typeof message === 'function') return '';
+    return message !== null && typeof message === 'object' ? message.text : message;
+  });
+}
+
+/** Exposes the full list only when the text projection omits rendered content. */
+export function richValidationMessages(messages: readonly FormValidationMessage[]) {
+  const hasContent = messages.some(message => typeof message === 'function'
+    || message !== null && typeof message === 'object');
+  return hasContent ? messages : undefined;
+}
+
+/** Copies message records at model boundaries while retaining the original snippet. */
+export function copyValidationMessages(messages: readonly FormValidationMessage[]) {
+  return Array.from(messages, message => {
+    if (message === null || typeof message !== 'object') return message;
+    return { text: message.text, content: message.content };
+  });
+}
+
+/** Detaches field snapshots and keeps their string-only shape for ordinary messages. */
+export function snapshotValidationMessages(
+  errors: readonly FormValidationMessage[] = [],
+  warnings: readonly FormValidationMessage[] = []
+): FormFieldMessages & { errors: string[]; warnings: string[] } {
+  const errorMessages = richValidationMessages(errors);
+  const warningMessages = richValidationMessages(warnings);
+
+  return {
+    errors: [...validationMessageTexts(errors)],
+    warnings: [...validationMessageTexts(warnings)],
+    ...(errorMessages && { errorMessages: copyValidationMessages(errorMessages) }),
+    ...(warningMessages && { warningMessages: copyValidationMessages(warningMessages) })
+  };
 }
 
 /** Locale and ConfigProvider unite groups; Form replaces their top-level spread separately. */
@@ -44,7 +89,7 @@ export function resolveValidationMessage<Values extends FormValues>(
   path: string | readonly [string, string],
   fallback: string,
   args: readonly unknown[] = [context?.name]
-): string {
+): FormValidationMessage {
   if (rule.message !== undefined) {
     return rule.message;
   }
@@ -91,11 +136,11 @@ export function resolveValidationMessage<Values extends FormValues>(
 
 /** rc-form single-pass substitution. A backslash preserves the literal ${variable}. */
 export function formatValidationMessages<Values extends FormValues>(
-  messages: readonly string[],
+  messages: readonly FormValidationMessage[],
   rule: ValidationRule<Values>,
   context?: ValidationMessageContext
-): readonly string[] {
-  if (!messages.some(message => message.includes('${'))) {
+): readonly FormValidationMessage[] {
+  if (!messages.some(message => typeof message === 'string' && message.includes('${'))) {
     return messages;
   }
 
@@ -108,7 +153,8 @@ export function formatValidationMessages<Values extends FormValues>(
     ...context?.variables
   };
 
-  return messages.map(message => message.replace(/\\?\$\{\w+\}/g, substituteVariable));
+  return messages.map(message => typeof message === 'string'
+    ? message.replace(/\\?\$\{\w+\}/g, substituteVariable) : message);
 
   // Substitutes only the context's own variables. A backslash preserves the literal.
   function substituteVariable(placeholder: string) {

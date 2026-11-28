@@ -7848,6 +7848,11 @@
         "tests/browser/fixtures/form-message-variables-cases.ts",
         "tests/browser/fixtures/ant-design-form-message-variables-reference.json",
         "tests/package/form/form-message-variables.ssr.test.ts",
+        "src/lib/form/form-rich-validation.test.ts",
+        "tests/browser/fixtures/FormRichValidationFixtures.svelte",
+        "tests/browser/fixtures/ant-design-form-rich-validation-reference.json",
+        "tests/browser/form/form-rich-validation.spec.ts",
+        "tests/package/form/form-rich-validation.ssr.test.ts",
         "src/lib/form/validation-messages.types.ts",
         "src/lib/form/form-validate-messages.test.ts",
         "tests/browser/form/form-validate-messages.spec.ts",
@@ -9070,6 +9075,29 @@
             "tests/package/form/form-message-variables.ssr.test.ts"
           ],
           "note": "Строковые rule.message и результаты native validator поддерживают однократную подстановку ${label}/${name}, rule aliases min/max/len/type/required/pattern/enum и messageVariables readonly Record<string,string>. Строковый label используется без normalization, иначе String(name); programmatic model без Item использует dot path. Name вложенного правила включает literal child key, aliases принадлежат child rule; label и явные variables наследуются от Item. Явные own variables перекрывают defaults/aliases, unknown даёт undefined, backslash экранирует placeholder; replacement не обрабатывается повторно. Контекст фиксируется до debounce/async и обновляется при следующей validation. Native ordinary messages, русские defaults/first-error, validator(value,values), metadata setFields и submit errors сохранены; manual errors остаются literal. Двадцать два unmodified UMD-состояния фиксируют aliases, rich/empty/null/numeric labels, array/zero NamePath, enum/pattern, escaping, nested object/array и inherited names. Source ошибочно теряет label имени 0, использует inherited constructor/toString и параметры root rule для object child; Native исправляет эти случаи, raw errors сохранены. Reactive props, async/debounce capture, warning channels, nested cycles и публичный SSR проверяются; ValidateMessages поддерживается отдельной feature. Новых npm dependencies и runtime React нет."
+        },
+        {
+          "id": "rich-validation-messages",
+          "title": "Markup in Form rule messages and field metadata",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/validation-message.engine.ts",
+            "src/lib/form/validation-messages.types.ts",
+            "src/lib/form/validation.engine.ts",
+            "src/lib/form/validation-nested.engine.ts",
+            "src/lib/form/form.model.svelte.ts",
+            "src/lib/form/FormItemMessages.svelte",
+            "src/lib/form/FormList.svelte",
+            "src/lib/form/form-rich-validation.test.ts",
+            "tests/browser/fixtures/FormRichValidationFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-rich-validation-reference.json",
+            "tests/browser/form/form-rich-validation.spec.ts",
+            "tests/browser/form/form-item-messages-hydration.spec.ts",
+            "tests/package/form/form-rich-validation.ssr.test.ts"
+          ],
+          "note": "The verified Ant Design 6.6.8 UMD reports React elements in quiet validation, failed submission, stored errors and warnings, and setFields. It renders nested noStyle markup in the owning item while the child description ID is unresolved. Svelte uses its existing association to the owning description and keeps help as the fallback for an empty list. Rules accept snippets with optional explicit text in a record. Field metadata preserves the existing string lists and exposes the complete rich lists only when present. FormItem and its noStyle collector, FormList, controlled field snapshots, status, and feedback use the same stored messages. SSR and hydration cover actual markup and descriptions. Locale template functions and custom validator return types keep their text contract."
         },
         {
           "id": "validate-messages",

@@ -1,6 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { NamePath } from './form-store.engine';
 import type { ValidationRule } from './validation.engine';
+import type { FormFieldMessages, FormValidationMessage } from './validation-messages.types';
 
 /** The index sets the current path, the key preserves an instance of the string when reshuffled. */
 export interface FormListFieldData {
@@ -16,7 +17,7 @@ export interface FormListOperation {
   move(from: number, to: number): void;
 }
 
-export interface FormListMeta {
+export interface FormListMeta extends FormFieldMessages {
   errors: readonly string[];
   warnings: readonly string[];
 }
@@ -24,7 +25,7 @@ export interface FormListMeta {
 /** The list rule uses the previous Svelte validator(value, values), only custom validation. */
 export interface FormListRule {
   validator: NonNullable<ValidationRule['validator']>;
-  message?: string;
+  message?: FormValidationMessage;
   /** Warning is displayed in meta.warnings and does not block submit. */
   warningOnly?: boolean;
   /** Participates only in these control events when the list is edited. */

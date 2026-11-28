@@ -8,13 +8,17 @@ import { test, expect } from '../test';
 
 const profiles = [
   { label: 'Title', text: 'Text', description: 'Alpha Beta Warning More details',
-    prefix: 'probe-form', nested: false },
+    prefix: 'probe-form', kind: 'field' as const },
   { label: 'first', text: 'Alpha', description: 'Invalid',
-    prefix: 'ant-form', nested: true }
+    prefix: 'ant-form', kind: 'nested' as const },
+  { label: /\bName$/, text: 'Ada', description: 'Enter a name Keep it concise',
+    prefix: 'ant-form', kind: 'rich' as const }
 ];
 
 for (const profile of profiles) {
-  const name = profile.nested ? 'messages from a noStyle child' : 'messages for the field';
+  const rich = profile.kind === 'rich';
+  const name = rich ? 'rich messages' : profile.kind === 'nested'
+    ? 'messages from a noStyle child' : 'messages for the field';
   test(`FormItem hydrates ${name} with the existing editor and description`, async ({ page }) => {
     const cacheDir = await mkdtemp(join(tmpdir(), 'antd-form-item-messages-hydration-'));
     const server = await createServer({
@@ -26,7 +30,7 @@ for (const profile of profiles) {
     try {
       const fixture = new URL('../fixtures/form-item-messages-hydration.server.ts', import.meta.url);
       const { renderFormItemMessages } = await server.ssrLoadModule(fileURLToPath(fixture));
-      const { head, body } = renderFormItemMessages(profile.nested);
+      const { head, body } = renderFormItemMessages(profile.kind);
       await page.goto('/tree-select-surface-hydration.html');
       await page.evaluate(({ head, body }) => {
         const target = document.getElementById('root');
@@ -38,7 +42,10 @@ for (const profile of profiles) {
         target.innerHTML = body;
       }, { head, body });
       const input = page.getByRole('textbox', { name: profile.label, exact: true });
-      const holder = page.locator(`.${profile.prefix}-item-explain-connected`);
+      const holderSelector = `.${profile.prefix}-item-explain-connected`;
+      const holder = page.locator(rich ? `.rich-name-item ${holderSelector}` : holderSelector);
+      const message = rich ? holder.locator('strong[data-message="rich-error"]') : undefined;
+      const renderedMessage = await message?.elementHandle();
       await expect(input).toHaveAccessibleDescription(profile.description);
       await input.focus();
       await input.evaluate((element: HTMLInputElement) => element.setSelectionRange(1, 3));
@@ -55,7 +62,12 @@ for (const profile of profiles) {
       }))).toEqual({ sameEditor: true, selection: [1, 3] });
       expect(await holder.evaluate(element => element === window.formItemMessagesHydration?.holder))
         .toBe(true);
-      await expect(page.locator(`.${profile.prefix}-item-margin-offset`)).toHaveCount(1);
+      if (message) {
+        expect(await message.evaluate((element, previous) => element === previous, renderedMessage))
+          .toBe(true);
+      }
+      const offset = `.${profile.prefix}-item-margin-offset`;
+      await expect(page.locator(rich ? `.rich-name-item ${offset}` : offset)).toHaveCount(1);
 
       await page.evaluate(() => window.formItemMessagesHydration?.dispose());
 

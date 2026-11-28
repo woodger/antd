@@ -1,4 +1,5 @@
 import type { RenderEmptyContent } from '../types';
+import type { FormValidationMessage } from './validation-messages.types';
 
 /** Visual field/help status; '' disables metadata FormItem automatic status. */
 export type FormValidateStatus = 'success' | 'warning' | 'error' | 'validating' | '';
@@ -11,8 +12,8 @@ export interface FormErrorListProps {
   help?: RenderEmptyContent;
   /** There is no color class without a help class; errors/warnings set their status themselves. */
   helpStatus?: FormValidateStatus;
-  errors?: readonly RenderEmptyContent[];
-  warnings?: readonly RenderEmptyContent[];
+  errors?: readonly (RenderEmptyContent | FormValidationMessage)[];
+  warnings?: readonly (RenderEmptyContent | FormValidationMessage)[];
   class?: string;
   /** After the appearance/hidden; is not called for the original blank list and after unmount. */
   onVisibleChanged?: (visible: boolean) => void;

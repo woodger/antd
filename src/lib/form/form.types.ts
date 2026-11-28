@@ -10,10 +10,10 @@ import type { FormValues } from './validation.engine';
 import type { ComponentSize, RenderEmptyContent, Variant } from '../types';
 import type { Options, ScrollAction } from '../vendor/compute-scroll-into-view';
 import type { TooltipProps } from '../tooltip/tooltip.types';
-import type { ValidateMessages } from './validation-messages.types';
+import type { FormFieldMessages, ValidateMessages } from './validation-messages.types';
 import type { FormValidateStatus } from './form-error-list.types';
 
-export interface FormFeedbackInfo {
+export interface FormFeedbackInfo extends FormFieldMessages {
   status: FormValidateStatus;
   errors: readonly string[];
   warnings: readonly string[];

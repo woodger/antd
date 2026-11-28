@@ -44,6 +44,7 @@
   import { useFormItemMeta, type FormItemMetaContext } from './form-item-meta-context';
   import { mergeFormItemMessages, type FormItemMessages as ReportedFormMessages }
     from './form-no-style.engine';
+  import { richValidationMessages, validationMessageTexts } from './validation-message.engine';
 
   /** Connects a Form model field to its label, validation status, and accessible error description. */
   export interface FormItemProps extends FormItemValueAdapter, Omit<
@@ -253,8 +254,12 @@
   let requiredMark = $derived(form?.requiredMark ?? true);
   let tooltipOptions = $derived(resolveFormTooltip(tooltip, form?.tooltip));
   let optionalText = $derived(config.locale.Form?.optional || enUS.Form.optional);
-  let errors = $derived(hasName ? form?.getFieldError(path) ?? [] : []);
-  let warnings = $derived(hasName ? form?.getFieldWarning(path) ?? [] : []);
+  const errorContent = $derived(hasName ? form?.getFieldMessages(path, 'errors') ?? [] : []);
+  const warningContent = $derived(hasName ? form?.getFieldMessages(path, 'warnings') ?? [] : []);
+  const errors = $derived(validationMessageTexts(errorContent));
+  const warnings = $derived(validationMessageTexts(warningContent));
+  const errorMessages = $derived(richValidationMessages(errorContent));
+  const warningMessages = $derived(richValidationMessages(warningContent));
   let meta = $derived(hasName ? form?.getFieldMeta(path) : undefined);
   let ownStatus = $derived(resolveFormStatus({
     validateStatus, errors, warnings, touched: meta?.touched, validating: meta?.validating,
@@ -267,7 +272,11 @@
       return { hasFeedback: enabled };
     }
     const icons = typeof hasFeedback === 'object' && hasFeedback.icons || form?.feedbackIcons;
-    const icon = icons?.({ status: ownStatus, errors, warnings })?.[ownStatus];
+    const icon = icons?.({
+      status: ownStatus, errors, warnings,
+      ...(errorMessages && { errorMessages }),
+      ...(warningMessages && { warningMessages })
+    })?.[ownStatus];
     return { hasFeedback: enabled, icon: icon === false ? undefined
       : { status: ownStatus, prefixCls: componentPrefix, prefixScope, content: icon || undefined } };
   });
@@ -292,7 +301,7 @@
     void reportVersion;
     return [...reportedFields];
   });
-  let messages = $derived(mergeFormItemMessages(errors, warnings, reports));
+  let messages = $derived(mergeFormItemMessages(errorContent, warningContent, reports));
   let hasReportedMessages = $derived(reports.some(field => field.errors.length || field.warnings.length));
   let descriptionId = $derived(hasLayout && (hasName || hasReportedMessages)
     && (messages.errors.length || messages.warnings.length || hasHelp)
@@ -343,8 +352,8 @@
   let removeReport: (() => void) | undefined;
   const report: ReportedFormMessages = {
     get name() { return path; },
-    get errors() { return errors; },
-    get warnings() { return warnings; }
+    get errors() { return errorContent; },
+    get warnings() { return warningContent; }
   };
   const collector: FormItemMetaContext = {
     get describedBy() { return descriptionId; },
@@ -516,7 +525,9 @@
   const itemStatus: FormItemStatus = {
     get status() { return status ?? ''; },
     get errors() { return errors; },
-    get warnings() { return warnings; }
+    get warnings() { return warnings; },
+    get errorMessages() { return errorMessages; },
+    get warningMessages() { return warningMessages; }
   };
 
   function updateRenderContent(

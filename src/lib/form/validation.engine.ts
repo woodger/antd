@@ -5,12 +5,14 @@ import {
 } from './validation-type.engine';
 import { matchesValidationPattern } from './validation-format.engine';
 import type { FormInstance } from './form.model.svelte';
+import type { FormFieldMessages, FormValidationMessage } from './validation-messages.types';
 import {
   collectValidationMessages, validateNestedRule,
   type ValidationMessages, type ValidationAncestor
 } from './validation-nested.engine';
 import {
-  formatValidationMessages, resolveValidationMessage, type ValidationMessageContext
+  formatValidationMessages, resolveValidationMessage, validationMessageTexts,
+  type ValidationMessageContext
 } from './validation-message.engine';
 export type { ValidationRuleType } from './validation-type.engine';
 
@@ -40,7 +42,8 @@ export interface ValidationRule<Values extends FormValues = FormValues> {
   fields?: Readonly<Record<string, ValidationRule<Values> | readonly ValidationRule<Values>[]>>;
   /** The rule of array elements; for object is applied to keys without its own fields rule. */
   defaultField?: ValidationRule<Values>;
-  message?: string;
+  /** Text or a Svelte snippet rendered when this rule reports a failure. */
+  message?: FormValidationMessage;
   /** Synchronously converts the value only for this rule, without recording the result in Form. */
   transform?: (value: FormValue) => FormValue;
   /** An explicit type replaces built-in validation while retaining the native value/values signature. */
@@ -77,7 +80,7 @@ export function resolveValidationRules<Values extends FormValues>(
 export type FieldErrors<Values extends FormValues> = Partial<Record<FieldName<Values>, string[]>>;
 
 /** Field errors retain the original path segments, including the difference between strings and numbers. */
-export interface FieldError {
+export interface FieldError extends FormFieldMessages {
   name: (string | number)[];
   errors: string[];
   warnings: string[];
@@ -90,7 +93,7 @@ export async function validateValue<Values extends FormValues>(
   rules: readonly ValidationRule<Values>[]
 ): Promise<string[]> {
   const result = await validateFieldValue(value, values, rules);
-  return result.errors;
+  return [...validationMessageTexts(result.errors)];
 }
 
 // Begins to check the field without the state of recursion on the nested values.
@@ -100,7 +103,7 @@ export async function validateFieldValue<Values extends FormValues>(
   rules: readonly ValidationRule<Values>[],
   validateFirst: boolean | 'parallel' = false,
   context?: ValidationMessageContext
-): Promise<{ errors: string[]; warnings: string[] }> {
+): Promise<ValidationMessages> {
   return validateRules(value, values, rules, validateFirst, undefined, context);
 }
 
@@ -118,7 +121,7 @@ async function validateRules<Values extends FormValues>(
   );
 
   if (validateFirst === true) {
-    let warnings: string[] | undefined;
+    let warnings: FormValidationMessage[] | undefined;
     for (const rule of ordered) {
       if (rule.warningOnly && warnings) {
         return { errors: [], warnings };
@@ -139,8 +142,8 @@ async function validateRules<Values extends FormValues>(
   }
 
   const results = await Promise.all(checks);
-  const errors: string[] = [];
-  const warnings: string[] = [];
+  const errors: FormValidationMessage[] = [];
+  const warnings: FormValidationMessage[] = [];
   results.forEach((messages) => {
     errors.push(...messages.errors);
     warnings.push(...messages.warnings);
@@ -158,7 +161,7 @@ function firstParallelResult(
   return new Promise((resolve, reject) => {
     let remaining = checks.length;
     let blocking = ordered.filter((rule) => !rule.warningOnly).length;
-    let warning: string[] | undefined;
+    let warning: FormValidationMessage[] | undefined;
 
     checks.forEach((check, index) => {
       check.then((messages) => {
@@ -235,8 +238,8 @@ async function validatePrimitiveRule<Values extends FormValues>(
   values: Readonly<Values>,
   rule: ValidationRule<Values>,
   context?: ValidationMessageContext
-): Promise<string[]> {
-  const messages: string[] = [];
+): Promise<FormValidationMessage[]> {
+  const messages: FormValidationMessage[] = [];
   const type = rule.type;
   if (type && rule.validator) {
     return validateCustomRule(transformedValue, values, rule, context);
@@ -358,8 +361,8 @@ async function validateCustomRule<Values extends FormValues>(
   values: Readonly<Values>,
   rule: ValidationRule<Values>,
   context?: ValidationMessageContext
-): Promise<string[]> {
-  const messages: string[] = [];
+): Promise<FormValidationMessage[]> {
+  const messages: FormValidationMessage[] = [];
   if (rule.validator) {
     try {
       const message = await rule.validator(value, values);

@@ -1,9 +1,10 @@
 import { getContext, setContext } from 'svelte';
 import type { FormValidateStatus } from './form-error-list.types';
+import type { FormFieldMessages } from './validation-messages.types';
 import { provideFormFeedback } from './form-feedback-context';
 
 /** Jet state of the nearest FormItem; errors and warnings are read-only. */
-export interface FormItemStatus {
+export interface FormItemStatus extends Readonly<FormFieldMessages> {
   /** '' inside pristine FormItem; undefined outside Item and abroad invested Form. */
   readonly status: FormValidateStatus | undefined;
   readonly errors: readonly string[];
@@ -40,6 +41,8 @@ export function useFormItemStatus(): FormItemStatus {
   return {
     get status() { return context.status; },
     get errors() { return context.errors ?? errors; },
-    get warnings() { return context.warnings ?? warnings; }
+    get warnings() { return context.warnings ?? warnings; },
+    get errorMessages() { return context.errorMessages; },
+    get warningMessages() { return context.warningMessages; }
   };
 }

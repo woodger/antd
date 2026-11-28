@@ -12,6 +12,8 @@ import type { NamePath } from './form-store.engine';
 import type { Variant } from '../types';
 import { useConfig } from '../config-provider/config-context';
 import type { FormRule, FormValues } from './validation.engine';
+import type { FormValidationMessage } from './validation-messages.types';
+import type { ValidationMessages } from './validation-nested.engine';
 
 export interface FormContext {
   readonly model: FormInstance<FormValues>;
@@ -33,8 +35,7 @@ export interface FormContext {
   readonly validateTrigger?: FormValidateTrigger;
   readonly preserve?: boolean;
   readonly resetKey?: object;
-  getFieldError(name: NamePath): readonly string[];
-  getFieldWarning(name: NamePath): readonly string[];
+  getFieldMessages(name: NamePath, kind: keyof ValidationMessages): readonly FormValidationMessage[];
   getFieldMeta(name: NamePath): (Pick<FormFieldMeta, 'touched' | 'validating'>
     & Partial<Pick<FormFieldMeta, 'validated'>>) | undefined;
   isFieldRequired(name: NamePath): boolean;

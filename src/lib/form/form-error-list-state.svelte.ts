@@ -1,16 +1,17 @@
 // Retains Form messages across brief validation gaps and owns the lifetime of leaving entries.
 import { onDestroy, onMount, untrack } from 'svelte';
-import type { RenderEmptyContent } from '../types';
 import type { FormErrorListProps } from './form-error-list.types';
 import {
   buildFormErrorList, reconcileFormErrorList, type FormErrorMotionEntity
 } from './form-error-list.engine';
 
+type ErrorListMessages = NonNullable<FormErrorListProps['errors']>;
+
 /** Clears after 10 ms. Connected fields can expose nonempty messages in the current update. */
 export function useDelayedFormMessages(
-  read: () => readonly RenderEmptyContent[], deferNonempty: boolean
+  read: () => ErrorListMessages, deferNonempty: boolean
 ) {
-  let retained = $state.raw<readonly RenderEmptyContent[]>(deferNonempty ? untrack(read) : []);
+  let retained = $state.raw<ErrorListMessages>(deferNonempty ? untrack(read) : []);
 
   $effect(() => {
     const next = [...read()];

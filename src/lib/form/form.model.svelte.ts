@@ -9,8 +9,12 @@ import { focusFormField, getFormFieldElement, scrollFormField } from './form-fie
 import { readFormControlValue } from './form-control.engine';
 import type { FormStoreListener, FormStoreUpdate } from './form-update.engine';
 import type { FormScrollOptions, FormValidateTrigger } from './form.types';
-import type { ValidateMessages } from './validation-messages.types';
-import { mergeValidationMessages } from './validation-message.engine';
+import type {
+  FormFieldMessages, FormValidationMessage, ValidateMessages
+} from './validation-messages.types';
+import {
+  copyValidationMessages, mergeValidationMessages, snapshotValidationMessages, validationMessageTexts
+} from './validation-message.engine';
 import {
   containsFormPath,
   copyFormValue,
@@ -35,6 +39,7 @@ import {
   type FormValues,
   type ValidationRule
 } from './validation.engine';
+import type { ValidationMessages } from './validation-nested.engine';
 
 export type SubmissionResult<Values extends FormValues> =
   | { status: 'success'; }
@@ -53,7 +58,7 @@ export interface FormValidateOptions {
 }
 
 /** The binding state; the name retains the path segment types. */
-export interface FormFieldMeta {
+export interface FormFieldMeta extends FormFieldMessages {
   touched: boolean;
   validating: boolean;
   errors: readonly string[];
@@ -75,7 +80,7 @@ export interface FormGetFieldsValueConfig {
 }
 
 /** Missing properties are saved; metadata updates only known bindings. */
-export interface FormFieldData {
+export interface FormFieldData extends FormFieldMessages {
   name: NamePath;
   value?: unknown;
   touched?: boolean;
@@ -182,8 +187,8 @@ interface StoredField {
   registrationOrder?: number;
   initialValueOrder?: number;
   metaCache?: FormFieldMeta;
-  errors?: string[];
-  warnings?: string[];
+  errors?: FormValidationMessage[];
+  warnings?: FormValidationMessage[];
   touched: boolean;
   dirty: boolean;
   validating: boolean;
@@ -323,10 +328,11 @@ export function createForm<Values extends FormValues>({
 
   // Copies the arrays so that the listener does not change the metadata in the repository.
   function fieldMeta(field: StoredField, path = fieldPath(field)): FormFieldMeta {
+    const messages = snapshotValidationMessages(field.errors, field.warnings);
+
     return {
       name: [...path], touched: field.touched, validating: field.validating,
-      validated: field.validated, errors: [...(field.errors ?? [])],
-      warnings: [...(field.warnings ?? [])]
+      validated: field.validated, ...messages
     };
   }
 
@@ -451,23 +457,33 @@ export function createForm<Values extends FormValues>({
     }
   }
 
-  function rootErrors(entries: readonly FieldError[]): FieldErrors<Values> {
+  function rootErrors(
+    entries: readonly { name: FieldError['name']; errors: readonly string[] }[]
+  ): FieldErrors<Values> {
     return Object.fromEntries(entries.filter((field) => field.name.length === 1)
       .map((field) => [field.name[0], [...field.errors]])) as FieldErrors<Values>;
   }
 
   function getFieldsError(names?: readonly NamePath[]): FieldError[] {
-    return names
-      ? names.map((name) => ({
-        name: formNamePath(name),
-        errors: [...(findField(name)?.errors ?? [])],
-        warnings: [...(findField(name)?.warnings ?? [])]
-      }))
-      : fields.map((field) => ({
-        name: fieldPath(field),
-        errors: [...(field.errors ?? [])],
-        warnings: [...(field.warnings ?? [])]
-      }));
+    if (names) {
+      return names.map(name => {
+        const path = formNamePath(name);
+        const field = findField(path);
+        const messages = snapshotValidationMessages(field?.errors, field?.warnings);
+        return { name: path, ...messages };
+      });
+    }
+
+    return fields.map(field => ({
+      name: fieldPath(field),
+      ...snapshotValidationMessages(field.errors, field.warnings)
+    }));
+  }
+
+  // Reads one message list so error and warning accessors keep separate reactive dependencies.
+  function getFieldMessages(name: NamePath, kind: keyof ValidationMessages) {
+    const field = findField(name);
+    return field?.[kind] ?? [];
   }
 
   function isFieldTouched(name: NamePath): boolean {
@@ -873,14 +889,14 @@ export function createForm<Values extends FormValues>({
         field.validating = false;
 
         if (valuesRevision === snapshotRevision && sameFormPath(path, fieldPath(field))) {
-          field.errors = messages.errors;
-          field.warnings = messages.warnings;
+          field.errors = copyValidationMessages(messages.errors);
+          field.warnings = copyValidationMessages(messages.warnings);
           field.validated = true;
         }
         notifyFieldMeta(field);
       }
 
-      return { name: path, ...messages };
+      return { name: path, ...snapshotValidationMessages(messages.errors, messages.warnings) };
     }
 
     // A pending timer or frame cannot continue with another value or a reassigned list row.
@@ -1120,8 +1136,18 @@ export function createForm<Values extends FormValues>({
           field.validating = !!update.validating;
           field.validated = !field.validating;
         }
-        if ('errors' in update) field.errors = [...(update.errors ?? [])];
-        if ('warnings' in update) field.warnings = [...(update.warnings ?? [])];
+        if ('errorMessages' in update) {
+          field.errors = copyValidationMessages(update.errorMessages ?? []);
+        }
+        else if ('errors' in update) {
+          field.errors = [...(update.errors ?? [])];
+        }
+        if ('warningMessages' in update) {
+          field.warnings = copyValidationMessages(update.warningMessages ?? []);
+        }
+        else if ('warnings' in update) {
+          field.warnings = [...(update.warnings ?? [])];
+        }
         field.dirty = true;
         notifyFieldMeta(field);
       }
@@ -1342,7 +1368,10 @@ export function createForm<Values extends FormValues>({
     },
     get errors() {
       return rootErrors(fields.filter((field) => field.errors !== undefined)
-        .map((field) => ({ name: fieldPath(field), errors: field.errors ?? [], warnings: [] })));
+        .map(field => ({
+          name: fieldPath(field),
+          errors: validationMessageTexts(field.errors ?? [])
+        })));
     },
     get isSubmitting() {
       return isSubmitting;
@@ -1359,13 +1388,11 @@ export function createForm<Values extends FormValues>({
     getFieldsError,
     // An unknown path returns an empty list, like a field without errors.
     getFieldError(name) {
-      const field = findField(name);
-      return field?.errors ?? [];
+      return validationMessageTexts(getFieldMessages(name, 'errors'));
     },
     // Warnings are read separately from the errors that block submitted.
     getFieldWarning(name) {
-      const field = findField(name);
-      return field?.warnings ?? [];
+      return validationMessageTexts(getFieldMessages(name, 'warnings'));
     },
     getFieldInstance<Instance = unknown>(name: NamePath) {
       const registration = controlRegistration(name);
@@ -1587,6 +1614,7 @@ export function createForm<Values extends FormValues>({
     },
     setControlledFields: (updates) => applyFieldUpdates(updates, true),
     getWatchValues: () => watchValues,
+    getFieldMessages,
     getFieldMeta(name) {
       const field = findField(name);
 

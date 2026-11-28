@@ -5,7 +5,9 @@
   import { useForm } from './form-context';
   import { buildFormErrorList } from './form-error-list.engine';
   import { useDelayedFormMessages, useFormErrorList } from './form-error-list-state.svelte';
+  import type { FormValidationMessage } from './validation-messages.types';
   import FormMessageMotion from './FormMessageMotion.svelte';
+  import NoFormItemBinding from './NoFormItemBinding.svelte';
 
   let {
     prefix, scope, messages, extraId, help, extra, item, itemClass, itemStyle,
@@ -14,8 +16,8 @@
     prefix: string;
     scope?: string;
     messages: {
-      readonly errors: readonly string[];
-      readonly warnings: readonly string[];
+      readonly errors: readonly FormValidationMessage[];
+      readonly warnings: readonly FormValidationMessage[];
       readonly descriptionId?: string;
     };
     extraId?: string;
@@ -120,7 +122,9 @@
               entry.status && `${prefix}-item-explain-${entry.status}`, form?.classNames?.helpItem
             ]}
             style={form?.styles?.helpItem}
-          >{entry.content}</FormMessageMotion>
+          >{#if typeof entry.content === 'function'}
+            <NoFormItemBinding>{@render entry.content()}</NoFormItemBinding>
+          {:else}{entry.content}{/if}</FormMessageMotion>
         {/each}
       </FormMessageMotion>
     {/if}

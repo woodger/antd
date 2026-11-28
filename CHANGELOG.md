@@ -49,6 +49,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   callbacks for imperative submission.
 - FormItem animates connected validation messages and reserves space through
   their exit while the field description follows current validation state.
+- Form rules accept Svelte snippets for errors and warnings. Validation
+  results expose the original messages alongside their string metadata.
 
 ### Fixed
 

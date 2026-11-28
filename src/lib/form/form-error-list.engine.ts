@@ -1,6 +1,7 @@
 // Builds Form message strings and keeps deleted strings until motion ends.
 import type { FormErrorListProps, FormValidateStatus } from './form-error-list.types';
 import type { RenderEmptyContent } from '../types';
+import type { FormValidationMessage } from './validation-messages.types';
 
 export interface FormErrorEntity {
   key: string;
@@ -19,11 +20,14 @@ export function buildFormErrorList({
   // Forms a key on the prefix and content. The repeat counter is used after the construction of the
   // list.
   function entity(
-    content: RenderEmptyContent,
+    message: RenderEmptyContent | FormValidationMessage,
     prefix: string,
     index = 0,
     status?: FormValidateStatus
   ): FormErrorEntity {
+    const content = message !== null && typeof message === 'object'
+      && !Array.isArray(message) && 'content' in message ? message.content : message;
+
     return { content, key: typeof content === 'string' ? content : `${prefix}-${index}`, status };
   }
 

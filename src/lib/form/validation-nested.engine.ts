@@ -1,13 +1,14 @@
 // Bypasses the fields of nested object and array rules. Comparison of the rule and the reference
 // value in the chain of ancestors interrupts cycles.
 import type { FormValues, ValidationRule } from './validation.engine';
+import type { FormValidationMessage } from './validation-messages.types';
 import {
   formatValidationMessages, resolveValidationMessage, type ValidationMessageContext
 } from './validation-message.engine';
 
 export interface ValidationMessages {
-  errors: string[];
-  warnings: string[];
+  errors: FormValidationMessage[];
+  warnings: FormValidationMessage[];
 }
 
 export interface ValidationAncestor {
@@ -26,7 +27,7 @@ type ValidateChildren<Values extends FormValues> = (
 // warningOnly also translates into warnings the errors of child rules.
 export function collectValidationMessages<Values extends FormValues>(
   rule: ValidationRule<Values>,
-  own: readonly string[],
+  own: readonly FormValidationMessage[],
   children: readonly ValidationMessages[]
 ): ValidationMessages {
   if (rule.warningOnly) {
@@ -55,7 +56,7 @@ export async function validateNestedRule<Values extends FormValues>(
   value: unknown,
   original: unknown,
   rule: ValidationRule<Values>,
-  own: readonly string[],
+  own: readonly FormValidationMessage[],
   validate: ValidateChildren<Values>,
   ancestor?: ValidationAncestor,
   identity: object = rule,

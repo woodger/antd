@@ -4,7 +4,8 @@ import type { FormRule, FormValues } from './validation.engine';
 import type { FormFieldData, FormFieldMeta, FormInstance } from './form.model.svelte';
 import type { FormItemValueAdapter, FormProps, FormValidateTrigger } from './form.types';
 import type { FormStoreListener } from './form-update.engine';
-import type { ValidateMessages } from './validation-messages.types';
+import type { FormValidationMessage, ValidateMessages } from './validation-messages.types';
+import type { ValidationMessages } from './validation-nested.engine';
 
 /** Resolves a removed row field against the model that owned its registration. */
 export type FormRemovalPath = (
@@ -50,6 +51,7 @@ export interface FormHooks<Values extends FormValues> {
   subscribeStoreUpdates(listener: FormStoreListener): () => void;
   setControlledFields(updates: readonly FormFieldData[]): void;
   getWatchValues(): FormValueProjection<Values>;
+  getFieldMessages(name: NamePath, kind: keyof ValidationMessages): readonly FormValidationMessage[];
   getFieldMeta(name: NamePath): FormFieldMeta | undefined;
   handleFieldBlur(name: NamePath): void;
   handleFieldEvent(mountKey: symbol, event: string, args: readonly unknown[]): boolean;

@@ -8,7 +8,8 @@
 
 <div>
   {@render children?.()}
-  <output data-form-status-read={scope}>{JSON.stringify({
+  <output data-form-status-read={scope} data-form-rich-errors={state.errorMessages?.length}
+    data-form-rich-warnings={state.warningMessages?.length}>{JSON.stringify({
     status: state.status ?? null, errors: state.errors, warnings: state.warnings
   })}</output>
 </div>

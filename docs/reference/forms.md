@@ -733,7 +733,10 @@ wrapper and passes fields, operations, and list errors to children.
           <button type="button" onclick={() => remove(field.name)}>Delete</button>
         {/each}
         <div class="ant-form-item">
-          <FormErrorList errors={meta.errors} warnings={meta.warnings} />
+          <FormErrorList
+            errors={meta.errorMessages ?? meta.errors}
+            warnings={meta.warningMessages ?? meta.warnings}
+          />
         </div>
         <button type="button" onclick={() => add({ name: '' })}>Add</button>
       {/snippet}
@@ -761,8 +764,10 @@ indexes. Duplicates and absent indexes leave unrelated rows intact. Move
 moves a row with its key and ignores fractional indexes.
 
 List rules support custom `validator(value, values)`. Errors go to meta.errors,
-and warningOnly warnings go to meta.warnings. Validation that resolves after
-a row is removed or reset leaves the removed field's errors cleared.
+and warningOnly warnings go to meta.warnings. A rule can supply a text or
+[rich message](#rich-validation-messages), including when the validator rejects.
+Validation that resolves after a row is removed or reset leaves the removed
+field's errors cleared.
 
 A list's prefixCls sets the prefix of the nested FormErrorList and leaves
 neighboring FormItem prefixes alone. Empty or undefined inherits the
@@ -770,13 +775,15 @@ ConfigProvider prefix, ant-form by default.
 
 ## FormErrorList
 
-Pass the list's `meta.errors` and `meta.warnings` to FormErrorList, as in the
-preceding example. Add ant-form-item to the wrapper for message styles. With a
-custom prefix, use the matching `<prefix>-item`. FormErrorList presents
-messages without registering a field or changing form values.
+Pass the list's `meta.errorMessages ?? meta.errors` and
+`meta.warningMessages ?? meta.warnings` to FormErrorList. Add ant-form-item
+to the wrapper for message styles. With a custom prefix, use the matching
+`<prefix>-item`. FormErrorList presents messages without registering a field
+or changing form values.
 
-Errors precede warnings. Messages can be strings, numbers, nested arrays, and
-snippets. Any help value other than null or undefined replaces both lists,
+Errors precede warnings. Messages can be strings, numbers, nested arrays,
+snippets, and `{ text, content }` records. Any help value other than null or
+undefined replaces both lists,
 including false, 0, and the empty string. HelpStatus sets the status class.
 FieldId sets id to `${fieldId}_help`. Class adds a container class. The
 container is omitted when there are no messages.
@@ -972,7 +979,7 @@ Missing templates use the Russian defaults, including with built-in ruRU and enU
 ValidateMessage accepts a string or a zero-argument function that returns a string.
 The template runs only when its rule fails. Printf formatting (%s, %d, %j, %%)
 runs before `${variables}` substitution and receives the field path followed by
-rule parameters. Rule.message interprets only `${...}`. An invalid date uses
+rule parameters. String rule messages interpret only `${...}`. An invalid date uses
 types.date, and a timestamp range uses number. Date.format, date.parse, and
 date.invalid are available in the types and add no checks. The default template
 supplies a custom error without Error.message. String validator results and
@@ -983,6 +990,47 @@ the next run and leave old errors intact. SSR does not run validation.
 CreateForm without Form uses default messages. An undefined result or a
 throw from a template callback falls back to the regular message and keeps
 the field invalid.
+
+### Rich validation messages
+
+A rule's `message` accepts a string, a Svelte snippet, or a record with a
+snippet in `content` and plain text in `text`.
+
+```svelte
+{#snippet accountMessage()}
+  Choose an <a href="/accounts/help">account name</a>.
+{/snippet}
+
+<FormItem name="account" label="Account" rules={[
+  { required: true, message: { text: 'Choose an account name.', content: accountMessage } }
+]}>
+  <Input
+    value={form.values.account}
+    onValueChange={(value) => form.setFieldValue('account', value)}
+  />
+</FormItem>
+```
+
+The connected description renders the snippet. Controls inside it do not
+bind to the validated field. The same rules apply to warnings and to
+`noStyle` messages displayed by the nearest styled item.
+
+The model's `errors` and `warnings` remain arrays of strings. Each rich
+message contributes its explicit `text` or an empty string for a bare snippet.
+Substitution applies to plain rule messages. The record's text stays literal.
+
+Use `errorMessages` and `warningMessages` to access the original content
+alongside any strings in the same list. They are available on the entries
+returned by `getFieldsError()`, the `errorFields` on a validation failure,
+field snapshots, FormList metadata, `useFormItemStatus()`, and feedback icon
+callbacks. The corresponding list is present when it contains a rich message.
+An error from `validateFields({ validateOnly: true })` includes the same
+message metadata while the displayed messages stay unchanged.
+
+Set these lists through `setFields` or controlled `Form.fields`. Passing one
+overrides the corresponding string list, and an explicit `undefined` clears
+that list. Rich content supplied through a model can also render during SSR.
+[Ant Design 6.6.8 observations](../../tests/browser/fixtures/ant-design-form-rich-validation-reference.json)
 
 ### Validation order and delay
 

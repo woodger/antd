@@ -2,6 +2,7 @@ import { hydrate, tick, unmount } from 'svelte';
 import '@woodger/antd/styles.css';
 import FormItemMessagesFixtures from './FormItemMessagesFixtures.svelte';
 import FormNoStyleFixtures from './FormNoStyleFixtures.svelte';
+import FormRichValidationFixtures from './FormRichValidationFixtures.svelte';
 
 declare global {
   interface Window {
@@ -19,13 +20,32 @@ if (!target) {
 }
 
 const nested = Boolean(target.querySelector('#form-no-style-fixture'));
-const input = target.querySelector(nested ? 'input[aria-label="first"]' : '.motion-probe-item input');
-const holder = target.querySelector(nested ? '.ant-form-item-explain' : '.probe-form-item-explain');
-const fixture = nested ? hydrate(FormNoStyleFixtures, {
-  target, props: { initialCase: 'error', initialMetadata: true }, recover: false
-}) : hydrate(FormItemMessagesFixtures, {
-  target, props: { initialProfile: 'extra-and-prefix', initialMessages: true }, recover: false
-});
+const rich = Boolean(target.querySelector('#form-rich-validation-fixture'));
+const inputSelector = rich ? '.rich-name-item input'
+  : nested ? 'input[aria-label="first"]' : '.motion-probe-item input';
+const holderSelector = rich ? '.rich-name-item .ant-form-item-explain'
+  : nested ? '.ant-form-item-explain' : '.probe-form-item-explain';
+const input = target.querySelector(inputSelector);
+const holder = target.querySelector(holderSelector);
+const fixture = hydrateFixture(target);
 
 await tick();
 window.formItemMessagesHydration = { input, holder, dispose: () => unmount(fixture) };
+
+/** Uses the props that seeded the matching server fixture and surfaces any hydration mismatch. */
+function hydrateFixture(host: HTMLElement) {
+  if (rich) {
+    return hydrate(FormRichValidationFixtures, {
+      target: host, props: { initialMessages: true }, recover: false
+    });
+  }
+  if (nested) {
+    return hydrate(FormNoStyleFixtures, {
+      target: host, props: { initialCase: 'error', initialMetadata: true }, recover: false
+    });
+  }
+
+  return hydrate(FormItemMessagesFixtures, {
+    target: host, props: { initialProfile: 'extra-and-prefix', initialMessages: true }, recover: false
+  });
+}

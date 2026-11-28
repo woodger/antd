@@ -1,0 +1,314 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "chromium": "158.0.8127.36"
+  },
+  "quiet": [
+    {
+      "name": [
+        "name"
+      ],
+      "errors": [
+        {
+          "type": "strong",
+          "text": "Enter a name",
+          "marker": "rich-error",
+          "key": "error_0"
+        }
+      ]
+    }
+  ],
+  "afterQuiet": {
+    "errors": [
+      {
+        "name": [
+          "name"
+        ],
+        "errors": [],
+        "warnings": []
+      },
+      {
+        "name": [
+          "child"
+        ],
+        "errors": [],
+        "warnings": []
+      },
+      {
+        "name": [
+          "manual"
+        ],
+        "errors": [],
+        "warnings": []
+      }
+    ],
+    "dom": {
+      "invalid": null,
+      "describedBy": null,
+      "description": null,
+      "markers": [],
+      "itemMarkers": []
+    }
+  },
+  "diagnostics": [
+    {
+      "name": [
+        "name"
+      ],
+      "errors": [
+        {
+          "type": "strong",
+          "text": "Enter a name",
+          "marker": "rich-error",
+          "key": "error_0"
+        }
+      ]
+    },
+    {
+      "name": [
+        "child"
+      ],
+      "errors": [
+        {
+          "type": "a",
+          "text": "Read field details",
+          "marker": "rich-child",
+          "key": "error_0"
+        }
+      ]
+    },
+    {
+      "name": [
+        "manual"
+      ],
+      "errors": [
+        {
+          "type": "strong",
+          "text": "Enter a name",
+          "marker": "rich-error",
+          "key": "error_0"
+        }
+      ]
+    }
+  ],
+  "seen": {
+    "errors": [
+      {
+        "name": [
+          "name"
+        ],
+        "errors": [
+          {
+            "type": "strong",
+            "text": "Enter a name",
+            "marker": "rich-error",
+            "key": "error_0"
+          }
+        ],
+        "warnings": [
+          {
+            "type": "em",
+            "text": "Keep it concise",
+            "marker": "rich-warning",
+            "key": "error_0"
+          }
+        ]
+      },
+      {
+        "name": [
+          "child"
+        ],
+        "errors": [
+          {
+            "type": "a",
+            "text": "Read field details",
+            "marker": "rich-child",
+            "key": "error_0"
+          }
+        ],
+        "warnings": []
+      },
+      {
+        "name": [
+          "manual"
+        ],
+        "errors": [
+          {
+            "type": "strong",
+            "text": "Enter a name",
+            "marker": "rich-error",
+            "key": "error_0"
+          }
+        ],
+        "warnings": []
+      }
+    ],
+    "name": {
+      "invalid": "true",
+      "describedBy": "audit_name_help",
+      "description": "Enter a nameKeep it concise",
+      "markers": [
+        [
+          "STRONG",
+          "rich-error"
+        ],
+        [
+          "EM",
+          "rich-warning"
+        ]
+      ],
+      "itemMarkers": [
+        [
+          "STRONG",
+          "rich-error"
+        ],
+        [
+          "EM",
+          "rich-warning"
+        ]
+      ]
+    },
+    "child": {
+      "invalid": "true",
+      "describedBy": "audit_child_help",
+      "description": null,
+      "markers": [],
+      "itemMarkers": [
+        [
+          "A",
+          "rich-child"
+        ]
+      ]
+    },
+    "manual": {
+      "invalid": "true",
+      "describedBy": "audit_manual_help",
+      "description": "Manually supplied help",
+      "markers": [],
+      "itemMarkers": []
+    },
+    "errorIdentity": false
+  },
+  "submitted": [
+    {
+      "name": [
+        "name"
+      ],
+      "errors": [
+        {
+          "type": "strong",
+          "text": "Enter a name",
+          "marker": "rich-error",
+          "key": "error_0"
+        }
+      ]
+    },
+    {
+      "name": [
+        "child"
+      ],
+      "errors": [
+        {
+          "type": "a",
+          "text": "Read field details",
+          "marker": "rich-child",
+          "key": "error_0"
+        }
+      ]
+    },
+    {
+      "name": [
+        "manual"
+      ],
+      "errors": [
+        {
+          "type": "strong",
+          "text": "Enter a name",
+          "marker": "rich-error",
+          "key": "error_0"
+        }
+      ]
+    }
+  ],
+  "external": {
+    "errors": [
+      {
+        "name": [
+          "name"
+        ],
+        "errors": [
+          {
+            "type": "span",
+            "text": "External message",
+            "marker": "rich-external",
+            "key": null
+          }
+        ],
+        "warnings": [
+          {
+            "type": "em",
+            "text": "Keep it concise",
+            "marker": "rich-warning",
+            "key": null
+          }
+        ]
+      },
+      {
+        "name": [
+          "child"
+        ],
+        "errors": [
+          {
+            "type": "a",
+            "text": "Read field details",
+            "marker": "rich-child",
+            "key": "error_0"
+          }
+        ],
+        "warnings": []
+      },
+      {
+        "name": [
+          "manual"
+        ],
+        "errors": [
+          {
+            "type": "strong",
+            "text": "Enter a name",
+            "marker": "rich-error",
+            "key": "error_0"
+          }
+        ],
+        "warnings": []
+      }
+    ],
+    "name": {
+      "invalid": "true",
+      "describedBy": "audit_name_help",
+      "description": "External messageKeep it concise",
+      "markers": [
+        [
+          "SPAN",
+          "rich-external"
+        ],
+        [
+          "EM",
+          "rich-warning"
+        ]
+      ],
+      "itemMarkers": [
+        [
+          "SPAN",
+          "rich-external"
+        ],
+        [
+          "EM",
+          "rich-warning"
+        ]
+      ]
+    }
+  }
+}

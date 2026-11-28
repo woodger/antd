@@ -1067,6 +1067,7 @@ export type {
   FormItemUpdateInfo
 } from './form/form.types';
 export type { ValidateMessage, ValidateMessages } from './form/validation-messages.types';
+export type { FormValidationMessage, FormFieldMessages } from './form/validation-messages.types';
 export { useFormItemStatus } from './form/form-item-status';
 export { useFormInstance, type FormInstanceRef } from './form/form-context';
 export {

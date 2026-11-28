@@ -267,8 +267,11 @@
     get resetKey() {
       return getFormHooks(form)?.resetKey ?? form.values;
     },
-    getFieldError: (name) => form.getFieldError(name),
-    getFieldWarning: (name) => form.getFieldWarning(name),
+    getFieldMessages(name, kind) {
+      const hooks = getFormHooks(form);
+      return hooks?.getFieldMessages(name, kind)
+        ?? (kind === 'errors' ? form.getFieldError(name) : form.getFieldWarning(name));
+    },
     getFieldMeta(name) {
       const hooks = getFormHooks(form);
 

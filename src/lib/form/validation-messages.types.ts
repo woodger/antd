@@ -1,3 +1,17 @@
+import type { Snippet } from 'svelte';
+
+/** Rule content can carry explicit text for consumers that read only the string metadata. */
+export type FormValidationMessage = string | Snippet | {
+  readonly text: string;
+  readonly content: Snippet;
+};
+
+/** When present, a message list includes the strings and snippets in their original order. */
+export interface FormFieldMessages {
+  errorMessages?: readonly FormValidationMessage[];
+  warningMessages?: readonly FormValidationMessage[];
+}
+
 /** Message pattern; function is called when the corresponding Sext error is errors. */
 export type ValidateMessage = string | (() => string);
 

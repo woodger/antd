@@ -7,7 +7,8 @@
   import { changeFormList, syncFormListKeys } from './form-list.engine';
   import { formNamePath } from './form-store.engine';
   import type { FormRemovalPath } from './form-internal';
-  import type { FormListOperation, FormListProps } from './form-list.types';
+  import type { FormListMeta, FormListOperation, FormListProps } from './form-list.types';
+  import { richValidationMessages, validationMessageTexts } from './validation-message.engine';
 
   let { name, initialValue, rules, children, prefixCls }: FormListProps = $props();
   const form = useForm();
@@ -37,8 +38,18 @@
   )));
   // React map skips holes. each receives a dense list of positions that exist.
   let fields = $derived(values.flatMap((_, index) => ({ name: index, key: keys.keys[index] })));
-  let meta = $derived({
-    errors: form.getFieldError(prefixName), warnings: form.getFieldWarning(prefixName)
+  const meta = $derived.by<FormListMeta>(() => {
+    const errors = form.getFieldMessages(prefixName, 'errors');
+    const warnings = form.getFieldMessages(prefixName, 'warnings');
+    const errorMessages = richValidationMessages(errors);
+    const warningMessages = richValidationMessages(warnings);
+
+    return {
+      errors: validationMessageTexts(errors),
+      warnings: validationMessageTexts(warnings),
+      ...(errorMessages && { errorMessages }),
+      ...(warningMessages && { warningMessages })
+    };
   });
   let fieldResetKey = $state.raw<object>({});
   let resetKey = $derived({ form: form.resetKey, field: fieldResetKey });
