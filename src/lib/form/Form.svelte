@@ -13,14 +13,17 @@
   import { provideFormFeedback, useFormFeedback } from './form-feedback-context';
   import type { FormProps, FormSemanticSlots } from './form.types';
   import { copyFormValue, sameFormValue } from './form-store.engine';
-  import type { FormFieldData, FormFieldSnapshot, FormInstance } from './form.model.svelte';
+  import {
+    createForm, type FormFieldData, type FormFieldSnapshot, type FormInstance
+  } from './form.model.svelte';
   import { resolveValidationRules, type FormValues } from './validation.engine';
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { mergeValidationMessages } from './validation-message.engine';
 
   let props: FormProps<Values> = $props();
   let {
-    form,
+    form: suppliedForm,
+    initialValues,
     fields,
     prefixCls: customizePrefixCls,
     children,
@@ -55,7 +58,28 @@
     ...attributes
   } = $derived(props);
 
-  // Restore a cleared model before child registrations read their initial values.
+  let ownedForm: FormInstance<Values> | undefined;
+  const form = $derived(suppliedForm ?? getOwnedForm());
+  let initializedForm: FormInstance<Values> | undefined;
+
+  function getOwnedForm() {
+    // The store can be empty before Form and its fields supply values for the schema.
+    ownedForm ??= createForm<Values>({ initialValues: {} as Values });
+
+    return ownedForm;
+  }
+
+  function applyInitialValues() {
+    const model = form;
+    const seed = initializedForm !== model;
+    getFormHooks(model)?.setInitialValues(initialValues, seed);
+    initializedForm = model;
+  }
+
+  // Children read initial values during setup, including SSR. Later default changes leave
+  // the store and the attached owner's lifecycle intact.
+  untrack(applyInitialValues);
+  $effect.pre(applyInitialValues);
   $effect.pre(() => getFormHooks(form)?.attachForm(() => clearOnDestroy));
 
   let appliedFields: {

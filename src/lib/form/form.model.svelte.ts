@@ -16,6 +16,7 @@ import {
   copyFormValue,
   formNamePath,
   getFormValue,
+  hasFormValue,
   mergeFormValues,
   sameFormPath,
   sameFormValue,
@@ -257,7 +258,8 @@ export function createForm<Values extends FormValues>({
   initialValues: Values;
   rules?: FormRules<Values>;
 }): FormModel<Values> {
-  const defaults = copyFormValue(initialValues);
+  const modelDefaults = copyFormValue(initialValues);
+  let defaults = modelDefaults;
   let valuesRevision = $state(0);
   let validationSequence = 0;
   let latestValidationRun = 0;
@@ -1221,6 +1223,27 @@ export function createForm<Values extends FormValues>({
     restoreDefaultsOnMount = true;
   }
 
+  // Form defaults take priority on reset. Connecting a model fills gaps beneath its current store.
+  function setInitialValues(initial: PartialFormValues<Values> | undefined, seed: boolean) {
+    defaults = initial === undefined ? modelDefaults : mergeFormValues(modelDefaults, initial);
+    if (!seed) {
+      return;
+    }
+
+    untrack(() => {
+      if (initial === undefined && !restoreDefaultsOnMount) {
+        return;
+      }
+
+      restoreDefaultsOnMount = false;
+      const next = mergeFormValues(defaults, values);
+      if (!sameFormValue(values, next)) {
+        updateValues(next);
+        valuesRevision++;
+      }
+    });
+  }
+
   const form: FormModel<Values> = {
     get values() {
       void valuesRevision;
@@ -1302,7 +1325,13 @@ export function createForm<Values extends FormValues>({
         const field = findField(name);
         if (field) field.dirty = true;
 
-        // A single field record carries a fresh store root even when its value compares equal.
+        // An explicit undefined entry can suppress a default when a Form attaches later.
+        if (value === undefined && !hasFormValue(values, formNamePath(name))) {
+          const next = setFormValue(values, name, value) as Values;
+          updateValues(next);
+          valuesRevision++;
+        }
+        // Even equal writes publish a fresh store root to predicates.
         storeSnapshot = undefined;
         notifyStoreUpdate(previous, { type: 'setField', name, hasValue: true });
         return;
@@ -1333,9 +1362,7 @@ export function createForm<Values extends FormValues>({
           field.validated = true;
         }
 
-        const parent = getFormValue(next, path.slice(0, -1));
-        const provided = parent !== null && typeof parent === 'object'
-          && path.length > 0 && Object.hasOwn(parent, path[path.length - 1]);
+        const provided = hasFormValue(next, path);
 
         if (!Object.is(getFormValue(values, path), getFormValue(merged, path))
           || provided) {
@@ -1480,16 +1507,9 @@ export function createForm<Values extends FormValues>({
     get resetKey() {
       return resetKey;
     },
+    setInitialValues,
     attachForm(getClearOnDestroy) {
-      untrack(() => {
-        mountedForms++;
-        if (restoreDefaultsOnMount) {
-          storeSnapshot = undefined;
-          values = mergeFormValues(defaults, values);
-          valuesRevision++;
-          restoreDefaultsOnMount = false;
-        }
-      });
+      mountedForms++;
 
       return () => {
         mountedForms--;

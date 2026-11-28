@@ -124,6 +124,7 @@ describe('createForm validateFields options', () => {
     form.setFieldValue('fresh', undefined);
     await form.validateFields({ dirty: true }).catch(() => {});
 
+    expect(Object.hasOwn(form.getFieldsValue(true), 'fresh')).toBe(true);
     expect(validator).toHaveBeenCalledTimes(1);
     expect(form.isFieldTouched('fresh')).toBe(false);
   });

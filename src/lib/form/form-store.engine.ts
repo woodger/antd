@@ -117,6 +117,18 @@ export function getFormValue(store: unknown, name: NamePath): unknown {
   return current;
 }
 
+/** Distinguishes an own undefined entry from a missing path. */
+export function hasFormValue(store: unknown, path: readonly (string | number)[]): boolean {
+  if (!path.length) {
+    return false;
+  }
+
+  const parent = getFormValue(store, path.slice(0, -1));
+  const key = path[path.length - 1];
+
+  return parent !== null && typeof parent === 'object' && Object.hasOwn(parent, key);
+}
+
 // Copies containers only along the path. Field removal can delete an undefined nested value.
 export function setFormValue(
   store: unknown,

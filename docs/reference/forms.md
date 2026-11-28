@@ -1,6 +1,7 @@
 # Forms and validation
 
-`createForm()` stores form values and errors. `Form` manages submission.
+`Form` manages submission and owns a form model by default. Use `createForm()`
+to supply an explicit model.
 `FormItem` associates a field with its label and messages, and `FormList`
 handles arrays of fields.
 
@@ -70,31 +71,61 @@ new instance through a model method to update one.
 
 ### Initial values
 
-`FormItem.initialValue` fills in a missing value before rendering the field,
-including SSR. The model's `initialValues` takes precedence, including
+`Form` creates an isolated model when `form` is omitted. Descendants can get
+the active model with `useFormInstance()`. Provide `Form.initialValues` to seed
+the store before the first field renders, including during SSR.
+
+```svelte
+<script lang="ts">
+  import { Form, FormItem, Input } from '@woodger/antd';
+</script>
+
+<Form initialValues={{ title: 'Draft' }}>
+  <FormItem name="title" label="Title">
+    {#snippet control(editor)}
+      <Input {...editor.props} onChange={(event) => editor.emit('onChange', event)} />
+    {/snippet}
+  </FormItem>
+</Form>
+```
+
+With an explicit `createForm` model, existing store entries take priority on
+attachment, including explicitly written `undefined`. `Form.initialValues`
+fills gaps within plain objects. Arrays are treated as whole values.
+Changing the prop preserves the current store and updates the defaults for
+reset, dirty validation, and non-preserved field removal. At reset,
+`Form.initialValues` takes priority over defaults from `createForm`.
+Omitting the prop restores those model
+defaults as the source for future resets. Switching the `form` prop connects
+the fields to the selected model, and removing it returns the form to its own
+model. An external structural model manages its own defaults.
+
+`FormItem.initialValue` fills in a missing value before rendering the field.
+The effective form defaults take precedence, including
 `null`, `false`, `0`, and `''`. An `undefined` value falls back to the field's
 `initialValue`. A field that appears later leaves an existing value intact.
 Initial values leave `touched` unset and count in validation with `dirty`.
-Connect `value` and `onValueChange` to the model explicitly.
+Connect the editor through the `control` snippet or use explicit model bindings.
 
 Changing `initialValue` leaves the current value in place. Reset uses the
-field's current `initialValue` if the exact path has no value in the original
-model `initialValues`. Objects and arrays are copied. `Date`, Day.js, and other
+field's current `initialValue` if the exact path has no effective default.
+Objects and arrays are copied. `Date`, Day.js, and other
 class instances are preserved. When several fields specify `initialValue`
 for one path, the first mounted field fills it. Reset leaves conflicting
 field defaults unresolved. With overlapping parent and descendant paths,
 mount order also affects the initial values.
 
-Initialize a `FormList` array through the list's `initialValue` or the model's
-`initialValues`. A list field's `initialValue` applies when it is created.
+Initialize a `FormList` array through `Form.initialValues`, model defaults, or
+the list's own `initialValue`. A list field's `initialValue` applies when it is created.
 Resetting just that field does not restore the list field default. Resetting
 the entire list remounts rows and reapplies their initial values.
+[React observations](../../tests/browser/fixtures/ant-design-form-initial-values-observation.json)
 
 ### Field retention and form disposal
 
 `Form.preserve` defaults to `true`. A `FormItem` can override it. With
-`preserve={false}`, removing a field restores that path from the model's
-`initialValues`. If the model has no default for the path, a top-level field
+`preserve={false}`, removing a field restores that path from the effective
+form defaults. If there is no default for the path, a top-level field
 becomes `undefined` and a nested field is removed from its container. A field's
 own `initialValue` fills the path again when the field mounts. Changing
 `name` releases the previous path while keeping the editor. Another mounted
@@ -147,9 +178,9 @@ remounts their contents just as it does for visible fields.
 ## Control adapters
 
 The `control` snippet connects a named FormItem to an editor inside a Form
-backed by `createForm`. Spread `editor.props` on the editor and forward the
-original callback arguments to `editor.emit`. The snippet takes precedence
-when both `control` and `children` are supplied.
+using its own or an explicit `createForm` model. Spread `editor.props` on the
+editor and forward the original callback arguments to `editor.emit`. The
+snippet takes precedence when both `control` and `children` are supplied.
 
 ```svelte
 <FormItem
@@ -590,7 +621,7 @@ selection. The associated HTML control regains focus after remount if it
 stays on the page and the user has not moved focus. Unassociated elements
 leave focus alone.
 
-Resetting a FormList remounts its rows. The model's initialValues takes
+Resetting a FormList remounts its rows. The effective form defaults take
 precedence over the current initialValue of the root list. When several lists
 set initialValue for the same path, reset leaves conflicting defaults unresolved.
 
@@ -647,9 +678,9 @@ includes only existing entries with their original indexes.
 
 FormItem and nested FormList names are relative to the nearest list.
 `setFieldValue` and `getFieldValue` take full paths from the form root.
-A nested independent form starts a new path. The array in model initialValues
-takes precedence, including []. A missing array can use list initialValue.
-Reset uses model initialValues or the list's current initialValue. Unmounting
+A nested independent form starts a new path. An array in the effective form
+defaults takes precedence, including []. A missing array can use list
+initialValue. Reset uses those defaults or the list's current initialValue. Unmounting
 a list removes its local rules and preserves its values by default.
 
 `add(defaultValue, insertIndex)` inserts a row at the supplied index or appends

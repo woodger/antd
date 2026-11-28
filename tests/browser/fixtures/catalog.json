@@ -199,6 +199,11 @@
     "root": "form-item-update-fixture"
   },
   {
+    "id": "form-initial-values",
+    "module": "./FormInitialValuesFixtures.svelte",
+    "root": "form-initial-values-fixture"
+  },
+  {
     "id": "form-reset-fields",
     "module": "./FormResetFieldsFixtures.svelte",
     "root": "form-reset-fields-fixture"

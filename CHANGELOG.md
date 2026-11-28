@@ -40,6 +40,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   and supports synchronous normalization before a control edit reaches the store.
 - FormItem supports `shouldUpdate` and dependency-selected snapshots in a
   `render` snippet.
+- Form creates a model when none is supplied and accepts reactive
+  `initialValues` for initialization and reset.
 
 ### Fixed
 

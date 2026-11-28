@@ -2,7 +2,7 @@ import type { Snippet } from 'svelte';
 import type { HTMLFormAttributes } from 'svelte/elements';
 import type { FormValidationError } from './FormValidationError';
 import type { FormFieldData, FormFieldSnapshot, FormInstance } from './form.model.svelte.js';
-import type { FormValueProjection } from './form-store.engine';
+import type { FormValueProjection, PartialFormValues } from './form-store.engine';
 import type { ColProps } from '../grid/grid.types';
 import type { FormValues } from './validation.engine';
 import type { ComponentSize, RenderEmptyContent, Variant } from '../types';
@@ -145,8 +145,10 @@ export interface FormProps<Values extends FormValues> extends Omit<
   HTMLFormAttributes,
   'children' | 'onsubmit' | 'onreset' | 'class'
 > {
-  /** An insulated model created by createForm. */
-  form: FormInstance<Values>;
+  /** An explicit model. When omitted, Form owns an isolated instance. */
+  form?: FormInstance<Values>;
+  /** Fills missing values on attachment and provides defaults for subsequent resets. */
+  initialValues?: PartialFormValues<Values>;
   /** Applies external field values and metadata after mounting, without change callbacks. */
   fields?: readonly FormFieldData[];
   /** CSS prefix root Form; empty/undefined inherit ConfigProvider regardless of FormItem. */

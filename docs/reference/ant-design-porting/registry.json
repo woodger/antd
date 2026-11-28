@@ -8090,6 +8090,23 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): boolean and predicate shouldUpdate, internal and external source information, setFields batch base and intermediate stores, metadata and validation notices, initialValue registration, preserve disposal, and whole versus selective reset. The first external metadata transition of a nameless source Item refreshes its content even when the predicate rejects the write. Svelte supplies the accepted full snapshot to a named render snippet on a nameless Item. Current model actions and ordinary field bindings remain reactive. Named fields also evaluate the source predicate and refresh mapped control props for accepted notices. Snapshot selection, final batch output, replacement model, focus and hydration are checked."
         },
         {
+          "id": "initial-values-and-owned-model",
+          "title": "Form initialValues and automatically created model",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/form.model.svelte.ts",
+            "src/lib/form/form.types.ts",
+            "tests/browser/fixtures/ant-design-form-initial-values-observation.json",
+            "tests/browser/form/form-initial-values.spec.ts",
+            "tests/package/form/form-initial-values.ssr.test.ts",
+            "tests/package/form/form-initial-values.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): automatic model, Form and Item or List default precedence, pre-existing model values, nested merge and whole arrays, silent default changes, selective and full reset, preserve=false restoration, dirty validation and reattachment with detached writes. Initial values, focus and input identity are measured on SSR and hydration. Svelte keeps createForm defaults as fallbacks and follows the live form prop. Dropping that prop returns to the same local model within an attachment. The control snippet forwards edits to the Svelte model."
+        },
+        {
           "id": "dayjs-values",
           "title": "Immutable Dayjs|null и диапазоны без преобразования в строку",
           "state": "supported",

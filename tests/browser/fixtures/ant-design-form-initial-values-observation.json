@@ -1,0 +1,119 @@
+{
+  "upstream": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1"
+  },
+  "ssr": {
+    "word": "from form",
+    "local": "from item",
+    "rows": [
+      "from form list"
+    ],
+    "values": {
+      "word": "from form",
+      "rows": [
+        {
+          "text": "from form list"
+        }
+      ],
+      "local": "from item"
+    },
+    "events": []
+  },
+  "hydrated": {
+    "word": "from form",
+    "local": "from item",
+    "rows": [
+      "from form list"
+    ],
+    "values": {
+      "word": "from form",
+      "rows": [
+        {
+          "text": "from form list"
+        }
+      ],
+      "local": "from item"
+    },
+    "events": [],
+    "sameInput": true,
+    "focused": true
+  },
+  "automaticEdited": {
+    "word": "draft",
+    "local": "from item",
+    "rows": [
+      "from form list"
+    ],
+    "values": {
+      "word": "draft",
+      "rows": [
+        {
+          "text": "from form list"
+        }
+      ],
+      "local": "from item"
+    },
+    "events": []
+  },
+  "automaticReset": {
+    "word": "from form",
+    "local": "from item",
+    "rows": [
+      "from form list"
+    ],
+    "values": {
+      "word": "from form",
+      "rows": [
+        {
+          "text": "from form list"
+        }
+      ],
+      "local": "from item"
+    },
+    "events": []
+  },
+  "dirty": {
+    "before": [],
+    "beforeEvents": [],
+    "defaultAppliedEvents": [],
+    "after": [
+      [
+        "late"
+      ]
+    ],
+    "finalEvents": [
+      "fields",
+      "fields"
+    ],
+    "current": {
+      "missing": true
+    }
+  },
+  "external": {
+    "firstMount": {"values":{"shared":"from model","profile":{"code":"pre-existing code","other":"initial other"},"removable":"initial removable","rows":[{"text":"existing row"}],"zero":0,"falsy":false,"nil":null,"blank":"","absent":"from item"},"word":"from model","code":"pre-existing code","removable":"initial removable","local":"from item","rows":["existing row"],"events":[]},
+    "changeDefaults": {"values":{"shared":"from model","profile":{"code":"pre-existing code","other":"initial other"},"removable":"initial removable","rows":[{"text":"existing row"}],"zero":0,"falsy":false,"nil":null,"blank":"","absent":"from item"},"word":"from model","code":"pre-existing code","removable":"initial removable","local":"from item","rows":["existing row"],"events":[]},
+    "resetPath": {"values":{"shared":"from model","profile":{"code":"next code","other":"initial other"},"removable":"initial removable","rows":[{"text":"existing row"}],"zero":0,"falsy":false,"nil":null,"blank":"","absent":"from item"},"word":"from model","code":"next code","removable":"initial removable","local":"from item","rows":["existing row"],"events":[]},
+    "removeField": {"values":{"shared":"from model","profile":{"code":"next code","other":"initial other"},"removable":"next removable","rows":[{"text":"existing row"}],"zero":0,"falsy":false,"nil":null,"blank":"","absent":"from item"},"word":"from model","code":"next code","removable":{"missing":true},"local":"from item","rows":["existing row"],"events":[]},
+    "remountField": {"values":{"shared":"from model","profile":{"code":"next code","other":"initial other"},"removable":"next removable","rows":[{"text":"existing row"}],"zero":0,"falsy":false,"nil":null,"blank":"","absent":"from item"},"word":"from model","code":"next code","removable":"next removable","local":"from item","rows":["existing row"],"events":[]},
+    "resetAll": {"values":{"shared":"next","profile":{"code":"next code","other":"next other"},"removable":"next removable","rows":[{"text":"new row"}],"additional":"added by reset","absent":"from item"},"word":"next","code":"next code","removable":"next removable","local":"from item","rows":["new row"],"events":[]},
+    "removeDefaults": {"values":{"shared":"next","profile":{"code":"next code","other":"next other"},"removable":"next removable","rows":[{"text":"new row"}],"additional":"added by reset","absent":"from item"},"word":"next","code":"next code","removable":"next removable","local":"from item","rows":["new row"],"events":[]},
+    "resetNoDefaults": {"values":{"absent":"from item","rows":[{"text":"list fallback"}]},"word":"","code":"","removable":"","local":"from item","rows":["list fallback"],"events":[]}
+  },
+  "preserve": {
+    "mount": {"values":{"keep":"first keep","discarded":"first remove"},"keep":"first keep","remove":"first remove"},
+    "detached": {"values":{"keep":"draft","discarded":"first remove"},"keep":{"missing":true},"remove":{"missing":true}},
+    "detachedWrite": {"values":{"keep":"detached keep","discarded":"detached remove"},"keep":{"missing":true},"remove":{"missing":true}},
+    "reattached": {"values":{"keep":"detached keep","discarded":"detached remove","extra":"next extra"},"keep":"detached keep","remove":"detached remove"},
+    "reset": {"values":{"keep":"next keep","discarded":"next remove","extra":"next extra"},"keep":"next keep","remove":"next remove"}
+  },
+  "clear": {
+    "mount": {"values":{"keep":"first keep","discarded":"first remove"},"keep":"first keep","remove":"first remove"},
+    "detached": {"values":{},"keep":{"missing":true},"remove":{"missing":true}},
+    "detachedWrite": {"values":{"keep":"detached keep","discarded":"detached remove"},"keep":{"missing":true},"remove":{"missing":true}},
+    "reattached": {"values":{"keep":"detached keep","discarded":"detached remove","extra":"next extra"},"keep":"detached keep","remove":"detached remove"},
+    "reset": {"values":{"keep":"next keep","discarded":"next remove","extra":"next extra"},"keep":"next keep","remove":"next remove"}
+  }
+}
