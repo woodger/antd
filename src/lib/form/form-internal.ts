@@ -2,7 +2,7 @@
 import type { FormValueProjection, NamePath } from './form-store.engine';
 import type { FormRule, FormValues } from './validation.engine';
 import type { FormFieldData, FormFieldMeta, FormInstance } from './form.model.svelte';
-import type { FormProps, FormValidateTrigger } from './form.types';
+import type { FormItemValueAdapter, FormProps, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
 
 /** Resolves a removed row field against the model that owned its registration. */
@@ -10,7 +10,7 @@ export type FormRemovalPath = (
   readValue: (name: NamePath) => unknown
 ) => readonly (string | number)[] | undefined;
 
-export interface FormFieldRegistration {
+export interface FormFieldRegistration extends Omit<FormItemValueAdapter, 'getValueProps'> {
   readonly name: NamePath;
   // Symbol preserves when identity registration is stored inside Svelte proxy.
   readonly mountKey?: symbol;
@@ -48,6 +48,7 @@ export interface FormHooks<Values extends FormValues> {
   getWatchValues(): FormValueProjection<Values>;
   getFieldMeta(name: NamePath): FormFieldMeta | undefined;
   handleFieldBlur(name: NamePath): void;
+  handleFieldEvent(mountKey: symbol, event: string, args: readonly unknown[]): boolean;
   registerField(field: FormFieldRegistration): () => void;
   markFieldMounted(mountKey: symbol): void;
   initializeField(name: NamePath, initialValue?: unknown): void;

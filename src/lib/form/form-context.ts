@@ -38,6 +38,7 @@ export interface FormContext {
   isFieldRequired(name: NamePath): boolean;
   hasRequiredRules(rules: readonly FormRule[]): boolean;
   handleFieldBlur(name: NamePath): void;
+  handleFieldEvent(mountKey: symbol, event: string, args: readonly unknown[]): boolean;
   registerField?(field: FormFieldRegistration): (() => void) | undefined;
   markFieldMounted(mountKey: symbol): void;
   getFieldValue(name: NamePath): unknown;

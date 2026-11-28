@@ -189,6 +189,11 @@
     "root": "form-controlled-fields-fixture"
   },
   {
+    "id": "form-control-adapters",
+    "module": "./FormControlAdaptersFixtures.svelte",
+    "root": "form-control-adapters-fixture"
+  },
+  {
     "id": "form-reset-fields",
     "module": "./FormResetFieldsFixtures.svelte",
     "root": "form-reset-fields-fixture"

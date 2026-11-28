@@ -244,6 +244,9 @@
         form.touchField(name);
       }
     },
+    handleFieldEvent: (mountKey, event, args) => getFormHooks(form)?.handleFieldEvent(
+      mountKey, event, args
+    ) ?? false,
     registerField: (field) => getFormHooks(form)?.registerField(field),
     markFieldMounted: (mountKey) => getFormHooks(form)?.markFieldMounted(mountKey),
     getFieldValue: (name) => form.getFieldValue(name),

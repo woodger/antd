@@ -36,6 +36,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   form model.
 - Form accepts external field records through `fields` and preserves pending
   validation when `onFieldsChange` feeds the field snapshots back.
+- FormItem maps editor properties and events through the `control` snippet
+  and supports synchronous normalization before a control edit reaches the store.
 
 ### Fixed
 

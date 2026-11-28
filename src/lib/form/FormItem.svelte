@@ -24,7 +24,8 @@
   import type { ColProps } from '../grid/grid.types';
   import { resolveFormWrapperCol } from './form-columns.engine';
   import type {
-    FormFeedbackIcons, FormItemTooltip as FormItemTooltipContent, FormValidateTrigger
+    FormFeedbackIcons, FormItemControl, FormItemTooltip as FormItemTooltipContent,
+    FormItemValueAdapter, FormValidateTrigger
   } from './form.types';
   import type { FormValidateStatus } from './form-error-list.types';
   import { resolveFormStatus } from './form-status.engine';
@@ -32,6 +33,7 @@
   import FormItemTooltip from './FormItemTooltip.svelte';
   import NoFormItemBinding from './NoFormItemBinding.svelte';
   import FormItemBinding from './FormItemBinding.svelte';
+  import FormItemControlBinding from './FormItemControlBinding.svelte';
   import FormItemStatusProvider from './FormItemStatusProvider.svelte';
   import { useFormItemStatusContext, type FormItemStatus } from './form-item-status';
   import { useFormFeedback, type FormFeedbackContext, type FormFeedbackIcon } from './form-feedback-context';
@@ -39,7 +41,7 @@
   import { mergeFormItemMessages, type FormItemMessages } from './form-no-style.engine';
 
   /** Connects a Form model field to its label, validation status, and accessible error description. */
-  export interface FormItemProps {
+  export interface FormItemProps extends FormItemValueAdapter {
     /** CSS prefix for Item and its parts. Empty and undefined values inherit from ConfigProvider independently of Form. */
     prefixCls?: string;
     /** Key or path from FormList. Without name, this is layout only, with no model binding, rules, or native name. */
@@ -51,6 +53,8 @@
     /** Help content or Tooltip options. Defaults are inherited from Form. */
     tooltip?: FormItemTooltipContent;
     children: Snippet;
+    /** Renders an editor with mapped props and explicit event forwarding. Replaces children. */
+    control?: Snippet<[FormItemControl]>;
     /** Help text for fields without errors or warnings. Supports rich content and resets with the field. */
     help?: RenderEmptyContent;
     /** Help text next to errors or warnings. Reset recreates the content. false, null, undefined, and '' hide it. */
@@ -104,12 +108,24 @@
     class?: string;
   }
 
+  /** A FormItem with a control snippet can omit the zero-argument children snippet. */
+  export interface FormItemControlProps extends Omit<FormItemProps, 'children' | 'control'> {
+    children?: Snippet;
+    control: Snippet<[FormItemControl]>;
+  }
+
   let {
     name,
     initialValue,
     label,
     tooltip,
     children,
+    control,
+    trigger,
+    valuePropName = 'value',
+    getValueProps,
+    getValueFromEvent,
+    normalize,
     help,
     extra,
     required,
@@ -135,7 +151,7 @@
     rootClassName,
     style,
     class: className = ''
-  }: FormItemProps = $props();
+  }: FormItemProps | FormItemControlProps = $props();
 
   const form = useForm();
   const config = useConfig();
@@ -167,6 +183,14 @@
   });
   let id = $derived(htmlFor ?? `ant-field-${generatedId}`);
   let path = $derived([...(list?.prefixName ?? []), ...formNamePath(name ?? [])]);
+  const editorProps = $derived.by(() => {
+    if (!hasName || !form) {
+      return {};
+    }
+
+    const value = form.getFieldValue(path);
+    return getValueProps ? getValueProps(value) ?? {} : { [valuePropName]: value };
+  });
   let resolvedLayout = $derived(layout ?? form?.layout ?? 'vertical');
   let resolvedLabelAlign = $derived(labelAlign ?? form?.labelAlign ?? 'right');
   let resolvedLabelCol = $derived(labelCol ?? form?.labelCol);
@@ -343,6 +367,18 @@
       get validateTrigger() {
         return validateTrigger ?? form?.validateTrigger;
       },
+      get trigger() {
+        return trigger;
+      },
+      get valuePropName() {
+        return valuePropName;
+      },
+      get getValueFromEvent() {
+        return getValueFromEvent;
+      },
+      get normalize() {
+        return normalize;
+      },
       get validateFirst() {
         return validateFirst;
       },
@@ -394,6 +430,15 @@
     get warnings() { return warnings; }
   };
 
+  function dispatchControlEvent(event: string, args: readonly unknown[]) {
+    const mountKey = registration?.mountKey;
+    if (!mountKey) {
+      return false;
+    }
+
+    return form?.handleFieldEvent(mountKey, event, args) ?? false;
+  }
+
   const fieldContext: FormFieldContext = {
     get id() {
       return hasName ? id : undefined;
@@ -435,7 +480,8 @@
       return () => { controls.delete(getInstance); };
     },
     onBlur() {
-      if (hasName) form?.handleFieldBlur(path);
+      // The control snippet forwards blur explicitly along with its other editor events.
+      if (hasName && !control) form?.handleFieldBlur(path);
     }
   };
 
@@ -455,6 +501,12 @@
     };
   }
 </script>
+
+{#snippet renderControl()}
+  {#if control}
+    <FormItemControlBinding {control} valueProps={editorProps} onEvent={dispatchControlEvent} />
+  {:else}{@render children?.()}{/if}
+{/snippet}
 
 {#snippet captionWithTooltip()}
   <RenderContent value={labelContent} />{#if tooltipOptions}<FormItemTooltip options={tooltipOptions} formPrefix={componentPrefix} formScope={prefixScope} />{/if}
@@ -510,7 +562,7 @@
           <div {...prefixAttributes} class={`${componentPrefix}-item-control-input`}>
             <div {...prefixAttributes} bind:this={content}
               class={[`${componentPrefix}-item-control-input-content`, form?.classNames?.content]}
-              style={form?.styles?.content}>{#key resetKey}<FormItemStatusProvider value={itemStatus} meta={collector} feedback={feedbackContext}>{@render children()}</FormItemStatusProvider>{/key}</div>
+              style={form?.styles?.content}>{#key resetKey}<FormItemStatusProvider value={itemStatus} meta={collector} feedback={feedbackContext}>{@render renderControl()}</FormItemStatusProvider>{/key}</div>
           </div>
           {#if messages.errors.length || messages.warnings.length}
             <div {...prefixAttributes} id={descriptionId} class={[`${componentPrefix}-item-explain`, form?.classNames?.help]}
@@ -544,7 +596,7 @@
 
 {#snippet itemBody()}
   {#if hasLayout}{@render itemLayout()}
-  {:else}{#key resetKey}<FormItemStatusProvider value={itemStatus} feedback={feedbackContext}>{@render children()}</FormItemStatusProvider>{/key}{/if}
+  {:else}{#key resetKey}<FormItemStatusProvider value={itemStatus} feedback={feedbackContext}>{@render renderControl()}</FormItemStatusProvider>{/key}{/if}
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`form-prefix:${prefixScope}`} />{/if}{#if hasName}

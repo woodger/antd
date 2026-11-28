@@ -6,6 +6,7 @@ import {
   setFormHooks, type FormCallbackProvider, type FormFieldRegistration, type FormRemovalPath
 } from './form-internal';
 import { focusFormField, getFormFieldElement, scrollFormField } from './form-field.dom';
+import { readFormControlValue } from './form-control.engine';
 import type { FormScrollOptions, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
 import { mergeValidationMessages } from './validation-message.engine';
@@ -286,6 +287,11 @@ export function createForm<Values extends FormValues>({
   // Compares the full path, keeping the difference of the string key and the index.
   function findField(name: NamePath): StoredField | undefined {
     return fields.find((field) => sameFormPath(fieldPath(field), name));
+  }
+
+  // A name can refer to multiple editors. The mount key identifies the emitting registration.
+  function findFieldByMountKey(mountKey: symbol): StoredField | undefined {
+    return fields.find((field) => field.registration?.mountKey === mountKey);
   }
 
   // Copies the arrays so that the listener does not change the metadata in the repository.
@@ -883,11 +889,42 @@ export function createForm<Values extends FormValues>({
   }
 
   // Checks the field's event configuration before individual rules are filtered.
-  function validateControlEvent(field: StoredField, trigger: string) {
+  function validateControlEvent(field: StoredField, trigger: string, sharedPath?: NamePath) {
     const triggers = field.registration?.validateTrigger ?? 'onChange';
-    if (allowsValidationTrigger(triggers, trigger) && fieldRules(field).length) {
-      validateAutomatically([field], { source: 'control', trigger });
+    if (!allowsValidationTrigger(triggers, trigger) || !fieldRules(field).length) {
+      return;
     }
+
+    const selected = sharedPath === undefined ? [field] : fields.filter((candidate) =>
+      sameFormPath(sharedPath, fieldPath(candidate))
+    );
+    validateAutomatically(selected, { source: 'control', trigger });
+  }
+
+  // Dispatches through the originating editor and reports when it must receive the committed value.
+  function handleFieldEvent(mountKey: symbol, event: string, args: readonly unknown[]) {
+    const field = findFieldByMountKey(mountKey);
+    const registration = field?.registration;
+    if (!field || !registration) {
+      return false;
+    }
+
+    const name = fieldPath(field);
+    const writesValue = event === (registration.trigger ?? 'onChange');
+    controlDrivenFields.add(field);
+    if (writesValue) {
+      applyControlValue(field, name, () => {
+        const extract = registration.getValueFromEvent;
+        if (extract) {
+          return extract(...args);
+        }
+
+        return readFormControlValue(registration.valuePropName ?? 'value', args);
+      });
+    }
+
+    validateControlEvent(field, event, name);
+    return writesValue;
   }
 
   // Returns the affected paths so a control edit can include them in its field-change callback.
@@ -931,6 +968,25 @@ export function createForm<Values extends FormValues>({
     field.touched = true;
     field.dirty = true;
     notifyFieldMeta(field);
+  }
+
+  // Touch precedes extraction and normalization. Validation uses the value committed by this edit.
+  function applyControlValue(field: StoredField, name: NamePath, readValue: () => unknown) {
+    markTouched(field);
+    const previous = getFormValue(values, name);
+    const value = readValue();
+    const normalize = field.registration?.normalize;
+    // Keep the old root while preserving field identities for the synchronous normalizer.
+    const nextValue = normalize ? normalize(value, previous, { ...values }) : value;
+    if (previous === nextValue) {
+      return;
+    }
+
+    const next = setFormValue(values, name, nextValue) as Values;
+    updateValues(next);
+    valuesRevision++;
+    submissionError = undefined;
+    publishControlEdit(name);
   }
 
   // Updates the current proxy keys by saving the model’s reader links.
@@ -1178,16 +1234,7 @@ export function createForm<Values extends FormValues>({
     changeFieldValue(name, value, trigger = 'onChange') {
       const field = ensureField(name);
       controlDrivenFields.add(field);
-      markTouched(field);
-
-      if (getFormValue(values, name) !== value) {
-        const next = setFormValue(values, name, value) as Values;
-        updateValues(next);
-        valuesRevision++;
-        submissionError = undefined;
-        publishControlEdit(name);
-      }
-
+      applyControlValue(field, name, () => value);
       validateControlEvent(field, trigger);
     },
     validateFieldOn(name, trigger) {
@@ -1412,10 +1459,11 @@ export function createForm<Values extends FormValues>({
         revalidateTouched();
       }
     },
+    handleFieldEvent,
     initializeField: initializeFieldValue,
     initializeList: initializeFieldValue,
     markFieldMounted(mountKey) {
-      const field = fields.find((field) => field.registration?.mountKey === mountKey);
+      const field = findFieldByMountKey(mountKey);
       if (field) field.initialValueOrder = ++initialValueOrder;
     },
     changeList(name, next) {

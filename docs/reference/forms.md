@@ -7,6 +7,7 @@ handles arrays of fields.
 ## Contents
 
 - [Values and fields](#values-and-fields)
+- [Control adapters](#control-adapters)
 - [Watching values](#watching-values)
 - [Validation](#validation)
 - [Change events and FormProvider](#change-events-and-formprovider)
@@ -141,6 +142,50 @@ state. It defaults to `false`. A hidden field still participates in validation,
 submission, and FormData, so a required error can block submission. Hidden
 field elements stay out of Tab navigation and the accessibility tree. Reset
 remounts their contents just as it does for visible fields.
+
+## Control adapters
+
+The `control` snippet connects a named FormItem to an editor inside a Form
+backed by `createForm`. Spread `editor.props` on the editor and forward the
+original callback arguments to `editor.emit`. The snippet takes precedence
+when both `control` and `children` are supplied.
+
+```svelte
+<FormItem
+  name="code"
+  label="Code"
+  validateTrigger="onBlur"
+  normalize={(value: string) => value.trim()}
+>
+  {#snippet control(editor)}
+    <Input
+      {...editor.props}
+      onChange={(event) => editor.emit('onChange', event)}
+      onBlur={(event) => editor.emit('onBlur', event)}
+    />
+  {/snippet}
+</FormItem>
+```
+
+- `valuePropName` defaults to `'value'`. Set it to `'checked'` for a Checkbox.
+  `getValueProps` can supply a different set of editor props from the stored
+  value. Mapping runs during SSR and follows model changes on the client.
+- `trigger` defaults to `'onChange'` and selects the event that writes to the
+  store. `getValueFromEvent` receives all the forwarded arguments. The default
+  extractor reads the configured property on the first argument's target
+  when present and otherwise takes the first argument itself.
+- `normalize` receives the extracted value, previous field value, and full
+  previous store, including unregistered values. It runs synchronously before
+  the write. Explicit `changeFieldValue` calls can also normalize an already
+  extracted value. Initial values and programmatic setters use the values
+  they were given.
+- `validateTrigger` selects validation events independently of the write
+  event. Forward each configured event through `emit`, including blur.
+  Call your own handler after `emit` when it needs the committed value.
+
+Editors sharing a path use the adapter of the editor that emitted the event.
+Validation requested by that editor checks the registered rules at the
+shared path. [React observations](../../tests/browser/fixtures/ant-design-form-control-adapters-observation.json)
 
 ## Watching values
 

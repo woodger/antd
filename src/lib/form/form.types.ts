@@ -75,6 +75,27 @@ export type FormSemantic = FormSemanticSlots
 /** Events that validate a field. An empty array or false disables control-triggered validation. */
 export type FormValidateTrigger = string | readonly string[] | false;
 
+/** Maps values between a named FormItem and its editor. */
+export interface FormItemValueAdapter {
+  /** The event that writes a value through the control snippet. Defaults to onChange. */
+  trigger?: string;
+  /** The editor value prop and default event target key. Defaults to value. */
+  valuePropName?: string;
+  /** Reads a value from the editor's original event arguments. */
+  getValueFromEvent?(...args: unknown[]): unknown;
+  /** Maps the stored value to editor props and takes precedence over valuePropName on render. */
+  getValueProps?(value: unknown): Readonly<Record<string, unknown>>;
+  /** Synchronously normalizes a control edit using the previous field value and full store. */
+  normalize?(value: unknown, previousValue: unknown, previousValues: Readonly<FormValues>): unknown;
+}
+
+/** The value props and event dispatch supplied to the FormItem control snippet. */
+export interface FormItemControl {
+  readonly props: Readonly<Record<string, unknown>>;
+  /** Forwards the editor's original arguments to the configured write and validation triggers. */
+  emit(event: string, ...args: unknown[]): void;
+}
+
 /** The currently mounted named models in a FormProvider subtree. */
 export type FormProviderForms = Readonly<Partial<Record<string, FormInstance<FormValues>>>>;
 

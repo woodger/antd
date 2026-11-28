@@ -8055,6 +8055,24 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): fields applies ordered silent updates after mount, skips arrays that reuse records, reapplies new records, and preserves a pending validator when onFieldsChange feeds allFields back. SSR uses model defaults. Svelte also tracks reactive record edits and applies current entries to a replacement model while retaining the existing control DOM. In echoStaleCompletion, the pinned React build publishes an error from a previous value through onFieldsChange, where feeding allFields back overrides the current external message. Svelte retains the replacement and discards the obsolete result."
         },
         {
+          "id": "field-control-adapters",
+          "title": "FormItem value mapping and event adapters",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/FormItem.svelte",
+            "src/lib/form/FormItemControlBinding.svelte",
+            "src/lib/form/form-control.engine.ts",
+            "src/lib/form/form-control.engine.test.ts",
+            "src/lib/form/form.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-form-control-adapters-observation.json",
+            "tests/browser/form/form-control-adapters.spec.ts",
+            "tests/package/form/form-control-adapters.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): trigger, valuePropName, getValueFromEvent, getValueProps and synchronous normalize. The Svelte control snippet spreads mapped props and explicitly forwards original arguments in place of React child cloning. The emitting field is touched before extraction, supplies the previous field and full store, publishes changed values before validation, and preserves editor identity when an equal normalized value is restored. Custom write and validation events, shared-path adapters and validators, programmatic writes, reset, SSR and hydration are verified. Plain children and explicit model edits retain their Svelte contracts."
+        },
+        {
           "id": "dayjs-values",
           "title": "Immutable Dayjs|null и диапазоны без преобразования в строку",
           "state": "supported",
