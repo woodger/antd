@@ -21,7 +21,8 @@ export function createFormRef<Values extends FormValues>(
   function submit(): void;
   function submit(finish: Finish): Promise<SubmissionResult<Values>>;
   function submit(finish?: Finish) {
-    if (finish) {
+    // Direct event handlers receive a native event as their first argument.
+    if (typeof finish === 'function') {
       return readModel().submit(finish);
     }
     submitForm();

@@ -1273,7 +1273,7 @@ export function createForm<Values extends FormValues>({
     function submit(): void;
     function submit(onFinish: FormSubmitHandler<Values>): Promise<SubmissionResult<Values>>;
     function submit(onFinish?: FormSubmitHandler<Values>) {
-      if (onFinish) {
+      if (typeof onFinish === 'function') {
         return run.call(form, onFinish);
       }
       const provider = currentCallbackProvider();

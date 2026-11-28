@@ -641,6 +641,8 @@ wrapper. Both calls return void. The overload with an explicit callback
 continues to return a submission result. A detached model can run validation
 with `submit()`.
 
+The model and ref methods can also be used directly as click handlers.
+
 Submitting with `<Button htmlType="submit">` inside Form calls onFinish after
 successful validation. Field errors go to onFinishFailed. Errors from
 onFinish go to onError and appear in a shared message. Form sets novalidate

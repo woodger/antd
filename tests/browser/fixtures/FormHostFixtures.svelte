@@ -108,6 +108,8 @@
   <button id="host-model-submit" type="button" onclick={() => { returnType = typeof currentForm.submit(); }}>
     Submit through model
   </button>
+  <button id="host-direct-ref-submit" type="button" onclick={ref?.submit}>Submit directly through ref</button>
+  <button id="host-direct-model-submit" type="button" onclick={currentForm.submit}>Submit directly through model</button>
   <button id="host-explicit-submit" type="button" onclick={async () => {
     const result = await ref?.submit(values => record({ type: 'explicit', values }));
     if (result) record({ type: 'result', status: result.status });

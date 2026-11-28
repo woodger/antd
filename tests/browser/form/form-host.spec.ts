@@ -154,6 +154,18 @@ test('Form shares pending submission state between native, model and ref entry p
   await expect.poll(() => snapshot(page)).toMatchObject({ events: [finish, finish] });
 });
 
+test('Form model and ref submit methods work as direct click handlers', async ({ page }) => {
+  await openHost(page);
+  const finish = { type: 'finish', values: { word: 'start', untouched: 'extra' } };
+
+  await page.locator('#host-direct-ref-submit').click();
+  await expect.poll(() => snapshot(page)).toMatchObject({ events: [finish], submitCalls: 1 });
+
+  await page.locator('#host-direct-model-submit').click();
+  await expect.poll(() => snapshot(page)).toMatchObject({ events: [finish, finish], submitCalls: 2 });
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
 test('Form hydrates a custom host and retains the focused SSR editor', async ({ page }) => {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-form-host-hydration-'));
   const server = await createServer({
