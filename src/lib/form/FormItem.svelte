@@ -37,11 +37,13 @@
   import NoFormItemBinding from './NoFormItemBinding.svelte';
   import FormItemBinding from './FormItemBinding.svelte';
   import FormItemControlBinding from './FormItemControlBinding.svelte';
+  import FormItemMessages from './FormItemMessages.svelte';
   import FormItemStatusProvider from './FormItemStatusProvider.svelte';
   import { useFormItemStatusContext, type FormItemStatus } from './form-item-status';
   import { useFormFeedback, type FormFeedbackContext, type FormFeedbackIcon } from './form-feedback-context';
   import { useFormItemMeta, type FormItemMetaContext } from './form-item-meta-context';
-  import { mergeFormItemMessages, type FormItemMessages } from './form-no-style.engine';
+  import { mergeFormItemMessages, type FormItemMessages as ReportedFormMessages }
+    from './form-no-style.engine';
 
   /** Connects a Form model field to its label, validation status, and accessible error description. */
   export interface FormItemProps extends FormItemValueAdapter {
@@ -261,7 +263,7 @@
       : form?.isFieldRequired(path)))
     ?? false);
   let hasHelp = $derived(help !== undefined && help !== null && help !== false && help !== '');
-  const reportedFields = new Set<FormItemMessages>();
+  const reportedFields = new Set<ReportedFormMessages>();
   let reportVersion = $state.raw<object>({});
   let reports = $derived.by(() => {
     void reportVersion;
@@ -272,10 +274,33 @@
   let descriptionId = $derived(hasLayout && (hasName || hasReportedMessages)
     && (messages.errors.length || messages.warnings.length || hasHelp)
     ? `${id}-help` : undefined);
+  // noStyle children can report during the same server render. Read their list after the editor.
+  const layoutMessages = {
+    get errors() { return messages.errors; },
+    get warnings() { return messages.warnings; },
+    get descriptionId() { return descriptionId; }
+  };
   let hasExtra = $derived(extra !== undefined && extra !== null && extra !== false && extra !== '');
   let extraId = $derived(hasLayout && hasName && hasExtra ? `${id}_extra` : undefined);
   let resetKey = $state.raw<object>({});
   let content: HTMLDivElement | undefined = $state();
+  let itemElement = $state<HTMLDivElement>();
+  let messageMargin = $state(0);
+  let withVisibleHelp = $state<boolean>();
+  const itemStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
+  const itemClasses = $derived([
+    `${componentPrefix}-item`,
+    componentTheme.className && `ant-form-css-var ${componentTheme.className}`,
+    `${componentPrefix}-item-${resolvedLayout}`,
+    hidden && `${componentPrefix}-item-hidden`,
+    status === 'error' && `${componentPrefix}-item-has-error`,
+    status === 'warning' && `${componentPrefix}-item-has-warning`,
+    status === 'success' && `${componentPrefix}-item-has-success`,
+    status === 'validating' && `${componentPrefix}-item-is-validating`,
+    ownStatus && ownFeedback.hasFeedback && `${componentPrefix}-item-has-feedback`,
+    className,
+    rootClassName
+  ]);
   let hasExternalMeta = false;
   const observesUpdates = $derived(hasName
     ? Boolean(shouldUpdate) : Boolean(render && (shouldUpdate || dependencies)));
@@ -293,7 +318,7 @@
   let registration: FormFieldRegistration | undefined;
   let hasMetaEvent = false;
   let removeReport: (() => void) | undefined;
-  const report: FormItemMessages = {
+  const report: ReportedFormMessages = {
     get name() { return path; },
     get errors() { return errors; },
     get warnings() { return warnings; }
@@ -587,20 +612,23 @@
   <RenderContent value={labelContent} />{#if tooltipOptions}<FormItemTooltip options={tooltipOptions} formPrefix={componentPrefix} formScope={prefixScope} />{/if}
 {/snippet}
 
+{#snippet fallbackHelp()}
+  {#key resetKey}<NoFormItemBinding>{#if form?.classNames?.helpItem || form?.styles?.helpItem}
+    <div {...prefixAttributes} class={form?.classNames?.helpItem} style={form?.styles?.helpItem}><RenderContent value={help} /></div>
+  {:else}<RenderContent value={help} />{/if}</NoFormItemBinding>{/key}
+{/snippet}
+
+{#snippet extraContent()}
+  {#key resetKey}<NoFormItemBinding><RenderContent value={extra} /></NoFormItemBinding>{/key}
+{/snippet}
+
 {#snippet itemLayout()}
-  <div {...prefixAttributes} data-ant-form-item class={[
-      `${componentPrefix}-item`,
-      componentTheme.className && `ant-form-css-var ${componentTheme.className}`,
-      `${componentPrefix}-item-${resolvedLayout}`,
-      hidden && `${componentPrefix}-item-hidden`,
-      status === 'error' && `${componentPrefix}-item-has-error`,
-      status === 'warning' && `${componentPrefix}-item-has-warning`,
-      status === 'success' && `${componentPrefix}-item-has-success`,
-      status === 'validating' && `${componentPrefix}-item-is-validating`,
-      ownStatus && ownFeedback.hasFeedback && `${componentPrefix}-item-has-feedback`,
-      className,
-      rootClassName
-    ]} style={[componentTheme.style, style].filter(Boolean).join(';') || undefined}>
+  <div {...prefixAttributes} bind:this={itemElement} data-ant-form-item
+    class={[
+      itemClasses,
+      (withVisibleHelp ?? Boolean(errors.length || warnings.length))
+        && `${componentPrefix}-item-with-help`
+    ]} style={itemStyle}>
     <Row {...prefixAttributes} class={[`${componentPrefix}-item-row`, componentTheme.className].filter(Boolean).join(' ')}>
       {#if hasLabel}
         <Col {...prefixAttributes} {...resolvedLabelCol} class={[
@@ -639,33 +667,26 @@
               class={[`${componentPrefix}-item-control-input-content`, form?.classNames?.content]}
               style={form?.styles?.content}>{#key resetKey}<FormItemStatusProvider value={itemStatus} meta={collector} feedback={feedbackContext}>{@render renderControl()}</FormItemStatusProvider>{/key}</div>
           </div>
-          {#if messages.errors.length || messages.warnings.length}
-            <div {...prefixAttributes} id={descriptionId} class={[`${componentPrefix}-item-explain`, form?.classNames?.help]}
-              style={form?.styles?.help} role={messages.errors.length ? 'alert' : 'status'}>
-              {#each messages.errors as error}
-                <div {...prefixAttributes} class={[`${componentPrefix}-item-explain-error`, form?.classNames?.helpItem]}
-                  style={form?.styles?.helpItem}>{error}</div>
-              {/each}
-              {#each messages.warnings as warning}
-                <div {...prefixAttributes} class={[`${componentPrefix}-item-explain-warning`, form?.classNames?.helpItem]}
-                  style={form?.styles?.helpItem}>{warning}</div>
-              {/each}
-            </div>
-          {:else if hasHelp}
-            <div {...prefixAttributes} id={descriptionId} class={[`${componentPrefix}-item-extra`, form?.classNames?.help]}
-              style={form?.styles?.help}>
-              {#key resetKey}<NoFormItemBinding>{#if form?.classNames?.helpItem || form?.styles?.helpItem}
-                <div {...prefixAttributes} class={form?.classNames?.helpItem} style={form?.styles?.helpItem}><RenderContent value={help} /></div>
-              {:else}<RenderContent value={help} />{/if}</NoFormItemBinding>{/key}
-            </div>
-          {/if}
-          {#if hasExtra}
-            <div {...prefixAttributes} id={extraId} class={[`${componentPrefix}-item-extra`, form?.classNames?.extra]}
-              style={form?.styles?.extra}>{#key resetKey}<NoFormItemBinding><RenderContent value={extra} /></NoFormItemBinding>{/key}</div>
-          {/if}
+          <FormItemMessages
+            prefix={componentPrefix}
+            scope={prefixScope}
+            messages={layoutMessages}
+            {extraId}
+            help={hasHelp ? fallbackHelp : undefined}
+            extra={hasExtra ? extraContent : undefined}
+            item={itemElement}
+            itemClass={itemClasses}
+            {itemStyle}
+            bind:margin={messageMargin}
+            bind:withHelp={withVisibleHelp}
+          />
         </Col>
       </NoFormItemColumns>
     </Row>
+    {#if messageMargin}
+      <div {...prefixAttributes} class={`${componentPrefix}-item-margin-offset`}
+        style:margin-bottom={`${-messageMargin}px`}></div>
+    {/if}
   </div>
 {/snippet}
 

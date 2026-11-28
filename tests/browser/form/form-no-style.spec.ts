@@ -136,7 +136,11 @@ test('Form noStyle routes nested messages to the nearest styled item', async ({ 
   const outer = page.locator('.no-style-outer');
   const inner = page.locator('.no-style-inner');
 
-  await expect(outer.locator(':scope > .ant-form-item-row > .ant-form-item-control > .ant-form-item-explain .ant-form-item-explain-error'))
+  const outerMessage = outer.locator(
+    ':scope > .ant-form-item-row > .ant-form-item-control > .ant-form-item-additional'
+    + ' > .ant-form-item-explain-connected > .ant-form-item-explain-error'
+  );
+  await expect(outerMessage)
     .toHaveText('First error');
   await expect(outer.locator('.ant-form-item-explain-warning')).toHaveText('Second warning');
   await expect(inner.locator('.ant-form-item-explain-error')).toHaveText('Third error');

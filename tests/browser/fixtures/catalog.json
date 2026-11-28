@@ -199,6 +199,11 @@
     "root": "form-item-update-fixture"
   },
   {
+    "id": "form-item-messages",
+    "module": "./FormItemMessagesFixtures.svelte",
+    "root": "form-item-messages-fixture"
+  },
+  {
     "id": "form-initial-values",
     "module": "./FormInitialValuesFixtures.svelte",
     "root": "form-initial-values-fixture"

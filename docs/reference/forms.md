@@ -769,8 +769,8 @@ FieldId sets id to `${fieldId}_help`. Class adds a container class. The
 container is omitted when there are no messages.
 
 Clearing errors and warnings waits 10 ms so a brief intermediate empty list
-can keep the messages visible. Enter and exit are animated. Motion={false}
-and the system's reduced-motion setting disable animation.
+can keep the messages visible. Enter and exit are animated. Set `theme.token.motion`
+to `false` in ConfigProvider or enable reduced motion to disable animation.
 OnVisibleChanged runs after entry or exit, excluding the initial empty list
 and unmount. Reinsertion during exit cancels the previous callback. Duplicate
 messages get separate keys, and reordering text messages preserves their DOM.
@@ -1213,6 +1213,16 @@ place of help, and extra stays visible. Numeric 0 renders and appears in
 aria-describedby. Updating help or extra preserves the field and focus.
 Reset remounts descriptions and their local state.
 
+Styled FormItem places validation messages and extra content in a connected
+container below the editor. It reserves space through the leave transition and
+keeps surviving message nodes when the order changes. Brief empty lists delay
+visual collapse. The field description and invalid state follow current metadata,
+including fallback help while old messages leave. The item reserves its computed
+bottom margin and the height of extra content. It also holds the previous height
+of fallback help when validation replaces it, so a blur during a click can keep
+the next control in place. ConfigProvider motion settings and reduced motion
+also apply here.
+
 Elements inside label, extra, help, and tooltip inherit form disabled, size,
 and variant. They are independent of the main field value and do not receive
 its id, name, status, error ARIA attributes, or ref. Input in an auxiliary
@@ -1249,8 +1259,7 @@ Transfer, and date and time pickers. Depending on the component, a custom suffix
 may appear beside the icon or replace it. For date and time pickers it replaces
 the icon entirely. Toggling hasFeedback may replace an Input or TextArea wrapper
 and lose focus. In Mentions, it may also replace the text field and close the
-suggestion list. A custom Input in AutoComplete can show both icons. Some form
-animations remain outside the current support.
+suggestion list. A custom Input in AutoComplete can show both icons.
 
 ### useFormItemStatus
 

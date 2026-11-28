@@ -4,9 +4,10 @@ export function formSemanticMetrics() {
   const item = field.querySelector('.ant-form-item')!;
   const row = item.querySelector(':scope > .ant-form-item-row')!;
   const control = row.querySelector(':scope > .ant-form-item-control')!;
-  const help = control.querySelector(
+  const additional = control.querySelector(':scope > .ant-form-item-additional');
+  const help = additional?.querySelector(
     ':scope > .ant-form-item-explain, :scope > .ant-form-item-extra[id$="-help"]'
-  );
+  ) ?? null;
   const list = host.querySelector('[data-semantic-list] [data-ant-form-error-list]');
 
   function metric(node: Element | null) {
@@ -29,7 +30,7 @@ export function formSemanticMetrics() {
       ':scope > .ant-form-item-control-input > .ant-form-item-control-input-content'
     )),
     help: metric(help), helpItems: help ? [...help.children].map(metric) : [],
-    extra: metric(control.querySelector(':scope > .ant-form-item-extra[id$="_extra"]')),
+    extra: metric(additional?.querySelector(':scope > .ant-form-item-extra[id$="_extra"]') ?? null),
     list: metric(list), listItems: list ? [...list.children].map(metric) : [],
     innerLabels: [...field.querySelectorAll(
       '.ant-form-item .ant-form-item .ant-form-item-label > label'
