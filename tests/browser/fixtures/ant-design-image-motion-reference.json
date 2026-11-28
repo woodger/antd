@@ -1,0 +1,841 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "rcImage": "1.10.0"
+  },
+  "viewport": {
+    "width": 960,
+    "height": 600
+  },
+  "cases": [
+    {
+      "name": "pointer",
+      "trigger": "pointer",
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [
+        {
+          "className": "ant-image-preview-fade-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "ant-image-preview-fade-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-enter-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-enter-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        }
+      ],
+      "rootEnd": [
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        },
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        },
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        }
+      ],
+      "requested": [
+        true,
+        false
+      ],
+      "reported": [
+        true,
+        false,
+        true
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": "160px 100px"
+    },
+    {
+      "name": "group-keyboard",
+      "trigger": "keyboard",
+      "group": true,
+      "prefix": "gallery",
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": null
+      },
+      "phases": [
+        {
+          "className": "gallery-preview-fade-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "gallery-preview-fade-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "gallery-preview-fade-leave-start",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "gallery-preview-fade-leave-active",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "gallery-preview-fade-enter-start",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "gallery-preview-fade-enter-active",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        }
+      ],
+      "rootEnd": [
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        },
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        },
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        }
+      ],
+      "requested": [
+        true,
+        false
+      ],
+      "reported": [
+        true,
+        false,
+        true
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": "25% 75%"
+    },
+    {
+      "name": "custom",
+      "initial": true,
+      "inline": true,
+      "css": "photo-motion",
+      "triggerPoint": null,
+      "phases": [
+        {
+          "className": "photo-motion-appear-start",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-appear-active",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "0.2",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-show",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-leave-start",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-leave-active",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-hide",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-enter-start",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-enter-active",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "0.2",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-show",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [
+        {
+          "kind": "animationend",
+          "property": "photo-show"
+        },
+        {
+          "kind": "animationend",
+          "property": "photo-hide"
+        },
+        {
+          "kind": "animationend",
+          "property": "photo-show"
+        }
+      ],
+      "requested": [],
+      "reported": [
+        true,
+        false,
+        true
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "25% 75%",
+      "repeatOrigin": "25% 75%"
+    },
+    {
+      "name": "no-motion",
+      "trigger": "pointer",
+      "css": "",
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [],
+      "rootEnd": [],
+      "requested": [
+        true,
+        false
+      ],
+      "reported": [
+        true,
+        false
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "theme-disabled",
+      "trigger": "pointer",
+      "group": true,
+      "theme": false,
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [],
+      "rootEnd": [],
+      "requested": [
+        true,
+        false
+      ],
+      "reported": [
+        true,
+        false
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "preference",
+      "trigger": "keyboard",
+      "reduced": true,
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": null
+      },
+      "phases": [
+        {
+          "className": "ant-image-preview-fade-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "matrix(0, 0, 0, 0, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "ant-image-preview-fade-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        },
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        }
+      ],
+      "requested": [
+        true,
+        false
+      ],
+      "reported": [
+        true,
+        false
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "undefined-name",
+      "trigger": "pointer",
+      "undefinedName": true,
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [
+        {
+          "className": "fade-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "fade-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "fade-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "fade-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [],
+      "requested": [
+        true
+      ],
+      "reported": [],
+      "openAfterWait": true,
+      "closedAfterWait": false,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "unknown-name",
+      "trigger": "pointer",
+      "css": "unregistered-motion",
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [
+        {
+          "className": "unregistered-motion-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "unregistered-motion-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "unregistered-motion-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "unregistered-motion-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [],
+      "requested": [
+        true
+      ],
+      "reported": [],
+      "openAfterWait": true,
+      "closedAfterWait": false,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "interrupt",
+      "trigger": "pointer",
+      "css": "photo-motion",
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [
+        {
+          "className": "photo-motion-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0.2",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-show",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "photo-motion-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-hide",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-enter-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "photo-motion-enter-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0.2",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-show",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "photo-motion-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "photo-motion-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "photo-hide",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [
+        {
+          "kind": "animationend",
+          "property": "photo-show"
+        },
+        {
+          "kind": "animationend",
+          "property": "photo-hide"
+        }
+      ],
+      "requested": [
+        true
+      ],
+      "reported": [
+        true,
+        false
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "group-disabled",
+      "trigger": "pointer",
+      "group": true,
+      "disabled": true,
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [
+        {
+          "className": "fade-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "fade-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "fade-leave-start",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "fade-leave-active",
+          "namedClass": true,
+          "origin": "25% 75%",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [],
+      "requested": [],
+      "reported": [],
+      "openAfterWait": true,
+      "closedAfterWait": false,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    },
+    {
+      "name": "independent-prefix",
+      "trigger": "pointer",
+      "independentPrefix": "viewer-name",
+      "triggerPoint": {
+        "center": [
+          160,
+          100
+        ],
+        "pointer": [
+          112,
+          68
+        ]
+      },
+      "phases": [
+        {
+          "className": "ant-image-preview-fade-appear-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-appear-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "0",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "auto hidden"
+        },
+        {
+          "className": "ant-image-preview-fade-leave-start",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        },
+        {
+          "className": "ant-image-preview-fade-leave-active",
+          "namedClass": true,
+          "origin": "160px 100px",
+          "opacity": "1",
+          "transform": "none",
+          "duration": "0.3s",
+          "animation": "none",
+          "scrollOverflow": "visible"
+        }
+      ],
+      "rootEnd": [
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        },
+        {
+          "kind": "transitionend",
+          "property": "opacity"
+        }
+      ],
+      "requested": [
+        true
+      ],
+      "reported": [
+        true,
+        false
+      ],
+      "openAfterWait": true,
+      "closedAfterWait": true,
+      "settledOrigin": "160px 100px",
+      "repeatOrigin": null
+    }
+  ]
+}

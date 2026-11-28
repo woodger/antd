@@ -81,7 +81,10 @@ export interface ImagePreviewConfig {
   /** Overrides the provider's popup container. Browser getters receive no arguments. */
   getContainer?: GetContainer;
   onOpenChange?: (open: boolean) => void;
+  /** Reports visibility after preview motion has finished. */
   afterOpenChange?: (open: boolean) => void;
+  /** CSS name for appear, enter, and leave. An empty string disables preview motion. */
+  motionName?: string;
   /** Reports transform and action through queue requestAnimationFrame. */
   onTransform?: (info: { transform: ImageTransform; action: ImageTransformAction; }) => void;
   scaleStep?: number;

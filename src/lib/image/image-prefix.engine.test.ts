@@ -25,6 +25,7 @@ describe('Image prefix stylesheet', () => {
     expect(css).toContain('.viewer:where([data-ant-image-prefix="ant-image"][data-ant-image-preview-prefix="viewer"])');
     expect(css).toContain('.viewer-actions-action');
     expect(css).toContain('.ant-image-img');
+    expect(css).toContain('.ant-image-preview-fade-leave-active:where([data-ant-image-prefix="ant-image"][data-ant-image-preview-prefix="viewer"]) .viewer-body');
     expect(css).toContain(':is([class^="ant-image"],[class^="viewer"])');
     expect(css).not.toContain('.ant-image-preview-mask');
     expect(getImagePrefixCss('photo', 'gallery')).toContain('[data-ant-image-preview-prefix="gallery"]');

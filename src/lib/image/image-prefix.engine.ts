@@ -24,6 +24,10 @@ export function getImagePrefixCss(prefix: string, previewPrefix = `${prefix}-pre
         if (!part) {
           return `${previewRoot}${previewScope}`;
         }
+        // The wrapper derives the motion name from the Image prefix, even for a renamed viewer.
+        if (part.startsWith('-fade')) {
+          return `.${prefix}-preview${part}${previewScope}`;
+        }
         if (part === '-movable' || part === '-moving') {
           return `.${previewPrefix}${part}${previewScope}`;
         }

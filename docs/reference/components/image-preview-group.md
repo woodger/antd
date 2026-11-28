@@ -49,6 +49,13 @@ starts uncontrolled current at 0. Reopening from a thumbnail uses the selected
 thumbnail index. External controlled current changes preserve the transform.
 User navigation resets it without a scale transition.
 
+The default `preview.motionName` uses the group base prefix and `-preview-fade`.
+Thumbnail activation sets the transform origin to the center of the event
+target. A close request from the viewer clears that origin, and the leave phase
+uses the default or `styles.popup.body` origin. A controlled close from the
+owner keeps the last thumbnail origin. `afterOpenChange` follows the settled
+phase. [Preview motion](image.md#preview-motion)
+
 CountRender(current, total) receives one-based current. Render info for
 imageRender and actionsRender contains zero-based current, total, and actions.
 Info.actions.onActive(offset) takes a relative offset as in rc-image runtime.

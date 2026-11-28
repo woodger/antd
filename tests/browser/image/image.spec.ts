@@ -5,6 +5,7 @@ import { imageOne, imageTwo } from '../fixtures/image-data';
 const trigger = (page: Page) => page.getByRole('button', { name: 'Photo one', exact: true });
 const viewer = (page: Page) => page.getByRole('dialog', { name: 'Photo one', exact: true });
 const picture = (page: Page) => viewer(page).getByRole('img', { name: 'Photo one', exact: true });
+const afterOpening = (page: Page) => page.getByLabel('Image after openings', { exact: true });
 
 async function lastTransform(page: Page) {
   const values = JSON.parse(
@@ -37,14 +38,14 @@ test(
     await expect(viewer(page)).toBeFocused();
     await expect(page.locator('html')).toHaveCSS('overflow', 'hidden');
     await expect(page.getByLabel('Image openings', { exact: true })).toHaveText('[true]');
+    await expect(afterOpening(page)).toHaveText('[true]');
 
     await viewer(page).getByRole('button', { name: 'Закрыть', exact: true }).click();
 
     await expect(viewer(page)).toHaveCount(0);
     await expect(trigger(page)).toBeFocused();
     await expect(page.locator('dialog.ant-image-preview')).toHaveCount(1);
-    await expect(page.getByLabel('Image after openings', { exact: true }))
-      .toHaveText('[true,false]');
+    await expect(afterOpening(page)).toHaveText('[true,false]');
 
     await trigger(page).press('Space');
 
@@ -133,6 +134,7 @@ test(
   async ({ page }) => {
     await page.getByLabel('Image wheel', { exact: true }).uncheck();
     await trigger(page).click();
+    await expect(afterOpening(page)).toHaveText('[true]');
     await picture(page).hover();
     await page.mouse.wheel(0, -100);
 
@@ -154,6 +156,7 @@ test(
   'Image pointer drag moves enlarged images and rebounds when both coordinates exceed viewport bounds',
   async ({ page }) => {
     await trigger(page).click();
+    await expect(afterOpening(page)).toHaveText('[true]');
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
 
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1.5);
@@ -181,6 +184,7 @@ test(
   async ({ page }) => {
     await page.getByLabel('Image movable', { exact: true }).uncheck();
     await trigger(page).click();
+    await expect(afterOpening(page)).toHaveText('[true]');
     await page.mouse.move(640, 350);
     await page.mouse.down();
     await page.mouse.move(700, 400);
@@ -409,6 +413,7 @@ test(
   'Image handles real touch pinch zoom and restores temporary underscale on touch end',
   async ({ page }) => {
     await trigger(page).click();
+    await expect(afterOpening(page)).toHaveText('[true]');
 
     const session = await page.context().newCDPSession(page);
 
@@ -470,6 +475,6 @@ test(
     await setCheckbox(page, 'Image focus trap', true);
 
     await expect(page.locator('dialog.ant-image-preview:modal')).toHaveCount(1);
-    await expect(page.getByLabel('Image after openings', { exact: true })).toHaveText('[true]');
+    await expect(afterOpening(page)).toHaveText('[true]');
   }
 );

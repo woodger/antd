@@ -58,9 +58,9 @@ For indeterminate progress, the render snippet receives `0`. The `root`,
 The progress root takes `width`, `height`, `styles.root`, and `style`, followed
 by `styles.placeholder.progress.root`. [React measurements](../../../tests/browser/fixtures/ant-design-image-progress-reference.json)
 
-Preview configuration includes src, open, onOpenChange, afterOpenChange, cover,
-closeIcon, mask, focusTrap, movable, wheel, scaleStep, minScale, maxScale, and
-onTransform. Preview.src can differ from the thumbnail. Open remains controlled
+Preview configuration includes src, open, onOpenChange, afterOpenChange, motionName,
+cover, closeIcon, mask, focusTrap, movable, wheel, scaleStep, minScale, maxScale,
+and onTransform. Preview.src can differ from the thumbnail. Open remains controlled
 when onOpenChange is omitted. Without open, the component owns state.
 Programmatic open changes leave onOpenChange untouched. Cover accepts a boolean,
 snippet, or { coverNode, placement }, with top, bottom, and center placement.
@@ -73,8 +73,7 @@ the viewer. Escape closes the top preview and focus returns to the opener.
 Closing or unmounting releases scroll unless an open host Modal still needs
 the lock. Mask accepts a boolean or { enabled, blur, closable }. Closable
 defaults to true. ClassNames.popup.root on Image and ImagePreviewGroup and
-preview.zIndex apply to the viewer. AfterOpenChange follows native visibility
-changes. The rc-motion fade timing is still outside the port.
+preview.zIndex apply to the viewer.
 
 `preview.getContainer` accepts a selector, an `Element`, a `DocumentFragment`
 such as a `ShadowRoot`, a getter, or `false`. `false` keeps the viewer inline.
@@ -87,11 +86,35 @@ For a nested preview with `focusTrap: false`, use a target within its host dialo
 to keep the preview interactive.
 
 Changing the resolved container recreates the viewer panel while preserving the
-transform and opener. When the new panel opens, `afterOpenChange(true)` runs
-without an `onOpenChange` request. A different getter that returns the same
-target preserves the panel and focused control. A portaled preview inherits the
+transform and opener. The new panel reports `afterOpenChange(true)` after its
+opening phase. A different getter that returns the same target preserves the
+panel and focused control. A portaled preview inherits the
 owner's CSS variables, and `styles.popup.root` can override them. Load the
 stylesheet inside a `ShadowRoot` used as a destination. [React measurements](../../../tests/browser/fixtures/ant-design-image-container-reference.json)
+
+## Preview motion
+
+`preview.motionName` defaults to `<image-prefix>-preview-fade`. The first
+opening uses `appear`, later openings use `enter`, and closing uses `leave`.
+Each phase applies the base name and its phase, start, and active classes to
+the viewer root. The built-in motion fades the viewer and scales its body with
+the theme's `motionDurationSlow`. A custom name uses the corresponding CSS
+transition or keyframe animation on the viewer root.
+
+A thumbnail click or keyboard activation sets the body transform origin to the
+event target's center in viewport coordinates. Programmatic opening before the
+first thumbnail activation uses the origin from `styles.popup.body` or CSS.
+An individual Image keeps the last thumbnail origin across close and reopen.
+An independent `previewPrefixCls` keeps the body scaling and the source motion
+name.
+
+`onOpenChange` requests a visibility change. `afterOpenChange` runs after the
+last active phase settles. Closing retains the native dialog and its scroll
+lock through the exit, then restores focus before the callback. An empty motion
+name, a theme with `token.motion: false`, and the browser's reduced-motion
+preference skip the animation. Svelte also completes a named phase when its CSS
+produces no effect. In the React reference, such a name can leave the preview
+visible after closing. [React measurements](../../../tests/browser/fixtures/ant-design-image-motion-reference.json)
 
 The default transform is x=y=rotate=0, scale=1, and flipX=flipY=false.
 MinScale defaults to 1, maxScale to 50, and scaleStep to 0.5. Toolbar zoom
@@ -141,8 +164,8 @@ that effective record. Use `closeIcon` to customize the close control and
 
 The preview supports themes, RTL, Russian and English accessible labels, and
 reduced motion. The image recipe extracts 58 rules and four progress keyframes.
-Preview rc-motion remains outside the port. Icons come from Ant Design Icons SVG
-4.6.0 with the existing MIT license. The fixture is `?fixture=image`.
+Icons come from Ant Design Icons SVG 4.6.0 with the existing MIT license.
+The fixtures are `?fixture=image` and `?fixture=image-motion`.
 
 ConfigProvider.theme.components.Image sets zIndexPopup, previewOperationSize,
 previewOperationColor, previewOperationHoverColor, previewOperationColorDisabled,

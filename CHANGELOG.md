@@ -17,6 +17,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   `ConfigProvider.getPopupContainer`.
 - Image and ImagePreviewGroup expose reusable preview buttons through
   `actionsRender` and support the upstream artwork selection rules.
+- Image and ImagePreviewGroup support named preview motion, thumbnail-based
+  transform origins, and visibility callbacks after the animation.
 
 ### Fixed
 

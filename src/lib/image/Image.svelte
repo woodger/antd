@@ -8,6 +8,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import { getImagePrefixCss } from './image-prefix.engine';
+  import type { ImagePoint } from './image-preview.engine';
   import { resolveImagePreviewAppearance, resolveImageSemantics } from './image-semantic.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
@@ -48,6 +49,10 @@
   const group = useImageGroup();
   const id = $props.id();
   let config = $derived<ImagePreviewConfig>(typeof preview === 'object' ? preview : {});
+  const effectivePreview = $derived({
+    motionName: `${componentPrefix}-preview-fade`,
+    ...config
+  });
   let appearance = $derived(resolveImagePreviewAppearance(config, context.image?.preview));
   let resolvedFallback = $derived(fallback ?? context.image?.fallback);
   let semanticProps = $derived<ImageSemanticProps>({
@@ -71,7 +76,7 @@
     onKeyDown,
     tabindex,
     preview: preview ? {
-      ...config,
+      ...effectivePreview,
       icons: defaultImagePreviewIcons,
       getContainer: config.getContainer ?? context.getPopupContainer,
       cover: config.cover ?? true,
@@ -90,6 +95,7 @@
     height === undefined ? undefined : `height:${dimension(height)}`
   ]));
   let previewSource = $derived(config.src ?? src ?? undefined);
+  let previewOrigin = $state.raw<ImagePoint>();
   let internalOpen = $state(untrack(() => Boolean(config.open)));
   let actualOpen = $derived(config.open ?? internalOpen);
   let status = $state<'loading' | 'normal' | 'error'>(
@@ -158,24 +164,30 @@
     internalOpen = next;
     config.onOpenChange?.(next);
   }
-  function activate() {
+  function activate(event: MouseEvent | KeyboardEvent) {
+    const bounds = event.target instanceof Element
+      ? event.target.getBoundingClientRect()
+      : nativeElement?.getBoundingClientRect();
+    const origin = bounds && { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 };
+
     if (group) {
-      group.preview(id, previewSource);
+      group.preview(id, previewSource, origin);
     }
     else {
+      previewOrigin = origin;
       requestOpen(true);
     }
   }
   function click(event: MouseEvent) {
     if (canPreview)
-      activate();
+      activate(event);
     onClick?.(event);
   }
   function keydown(event: KeyboardEvent) {
     onKeyDown?.(event);
     if (canPreview && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
-      activate();
+      activate(event);
     }
   }
   function dimension(value: string | number | undefined) {
@@ -273,6 +285,7 @@
 {#if canPreview && !group}
   <ImagePreview imagePrefix={componentPrefix} previewPrefix={previewPrefixCls}
     open={actualOpen} image={{ url: previewSource, alt: alt ?? undefined, width, height }}
-    {config} {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup}
+    {config} motionName={effectivePreview.motionName} origin={previewOrigin} {appearance}
+    classNames={semantics.classes.popup} styles={semantics.styles.popup}
     fallback={resolvedFallback} imageAttributes={common} onClose={() => requestOpen(false)} />
 {/if}

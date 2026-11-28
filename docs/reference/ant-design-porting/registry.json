@@ -18313,10 +18313,37 @@
         {
           "id": "extended-api",
           "title": "Preview fade and transform-origin motion",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Remaining work includes preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases."
+          "evidence": [
+            "src/lib/image/Image.svelte",
+            "src/lib/image/ImagePreview.svelte",
+            "src/lib/image/ImagePreviewGroup.svelte",
+            "src/lib/image/image-preview-motion.dom.ts",
+            "src/lib/image/image-prefix.engine.ts",
+            "src/lib/image/image.types.ts",
+            "tests/browser/fixtures/ant-design-image-motion-reference.json",
+            "tests/browser/image/image-motion.spec.ts",
+            "tests/package/image/image-motion.ssr.test.ts",
+            "docs/reference/components/image.md",
+            "docs/reference/components/image-preview-group.md"
+          ],
+          "note": "Eleven Ant Design 6.6.8 UMD cases record the appear, enter and leave classes, themed default fade, named CSS, thumbnail center, individual and group origin lifetimes and completion callbacks. Closing resets image transforms at the start of leave. The shared CSSMotion controller handles phase replacement and ignores descendant completion events. The viewer stays deferred until mount."
+        },
+        {
+          "id": "preview-native-motion",
+          "title": "Native preview lifetime, motion accessibility and CSS fallback",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/ImagePreview.svelte",
+            "src/lib/image/image-preview-motion.dom.ts",
+            "src/lib/image/image-prefix.engine.ts",
+            "tests/browser/fixtures/ant-design-image-motion-reference.json",
+            "tests/browser/image/image-motion.spec.ts",
+            "docs/reference/components/image.md"
+          ],
+          "note": "The native dialog and scroll lock remain through exit, and the closed DOM is retained. Svelte honors prefers-reduced-motion and settles missing CSS, including the group preview=false path that stays visible in the React reference. An independent viewer prefix retains body scaling through scoped CSS while keeping the upstream phase names."
         },
         {
           "id": "component-prefix",

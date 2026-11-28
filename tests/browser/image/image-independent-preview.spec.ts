@@ -29,7 +29,8 @@ for (const entry of reference.cases) {
       expect(await viewer.evaluate((node, prefix) => node.classList.contains(prefix), prefix)).toBe(true);
     }
     else {
-      expect(await viewer.getAttribute('class')).not.toContain('photo-preview');
+      // The fade uses the Image prefix until the viewer settles.
+      await expect(viewer).not.toHaveClass(/photo-preview/);
     }
     expect(await viewer.getByRole('button', { name: 'zoomIn', exact: true })
       .evaluate(

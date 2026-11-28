@@ -11,6 +11,7 @@
     ImagePreviewGroupSemanticProps
   } from './image-preview-group.types';
   import type { ImageGroupEntry } from './image-group-context';
+  import type { ImagePoint } from './image-preview.engine';
   import { provideImageGroup } from './image-group-context';
   import { getImagePreviewItems, getImagePreviewIndex } from './image-preview-group.engine';
   import { resolveImagePreviewAppearance, resolveImageSemantics } from './image-semantic.engine';
@@ -40,7 +41,12 @@
   let innerOpen = $state(untrack(() => Boolean(config.open)));
   let opened = $derived(config.open ?? innerOpen);
   let data = $derived(entries[current]?.data ?? {});
-  let viewerConfig = $derived({ ...config, onOpenChange: undefined });
+  const viewerConfig = $derived({ ...config, onOpenChange: undefined });
+  const motionName = $derived.by(() => {
+    if (preview === false) return undefined;
+    return Object.hasOwn(config, 'motionName') ? config.motionName : `${componentPrefix}-preview-fade`;
+  });
+  let previewOrigin = $state.raw<ImagePoint>();
   let keepOpenIndex = false;
   let previousOpen = false;
   let previous = untrack(() => ({ current: config.current, open: config.open }));
@@ -78,11 +84,16 @@
     if (next !== before)
       config.onOpenChange?.(next, { current: index });
   }
-  function fromImage(id: string, source: string | undefined) {
+  function fromImage(id: string, source: string | undefined, origin: ImagePoint | undefined) {
     const before = current;
     innerCurrent = getImagePreviewIndex(entries, id, source, items !== undefined);
     requestOpen(true, before);
+    previewOrigin = origin;
     keepOpenIndex = true;
+  }
+  function close() {
+    requestOpen(false);
+    previewOrigin = undefined;
   }
   function change(next: number, previous: number) {
     innerCurrent = next;
@@ -92,6 +103,6 @@
 </script>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}`} />{/if}{#if children}{@render children()}{/if}<ImagePreview imagePrefix={componentPrefix} open={opened} image={{ url: data.src ?? undefined, alt: data.alt ?? undefined }} config={viewerConfig}
-  inheritContainer={preview !== false} icons={viewerIcons}
-  {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
-  imageAttributes={data} onClose={() => requestOpen(false)} {current} count={entries.length} group onChange={change} countRender={config.countRender} />
+  {motionName} inheritContainer={preview !== false} icons={viewerIcons}
+  origin={previewOrigin} {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
+  imageAttributes={data} onClose={close} {current} count={entries.length} group onChange={change} countRender={config.countRender} />

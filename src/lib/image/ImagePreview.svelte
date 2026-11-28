@@ -19,11 +19,16 @@
     registerImagePreview,
     isTopImagePreview
   } from './image-preview.dom';
+  import {
+    connectImagePreviewMotion, type ImagePreviewMotionFrame, type ImagePreviewMotionSettings
+  } from './image-preview-motion.dom';
   import { checkImageSource } from './image-status.dom';
   import { useConfig } from '../config-provider/config-context';
   import { createDialogContainer } from '../dialog/dialog-container.model.svelte.js';
   import { getDialogActiveElement } from '../dialog/dialog-focus.dom';
   import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import { getPopupActiveElement } from '../popup/popup.dom';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
@@ -37,8 +42,10 @@
     previewPrefix: customizePreviewPrefix,
     image,
     config: preview = {},
+    motionName,
     inheritContainer = true,
     icons: customIcons,
+    origin,
     appearance,
     fallback,
     imageAttributes = {},
@@ -56,8 +63,10 @@
     previewPrefix?: string;
     image: ImageInfo;
     config?: ImagePreviewConfig;
+    motionName?: string;
     inheritContainer?: boolean;
     icons?: ImagePreviewIcons;
+    origin?: ImagePoint;
     appearance: ResolvedImagePreviewAppearance;
     classNames?: ImagePopupSlots;
     styles?: ImagePopupSlots;
@@ -77,6 +86,15 @@
   const showSwitch = $derived(group && count > 1);
   let previewPrefix = $derived(customizePreviewPrefix ?? `${imagePrefix}-preview`);
   const componentTheme = useComponentTheme('Image');
+  const design = useDesignTokenContext();
+  const motionSettings = $derived({
+    name: motionName,
+    enabled: design.state.token.motion,
+    builtInFade: motionName === `${imagePrefix}-preview-fade`
+  });
+  const bodyStyle = $derived(serializeInlineStyleLayers([
+    styles?.body, origin && `transform-origin:${origin.x}px ${origin.y}px`
+  ]));
   const layer = useZIndex('preview', () => preview.zIndex);
   const dialogStyle = $derived([componentTheme.style, styles?.root, layer.style]
     .filter(Boolean).join(';'));
@@ -106,8 +124,12 @@
   let alive = true;
   let opener: HTMLElement | undefined;
   let activeDialog: HTMLDialogElement | undefined;
-  let presentedDialog: HTMLDialogElement | undefined;
+  let presented = false;
+  let leaving = false;
   let releaseLayer: (() => void) | undefined;
+  let motionRoot: HTMLDialogElement | undefined;
+  let motion: ReturnType<typeof connectImagePreviewMotion> | undefined;
+  let motionFrame = $state.raw<ImagePreviewMotionFrame>({ fadeStarting: false });
   $effect(() => {
     if (open)
       mounted = true;
@@ -127,7 +149,8 @@
     const root = dialog;
     const connected = container.connected;
     const trap = focusTrap;
-    untrack(() => syncPresentation(next, connected ? root : undefined, trap));
+    const settings = motionSettings;
+    untrack(() => syncPresentation(next, connected ? root : undefined, trap, settings));
   });
   $effect(() => {
     if (!open || !element) {
@@ -144,38 +167,46 @@
       }
     });
   });
-  $effect(() => {
-    if (!open || !dialog) {
-      return;
+  onDestroy(() => {
+    alive = false;
+    cancelFrame();
+    stopSwitch();
+    clearMotion();
+    releasePresentation();
+    restoreOpener();
+  });
+
+  /** Escape belongs to the active viewer until its native layer closes. */
+  function connectLayer(root: HTMLDialogElement) {
+    const release = registerImagePreview(root);
+    const view = root.ownerDocument.defaultView;
+    if (!view) {
+      return release;
     }
-    const view = dialog.ownerDocument.defaultView!;
+
     function keydown(event: KeyboardEvent) {
-      if (event.defaultPrevented || !dialog?.open || !isTopImagePreview(dialog)) {
+      if (event.defaultPrevented || !root.open || !isTopImagePreview(root)) {
         return;
       }
-      const active = getPopupActiveElement(dialog);
-      if (focusTrap && active && !dialog.contains(active)) {
+      const active = getPopupActiveElement(root);
+      if (focusTrap && active && !root.contains(active)) {
         return;
       }
-      if (group && count > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+      if (open && group && count > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
         activate(event.key === 'ArrowLeft' ? -1 : 1);
       }
       else if (event.key === 'Escape' && !focusTrap) {
         event.preventDefault();
         event.stopPropagation();
-        onClose();
+        requestClose();
       }
     }
     view.addEventListener('keydown', keydown);
-    return () => view.removeEventListener('keydown', keydown);
-  });
-  onDestroy(() => {
-    alive = false;
-    cancelFrame();
-    stopSwitch();
-    releasePresentation();
-    restoreOpener();
-  });
+    return () => {
+      view.removeEventListener('keydown', keydown);
+      release();
+    };
+  }
 
   function showDialog(root: HTMLDialogElement, trap: boolean) {
     if (trap) {
@@ -200,51 +231,108 @@
     opener = undefined;
   }
 
-  /** A new container presents a new dialog within the same open preview session. */
-  function syncPresentation(next: boolean, root: HTMLDialogElement | undefined, trap: boolean) {
-    if (!next) {
-      if (!presentedDialog) {
-        return;
-      }
+  function requestClose() {
+    if (open) onClose();
+  }
 
-      releasePresentation();
+  /** Cancels phases tied to a root that will be removed or replaced. */
+  function clearMotion() {
+    motion?.destroy();
+    motion = undefined;
+    motionRoot = undefined;
+    motionFrame = { fadeStarting: false };
+  }
+
+  /** The native layer and opener stay in place until the visible exit has completed. */
+  function completeClose() {
+    releasePresentation();
+    restoreOpener();
+    presented = false;
+    leaving = false;
+    preview.afterOpenChange?.(false);
+  }
+
+  function startClose(root: HTMLDialogElement | undefined, settings: ImagePreviewMotionSettings) {
+    if (!presented) {
+      return;
+    }
+
+    if (!leaving) {
+      leaving = true;
       cancelFrame();
       stopSwitch();
       reset('close');
       moving = false;
-      restoreOpener();
-      presentedDialog = undefined;
-      preview.afterOpenChange?.(false);
+    }
+
+    if (root?.open && root.isConnected && root === activeDialog && motion) {
+      motion.sync(false, settings);
       return;
     }
 
+    clearMotion();
+    completeClose();
+  }
+
+  /** Reports completion only for the current root and current requested visibility. */
+  function settleMotion(root: HTMLDialogElement, visible: boolean) {
+    if (root !== activeDialog || visible !== open || !root.isConnected) {
+      return;
+    }
+
+    if (visible) preview.afterOpenChange?.(true);
+    else completeClose();
+  }
+
+  /** A new container presents a new dialog within the same open preview session. */
+  function syncPresentation(
+    next: boolean,
+    root: HTMLDialogElement | undefined,
+    trap: boolean,
+    settings: ImagePreviewMotionSettings
+  ) {
+    if (!next) {
+      startClose(root, settings);
+      return;
+    }
+
+    leaving = false;
     if (activeDialog && (activeDialog !== root || !activeDialog.isConnected)) {
       releasePresentation();
+      clearMotion();
     }
 
     if (!root?.isConnected) {
       return;
     }
 
-    if (!root.open) {
-      if (!presentedDialog) {
+    const newlyShown = !root.open;
+    if (newlyShown) {
+      if (!presented) {
         const focused = getDialogActiveElement(root.ownerDocument);
         opener = focused instanceof HTMLElement ? focused : undefined;
       }
       showDialog(root, trap);
       activeDialog = root;
       releaseLayer?.();
-      releaseLayer = registerImagePreview(root);
-
-      if (presentedDialog !== root) {
-        presentedDialog = root;
-        preview.afterOpenChange?.(true);
-      }
+      releaseLayer = connectLayer(root);
+      presented = true;
     }
     else if (root.matches(':modal') !== trap) {
       root.close();
       showDialog(root, trap);
     }
+
+    if (motionRoot !== root) {
+      clearMotion();
+      motionRoot = root;
+      motion = connectImagePreviewMotion(
+        root,
+        state => { motionFrame = state; },
+        visible => settleMotion(root, visible)
+      );
+    }
+    motion?.sync(true, settings, newlyShown);
   }
 
   function cancelFrame() {
@@ -297,7 +385,7 @@
   function activate(offset: number) {
     const before = current;
     const next = before + offset;
-    if (next < 0 || next >= count) {
+    if (!open || next < 0 || next >= count) {
       return;
     }
     stopSwitch();
@@ -345,7 +433,7 @@
       onRotateRight: () => update({ rotate: transform.rotate + 90 }, 'rotateRight'),
       onZoomOut: () => zoom(1 / (1 + (preview.scaleStep ?? 0.5)), 'zoomOut'),
       onZoomIn: () => zoom(1 + (preview.scaleStep ?? 0.5), 'zoomIn'),
-      onClose,
+      onClose: requestClose,
       onReset: () => {
         cancelFrame();
         reset('reset');
@@ -372,6 +460,9 @@
   }
   .image-preview-dialog:not([open]) { display: none; }
   .image-preview-dialog::backdrop { background: transparent; }
+  .image-preview-dialog.image-preview-fade-start {
+    transition-property: none;
+  }
   [data-ant-image-preview-img] { touch-action: none; }
   [data-ant-image-preview-img].moving { transition-duration: 0s; }
   [data-ant-image-preview-action]:focus-visible {
@@ -430,13 +521,15 @@
         `image-preview-dialog ${previewPrefix} ant-image-css-var`,
         componentTheme.className,
         classNames?.root,
+        motionFrame.className,
+        motionFrame.fadeStarting && 'image-preview-fade-start',
         preview.movable !== false && `${previewPrefix}-movable`,
         moving && `${previewPrefix}-moving`
       ]}
       dir={context.direction} aria-label={image.alt || context.locale.image?.preview || 'Image preview'} aria-modal={focusTrap ? 'true' : undefined}
       style={dialogStyle} {@attach container.attach} oncancel={event => {
               event.preventDefault();
-              onClose();
+              requestClose();
             }}>
       <div class={[
           `${previewPrefix}-mask`,
@@ -446,9 +539,9 @@
         ]}
         style={styles?.mask} role="presentation" onclick={() => {
             if (appearance.mask.closable)
-              onClose();
+              requestClose();
           }}></div>
-      <div class={[`${previewPrefix}-body`, classNames?.body]} style={styles?.body}>
+      <div class={[`${previewPrefix}-body`, classNames?.body]} style={bodyStyle}>
         {#if preview.imageRender}{@render preview.imageRender(
             defaultImage,
             { transform, image, ...(group ? { current } : {}) }
@@ -456,7 +549,7 @@
       </div>
       {#if appearance.closeIcon !== false && appearance.closeIcon !== null}
         <button type="button" class={[`${previewPrefix}-close`, classNames?.close]}
-          style={styles?.close} aria-label={context.locale.closeText} onclick={onClose}>
+          style={styles?.close} aria-label={context.locale.closeText} onclick={requestClose}>
           {#if typeof appearance.closeIcon === 'function'}
             {@render appearance.closeIcon()}
           {:else if artwork.close}

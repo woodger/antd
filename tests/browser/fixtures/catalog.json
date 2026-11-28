@@ -966,6 +966,11 @@
     "root": "image-action-icons-fixture"
   },
   {
+    "id": "image-motion",
+    "module": "./ImageMotionFixtures.svelte",
+    "root": "image-motion-fixture"
+  },
+  {
     "id": "image-preview-group",
     "module": "./ImageGroupFixtures.svelte",
     "root": "image-group-fixture"
