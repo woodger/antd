@@ -1,0 +1,283 @@
+{
+  "reference": {
+    "source": "package/dist/antd.min.js",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "dayjs": "1.11.23",
+    "browser": "158.0.8127.36",
+    "stylesheet": "package/dist/antd.css"
+  },
+  "settings": {
+    "colorPrimary": "#ab321f",
+    "contentFontSize": 21,
+    "motion": false
+  },
+  "cases": [
+    {
+      "sample": "runtime",
+      "zeroRuntime": false,
+      "prebuiltCss": false,
+      "buttonStylePrefixes": [
+        "ant"
+      ],
+      "globalVariableSheets": 1,
+      "buttonVariableSheets": 1,
+      "buttons": {
+        "outer": {
+          "className": "ant-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(171, 50, 31)",
+          "fontSize": "21px"
+        }
+      }
+    },
+    {
+      "sample": "zero",
+      "zeroRuntime": true,
+      "prebuiltCss": false,
+      "buttonStylePrefixes": [],
+      "globalVariableSheets": 1,
+      "buttonVariableSheets": 1,
+      "buttons": {
+        "outer": {
+          "className": "ant-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(239, 239, 239)",
+          "fontSize": "13.3333px"
+        }
+      }
+    },
+    {
+      "sample": "zeroWithCss",
+      "zeroRuntime": true,
+      "prebuiltCss": true,
+      "buttonStylePrefixes": [],
+      "globalVariableSheets": 1,
+      "buttonVariableSheets": 1,
+      "buttons": {
+        "outer": {
+          "className": "ant-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(171, 50, 31)",
+          "fontSize": "21px"
+        }
+      }
+    },
+    {
+      "sample": "runtimeCustomPrefix",
+      "zeroRuntime": false,
+      "prebuiltCss": false,
+      "prefixCls": "suite",
+      "buttonStylePrefixes": [
+        "suite"
+      ],
+      "globalVariableSheets": 1,
+      "buttonVariableSheets": 1,
+      "buttons": {
+        "outer": {
+          "className": "suite-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(171, 50, 31)",
+          "fontSize": "21px"
+        }
+      }
+    },
+    {
+      "sample": "zeroCustomPrefixWithCss",
+      "zeroRuntime": true,
+      "prebuiltCss": true,
+      "prefixCls": "suite",
+      "buttonStylePrefixes": [],
+      "globalVariableSheets": 1,
+      "buttonVariableSheets": 1,
+      "buttons": {
+        "outer": {
+          "className": "suite-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(239, 239, 239)",
+          "fontSize": "13.3333px"
+        }
+      }
+    },
+    {
+      "sample": "zeroNestedInheritance",
+      "zeroRuntime": true,
+      "prebuiltCss": false,
+      "nestedInherit": false,
+      "nestedPrefixCls": "inner",
+      "buttonStylePrefixes": [],
+      "globalVariableSheets": 2,
+      "buttonVariableSheets": 2,
+      "buttons": {
+        "outer": {
+          "className": "ant-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(239, 239, 239)",
+          "fontSize": "13.3333px"
+        },
+        "inner": {
+          "className": "inner-btn",
+          "primaryToken": "#1677ff",
+          "background": "rgb(239, 239, 239)",
+          "fontSize": "13.3333px"
+        }
+      }
+    },
+    {
+      "sample": "zeroNestedOverride",
+      "zeroRuntime": true,
+      "prebuiltCss": false,
+      "nestedInherit": false,
+      "nestedPrefixCls": "inner",
+      "nestedZeroRuntime": false,
+      "buttonStylePrefixes": [
+        "inner"
+      ],
+      "globalVariableSheets": 2,
+      "buttonVariableSheets": 2,
+      "buttons": {
+        "outer": {
+          "className": "ant-btn",
+          "primaryToken": "#ab321f",
+          "background": "rgb(239, 239, 239)",
+          "fontSize": "13.3333px"
+        },
+        "inner": {
+          "className": "inner-btn",
+          "primaryToken": "#1677ff",
+          "background": "rgb(22, 119, 255)",
+          "fontSize": "14px"
+        }
+      }
+    }
+  ],
+  "live": {
+    "newColorPrimary": "#1d762c",
+    "phases": [
+      {
+        "step": "normal",
+        "zeroRuntime": false,
+        "mountedPrefixes": [
+          "stable-btn"
+        ],
+        "buttonStylePrefixes": [
+          "stable"
+        ],
+        "globalVariableSheets": 1,
+        "buttonVariableSheets": 1,
+        "buttons": {
+          "outer": {
+            "className": "stable-btn",
+            "primaryToken": "#ab321f",
+            "background": "rgb(171, 50, 31)",
+            "fontSize": "21px"
+          }
+        }
+      },
+      {
+        "step": "zero",
+        "zeroRuntime": true,
+        "mountedPrefixes": [
+          "stable-btn",
+          "late-btn"
+        ],
+        "buttonStylePrefixes": [
+          "stable"
+        ],
+        "globalVariableSheets": 1,
+        "buttonVariableSheets": 2,
+        "buttons": {
+          "outer": {
+            "className": "stable-btn",
+            "primaryToken": "#1d762c",
+            "background": "rgb(29, 118, 44)",
+            "fontSize": "21px"
+          },
+          "late": {
+            "className": "late-btn",
+            "primaryToken": "#1d762c",
+            "background": "rgb(239, 239, 239)",
+            "fontSize": "13.3333px"
+          }
+        }
+      },
+      {
+        "step": "reenabled",
+        "zeroRuntime": false,
+        "mountedPrefixes": [
+          "stable-btn",
+          "late-btn",
+          "fresh-btn"
+        ],
+        "buttonStylePrefixes": [
+          "fresh",
+          "stable"
+        ],
+        "globalVariableSheets": 1,
+        "buttonVariableSheets": 3,
+        "buttons": {
+          "outer": {
+            "className": "stable-btn",
+            "primaryToken": "#1d762c",
+            "background": "rgb(29, 118, 44)",
+            "fontSize": "21px"
+          },
+          "late": {
+            "className": "late-btn",
+            "primaryToken": "#1d762c",
+            "background": "rgb(239, 239, 239)",
+            "fontSize": "13.3333px"
+          },
+          "fresh": {
+            "className": "fresh-btn",
+            "primaryToken": "#1d762c",
+            "background": "rgb(29, 118, 44)",
+            "fontSize": "21px"
+          }
+        }
+      }
+    ]
+  },
+  "svelteBaseline": {
+    "revision": "bf65615f529c657b7d8d47a5f67cb97f1e916cb1",
+    "prefixCls": "suite",
+    "cases": [
+      {
+        "zeroRuntime": false,
+        "ssr": [
+          "button-prefix:suite-btn:suite",
+          "input-prefix:suite-input",
+          "zero-outer"
+        ],
+        "client": {
+          "styles": [
+            "button-prefix:suite-btn:suite",
+            "input-prefix:suite-input",
+            "zero-outer"
+          ],
+          "backgroundColor": "rgb(171, 50, 31)",
+          "fontSize": "21px"
+        }
+      },
+      {
+        "zeroRuntime": true,
+        "ssr": [
+          "button-prefix:suite-btn:suite",
+          "input-prefix:suite-input",
+          "zero-outer"
+        ],
+        "client": {
+          "styles": [
+            "button-prefix:suite-btn:suite",
+            "input-prefix:suite-input",
+            "zero-outer"
+          ],
+          "backgroundColor": "rgb(171, 50, 31)",
+          "fontSize": "21px"
+        }
+      }
+    ]
+  }
+}

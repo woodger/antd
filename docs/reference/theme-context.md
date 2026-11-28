@@ -81,6 +81,19 @@ It resets inherited tokens, algorithms, component settings, `mode`,
 `cssVar.prefix`, and `zeroRuntime`. For a local theme, it creates its own
 `cssVar.key` unless you pass a nonempty key.
 
+### Component styles in zero-runtime mode
+
+Ant Design React 6.6.8 keeps global and component CSS variables with
+`theme.zeroRuntime: true`. Components in that scope use prebuilt styles for
+their class prefix. In the live capture, a prefix that registered its rules
+before the switch keeps them. A prefix first mounted with `zeroRuntime: true`
+stays unregistered when the flag is cleared. A newly mounted prefix then
+registers its rules with the current setting.
+
+The Svelte provider inherits `zeroRuntime` and currently emits generated
+prefix styles in SSR and in the browser in both modes.
+[React and Svelte measurements](../../tests/reference/ant-design-theme-zero-runtime-observation.json)
+
 ### Read tokens in a component
 
 Call `theme.useToken()` during child component initialization. In this example,
