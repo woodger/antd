@@ -7,7 +7,8 @@
     { name: 'drawer-late-getter', component: 'drawer', local: 'late-target' },
     { name: 'drawer-late-provider', component: 'drawer', parent: 'late-target' },
     { name: 'modal-late-getter', component: 'modal', local: 'late-target' },
-    { name: 'modal-late-provider', component: 'modal', parent: 'late-target' }
+    { name: 'modal-late-provider', component: 'modal', parent: 'late-target' },
+    { name: 'modal-late-destroy', component: 'modal', local: 'late-target', destroy: true }
   ];
   const samples = [...reference.cases, ...lateCases];
   let name = $state(reference.cases[0].name);

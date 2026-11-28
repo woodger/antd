@@ -165,5 +165,73 @@
       ],
       "openings": []
     }
-  ]
+  ],
+  "modalClose": {
+    "browser": "158.0.8127.36",
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "repeat": 2,
+    "persistentControl": "persistent-target",
+    "events": [
+      [
+        "afterOpenChange",
+        true,
+        "button"
+      ],
+      [
+        "closable.afterClose",
+        "opener"
+      ],
+      [
+        "afterClose",
+        "opener"
+      ],
+      [
+        "afterOpenChange",
+        false,
+        "opener"
+      ]
+    ],
+    "retarget": {
+      "focus": "body",
+      "events": [
+        [
+          "afterOpenChange",
+          true,
+          "button"
+        ],
+        [
+          "afterOpenChange",
+          true,
+          "button"
+        ],
+        [
+          "closable.afterClose",
+          "button"
+        ],
+        [
+          "afterClose",
+          "button"
+        ],
+        [
+          "afterOpenChange",
+          false,
+          "button"
+        ]
+      ]
+    },
+    "animatedExitMove": {
+      "firstTarget": "other",
+      "focus": "body",
+      "events": [
+        [
+          "afterOpenChange",
+          true,
+          "button"
+        ]
+      ]
+    }
+  }
 }

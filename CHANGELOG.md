@@ -16,6 +16,11 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 - Image and ImagePreviewGroup support `preview.getContainer` and inherit
   `ConfigProvider.getPopupContainer`.
 
+### Fixed
+
+- Modal restores focus and completes close callbacks when its container is
+  removed during closing. Moving an open Modal preserves its original opener.
+
 ## [0.1.1]
 
 ### Changed

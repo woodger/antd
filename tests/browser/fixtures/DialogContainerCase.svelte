@@ -40,6 +40,7 @@
   let calls = $state<{ getter: string; args: number; tag: string; body: boolean; }[]>([]);
   let closes = $state(0);
   let openedAt = $state<string[]>([]);
+  let modalEvents = $state<([string, string | undefined] | [string, boolean, string | undefined])[]>([]);
   const lateTargetId = $derived(sample.local === 'missing-selector' ? 'panel-never' : 'panel-late-target');
   const stagingNode = untrack(() => typeof document === 'undefined' ? undefined
     : staging === 'fragment' ? document.createDocumentFragment()
@@ -100,13 +101,22 @@
   let localElement = $state<HTMLDivElement>();
   let childElement = $state<HTMLDivElement>();
 
-  /** Measures where Drawer has been moved to the show notification. */
+  /** Reads the live destination at the open notification. */
   function recordOpen(visible: boolean) {
     if (!visible) {
       return;
     }
-    const root = document.querySelector<HTMLDialogElement>('dialog.ant-svelte-drawer');
+    const selector = sample.component === 'drawer' ? 'dialog.ant-svelte-drawer[open]'
+      : 'dialog.ant-svelte-dialog[open]';
+    const root = document.querySelector<HTMLDialogElement>(selector);
     openedAt.push(root?.parentElement?.dataset.panelContainer ?? 'default');
+  }
+
+  /** Records focus at each Modal notification, including the order of close callbacks. */
+  function recordModalEvent(name: string, visible?: boolean) {
+    const active = document.activeElement;
+    const focus = active?.id === 'panel-container-opener' ? 'opener' : active?.localName;
+    modalEvents.push(visible === undefined ? [name, focus] : [name, visible, focus]);
   }
 
   function getter(name: string, target: string) {
@@ -155,7 +165,7 @@
   shadow = root;
   return () => observer.disconnect();
 }}></div>
-<button type="button" onclick={() => opened = true}>Open container panel</button>
+<button id="panel-container-opener" type="button" onclick={() => opened = true}>Open container panel</button>
 <div id="panel-staging-host"></div>
 <button type="button" onclick={() => {
   if (stagingNode) document.getElementById('panel-staging-host')!.append(stagingNode);
@@ -172,8 +182,13 @@
       {#if opened && readyAtOpen === 'before'}<div id={lateTargetId} data-panel-container="late"></div>{/if}
       {#if mounted}
         {#if sample.component === 'modal'}
-          <Modal {...localOptions} bind:open={opened} title="Container panel"
-            onCancel={() => closes++}>
+          <Modal {...localOptions} bind:open={opened} title="Container panel" destroyOnHidden={sample.destroy}
+            onCancel={() => closes++} closable={{ afterClose: () => recordModalEvent('closable.afterClose') }}
+            afterClose={() => recordModalEvent('afterClose')}
+            afterOpenChange={next => {
+              recordOpen(next);
+              recordModalEvent('afterOpenChange', next);
+            }}>
             <DialogContainerContents {nested} />
           </Modal>
         {:else}
@@ -193,3 +208,4 @@
 <output aria-label="Panel container closes">{closes}</output>
 <output aria-label="Panel container open">{String(opened)}</output>
 <output aria-label="Panel opening destinations">{JSON.stringify(openedAt)}</output>
+<output aria-label="Modal lifecycle events">{JSON.stringify(modalEvents)}</output>

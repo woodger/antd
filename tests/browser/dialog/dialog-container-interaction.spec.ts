@@ -1,5 +1,8 @@
 import type { Page } from '@playwright/test';
 import { test, expect } from '../test';
+import commitReference from '../fixtures/ant-design-dialog-container-commit-reference.json' with {
+  type: 'json'
+};
 
 const root = (page: Page) => page.locator('dialog.ant-svelte-dialog,dialog.ant-svelte-drawer');
 const panel = (page: Page) => page.getByRole('dialog', { name: 'Container panel', exact: true });
@@ -31,6 +34,64 @@ async function frames(page: Page) {
     for (let n = 0; n < 10; n++) await new Promise(requestAnimationFrame);
   });
 }
+
+test('Modal restores the original opener after moving an open panel to another target', async ({ page }) => {
+  await open(page, 'modal-local');
+  const original = await panel(page).elementHandle();
+  const events = page.getByLabel('Modal lifecycle events', { exact: true });
+  const [firstOpen, secondOpen] = commitReference.modalClose.retarget.events;
+  const [, ...closing] = commitReference.modalClose.events;
+  await expect(events).toHaveText(JSON.stringify([firstOpen]));
+
+  await check(page, 'Alternate panel container', true);
+
+  await expect(page.locator('[data-panel-container="child"] > dialog')).toBeVisible();
+  expect(await panel(page).evaluate((node, old) => node === old, original)).toBe(false);
+  await expect(events).toHaveText(JSON.stringify([firstOpen, secondOpen]));
+
+  await page.keyboard.press('Escape');
+
+  await expect(panel(page)).toHaveCount(0);
+  await expect(opener(page)).toBeFocused();
+  await expect(events).toHaveText(JSON.stringify([firstOpen, secondOpen, ...closing]));
+});
+
+test('Modal cancels an old exit when its connected target changes', async ({ page }) => {
+  await check(page, 'Animate container panel', true);
+  await open(page, 'modal-local');
+  const previous = page.locator('[data-panel-container="local"] > dialog');
+  const events = page.getByLabel('Modal lifecycle events', { exact: true });
+  const expected = JSON.stringify(commitReference.modalClose.animatedExitMove.events);
+  const closer = await page.getByRole('button', { name: 'Close container panel', exact: true })
+    .elementHandle();
+  await expect(events).toHaveText(expected);
+  const paused = await previous.evaluate(async (node, button) => {
+    if (!(button instanceof HTMLButtonElement)) {
+      return false;
+    }
+    const surface = node.querySelector('[data-ant-modal-panel]');
+    button.click();
+    for (let frame = 0; frame < 12; frame++) {
+      await new Promise(requestAnimationFrame);
+      const exit = surface?.getAnimations()[0];
+      if (exit) {
+        exit.pause();
+        return true;
+      }
+    }
+    return false;
+  }, closer);
+  expect(paused).toBe(true);
+
+  await check(page, 'Alternate panel container', true);
+
+  await expect(previous).toHaveCount(0);
+  const next = page.locator('[data-panel-container="child"] > dialog');
+  await expect(next).toHaveCount(1);
+  await expect(next).toBeHidden();
+  await expect(opener(page)).toBeFocused();
+  await expect(events).toHaveText(expected);
+});
 
 for (const name of ['modal-local', 'modal-local-shadow', 'drawer-local', 'drawer-local-shadow']) {
   test(`dialog containers retain native modality and opener focus for ${name}`, async ({ page }) => {

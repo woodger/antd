@@ -102,6 +102,13 @@ open. Consumers supply ShadowRoot styles. Native dialog mode
 retains modality, `inert`, and focus restoration in any
 container.
 
+If the host disappears during close, Modal releases modality and finishes the
+close callbacks in their usual order. Changing a connected target during an
+animated close discards the old panel and its animation. A move while open
+keeps the original opener as the focus restore target. In the captured React
+move, focus ended on the document body.
+[Container close measurements](../../../tests/browser/fixtures/ant-design-dialog-container-commit-reference.json)
+
 The reference uses `@rc-component/dialog` 1.10.0 and portal 2.1.3.
 Their licenses are included. [Dialog license](../../../src/lib/vendor/LICENSE.rc-dialog) ·
 [Portal license](../../../src/lib/vendor/LICENSE.rc-portal)

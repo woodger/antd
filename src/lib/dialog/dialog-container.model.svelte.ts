@@ -59,7 +59,11 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       next = (typeof choice === 'function' ? choice() : choice) ?? document.body;
     }
 
-    if (initialized && next !== untrack(() => target)) revision = ++currentRevision;
+    if (initialized && next !== untrack(() => target)) {
+      // Visibility effects must wait for the new keyed attachment.
+      connected = false;
+      revision = ++currentRevision;
+    }
     initialized = true;
     target = next;
   });
@@ -141,7 +145,9 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       function sync() {
         const nonce = config.csp?.nonce;
         // The hidden static root is required for CSSOM. The dialog can appear after it is moved.
-        connected = node.isConnected && !node.closest('[data-ant-modal-static-host]');
+        if (activeNode === node && nodeRevision === currentRevision) {
+          connected = node.isConnected && !node.closest('[data-ant-modal-static-host]');
+        }
         // Document :has() cannot see a modal in a ShadowRoot. Native modality still applies.
         const shadowModal = node.isConnected && node.open
           && !node.hasAttribute('data-ant-dialog-unlocked')

@@ -148,9 +148,9 @@ export function connectDialogFocus(
     }
   }
 
-  /** Remembers the external opener only on first show, before moving focus. */
-  function open() {
-    const current = getDialogActiveElement(document);
+  /** Captures the opener before moving focus, or uses the opener of the same portaled session. */
+  function open(previousOpener?: HTMLElement) {
+    const current = previousOpener ?? getDialogActiveElement(document);
     opener = current instanceof view.HTMLElement ? current : undefined;
     stack.push(dialog);
     const interaction = getInteraction();
@@ -160,6 +160,7 @@ export function connectDialogFocus(
       target.focus({ preventScroll: true });
     }
     keepFocus();
+    return opener;
   }
 
   /** showModal raises the dialog when switching modes while preserving the logical focus stack. */

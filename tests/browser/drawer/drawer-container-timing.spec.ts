@@ -99,10 +99,8 @@ for (const sample of commitReference.cases) {
     await expect(destination).toHaveCount(1);
     await expect.poll(() => getterPayloads(page)).toEqual(sample.calls);
     await expect.poll(() => dialog.evaluate(node => node.contains(document.activeElement))).toBe(true);
-    if (component === 'drawer') {
-      await expect(page.getByLabel('Panel opening destinations', { exact: true }))
-        .toHaveText(JSON.stringify([sample.destination]));
-    }
+    await expect(page.getByLabel('Panel opening destinations', { exact: true }))
+      .toHaveText(JSON.stringify([sample.destination]));
 
     await page.getByRole('button', { name: 'Close container panel', exact: true })
       .evaluate(button => {
@@ -113,5 +111,32 @@ for (const sample of commitReference.cases) {
     await expect(destination).toHaveCount(0);
     await expect(opener).toBeFocused();
     await expect(page.locator('html')).not.toHaveCSS('overflow', 'hidden');
+    if (component === 'modal') {
+      await expect(page.getByLabel('Modal lifecycle events', { exact: true }))
+        .toHaveText(JSON.stringify(commitReference.modalClose.events));
+    }
   });
 }
+
+test('Modal settles dismissal and destroys the panel when its animated host disappears', async ({ page }) => {
+  await page.goto('/?fixture=dialog-container');
+  await page.getByLabel('Dialog reference', { exact: true }).selectOption('modal-late-destroy');
+  await page.getByRole('combobox', { name: 'Destination with open', exact: true }).selectOption('after');
+  await page.getByLabel('Animate container panel', { exact: true }).check();
+  const opener = page.getByRole('button', { name: 'Open container panel', exact: true });
+  const destination = page.locator('[data-panel-container="late"] > dialog');
+  const lifecycle = page.getByLabel('Modal lifecycle events', { exact: true });
+  const [opening] = commitReference.modalClose.events;
+  await expect(page.locator('dialog.ant-svelte-dialog')).toHaveCount(0);
+  await opener.click();
+  await expect(destination).toBeVisible();
+  await expect(lifecycle).toHaveText(JSON.stringify([opening]));
+
+  await page.keyboard.press('Escape');
+
+  await expect(page.locator('dialog.ant-svelte-dialog')).toHaveCount(0);
+  await expect(opener).toBeFocused();
+  await expect(lifecycle).toHaveText(JSON.stringify(commitReference.modalClose.events));
+  await expect(page.getByLabel('Panel container closes', { exact: true })).toHaveText('1');
+  await expect(page.locator('html')).not.toHaveCSS('overflow', 'hidden');
+});

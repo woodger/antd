@@ -160,6 +160,7 @@
   let backdrop = $state<HTMLDivElement>();
   let backdropPointer: number | undefined;
   let presented = $state(false);
+  let openingTrigger: HTMLElement | undefined;
   let visited = $state(false);
   let panelMotion = $state.raw<CssMotionState>({});
   let maskMotion = $state.raw<CssMotionState>({});
@@ -209,6 +210,7 @@
   let runtime = $state.raw<{
     sync(open: boolean, settings: ModalMotionSettings, movingMask: boolean): void;
     closed(): void;
+    closeDetached(): void;
     end(part: ModalMotionPart, event: CssMotionEvent): void;
   }>();
   const container = createDialogContainer(() => ({
@@ -216,7 +218,10 @@
     open,
     getContainer,
     getPopupContainer: config.getPopupContainer,
-    resolveWhenClosed: renderDialog,
+    // A removed host leaves the current attachment responsible for completing close.
+    resolveWhenClosed: renderDialog && (
+      open || !presented || untrack(() => dialog?.isConnected === true)
+    ),
     portalByDefault: !interaction.native && (open || presented || maskLeaving),
     style: dialogStyle,
     onPointerDown: event => {
@@ -240,14 +245,27 @@
 
   $effect(() => {
     const current = runtime;
+    const node = dialog;
+    const connected = container.connected;
     const requested = open;
     const settings = motionSettings;
     const movingMask = maskLeaving;
-    if (!current || !container.connected || !dialog?.isConnected) {
+    if (!current || !node) {
       return;
     }
 
-    untrack(() => current.sync(requested, settings, movingMask));
+    if (!node.isConnected) {
+      if (!requested) {
+        queueMicrotask(() => {
+          if (runtime === current && !open && !node.isConnected) {
+            current.closeDetached();
+          }
+        });
+      }
+      return;
+    }
+
+    if (connected) untrack(() => current.sync(requested, settings, movingMask));
   });
 
   $effect(() => {
@@ -273,8 +291,12 @@
     function sync(visible: boolean, options: ModalMotionSettings, movingMask: boolean) {
       if (visible) {
         releaseMask();
-        if (node.open) focus.sync();
-        else focus.open();
+        if (node.open) {
+          focus.sync();
+        }
+        else {
+          openingTrigger = focus.open(openingTrigger);
+        }
 
         shown = node.open;
         if (shown) {
@@ -353,6 +375,7 @@
       shown = false;
       const restore = pendingRestore ?? focus.close();
       pendingRestore = undefined;
+      openingTrigger = undefined;
       motion.closed();
       const destroy = destroyOnHidden === true && forceRender !== true;
       const afterCloseButton = closeCallbacks?.afterClose;
@@ -369,7 +392,18 @@
       }
     }
 
-    const current = { sync, closed, end: motion.end };
+    /** Completes an owner-requested close when removing the portal prevents a native close event. */
+    function closeDetached() {
+      if (!shown) {
+        return;
+      }
+
+      pendingRestore ??= focus.close();
+      motion.reset();
+      closed();
+    }
+
+    const current = { sync, closed, closeDetached, end: motion.end };
     panelMotion = {};
     maskMotion = {};
     visited = true;
@@ -383,6 +417,7 @@
       if (runtime === current) {
         runtime = undefined;
         presented = false;
+        if (!open) openingTrigger = undefined;
       }
 
       if (active && active !== document.body && !isPopupFocusWithin(node, active)) {
