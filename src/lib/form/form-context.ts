@@ -1,17 +1,19 @@
+// Shares field behavior and the live model of the nearest Form with descendant controls.
 import { getContext, onDestroy, onMount, setContext } from 'svelte';
 import type { FormFieldRegistration } from './form-internal';
 import type {
   FormFeedbackIcons, FormRequiredMark, FormSemanticSlots, FormTooltipProps, FormValidateTrigger
 } from './form.types';
 import type { FormValidateStatus } from './form-error-list.types';
-import type { FormFieldMeta } from './form.model.svelte';
+import type { FormFieldMeta, FormInstance } from './form.model.svelte';
 import type { ColProps } from '../grid/grid.types';
 import type { NamePath } from './form-store.engine';
 import type { Variant } from '../types';
 import { useConfig } from '../config-provider/config-context';
-import type { FormRule } from './validation.engine';
+import type { FormRule, FormValues } from './validation.engine';
 
 export interface FormContext {
+  readonly model: FormInstance<FormValues>;
   readonly variant?: Variant;
   readonly disabled: boolean;
   readonly submitting: boolean;
@@ -63,10 +65,28 @@ export interface FormFieldContext {
 const formKey = Symbol('ant-design-form');
 const fieldKey = Symbol('ant-design-form-field');
 
+/** A reactive reference to the model of the nearest Form. */
+export interface FormInstanceRef<Values extends FormValues> {
+  readonly current: FormInstance<Values> | undefined;
+}
+
+/** Captures the nearest Form during component initialization and follows model replacement. */
+export function useFormInstance<Values extends FormValues = FormValues>(): FormInstanceRef<Values> {
+  const context = getContext<FormContext | undefined>(formKey);
+  return {
+    get current() {
+      // Context erases the value schema. The caller knows the schema supplied to the nearest Form.
+      return context?.model as FormInstance<Values> | undefined;
+    }
+  };
+}
+
+/** Publishes the form context owned by this component. */
 export function provideForm(form: FormContext) {
   setContext(formKey, form);
 }
 
+/** Reads form settings with the effective disabled state of the nearest ConfigProvider. */
 export function useForm(): FormContext | undefined {
   const parent = getContext<FormContext | undefined>(formKey);
   if (!parent) {
@@ -82,10 +102,12 @@ export function useForm(): FormContext | undefined {
   return form;
 }
 
+/** Sets the field association for the controls in this scope. */
 export function provideFormField(field: FormFieldContext | undefined) {
   setContext(fieldKey, field);
 }
 
+/** Reads field attributes and keeps a control registration until it unmounts. */
 export function useFormField(getInstance?: () => unknown): FormFieldContext | undefined {
   const parent = getContext<FormFieldContext | undefined>(fieldKey);
   const config = useConfig();

@@ -130,6 +130,9 @@
   provideConfig(fieldConfig);
 
   provideForm({
+    get model() {
+      return form;
+    },
     get variant() {
       return variant;
     },

@@ -490,18 +490,15 @@ export function createForm<Values extends FormValues>({
         continue;
       }
 
-      const meta: FormFieldMeta | null = field ? {
-        touched: field.touched,
-        validating: field.validating,
-        errors: [...(field.errors ?? [])],
-        warnings: [...(field.warnings ?? [])],
-        name: [...path],
-        validated: field.validated
-      } : null;
-      if (!filter || filter(meta)) {
-        const currentValue = getFormValue(values, path);
-        result = setFormValue(result, path, currentValue);
+      if (filter) {
+        const meta = field ? fieldMeta(field, path) : null;
+        if (!filter(meta)) {
+          continue;
+        }
       }
+
+      const currentValue = getFormValue(values, path);
+      result = setFormValue(result, path, currentValue);
     }
 
     for (const path of lists) {
@@ -540,6 +537,9 @@ export function createForm<Values extends FormValues>({
 
     return projectFieldValues(selected, select);
   }
+
+  // All mounted observers can read the same projection without subscribing to validation metadata.
+  const watchValues = $derived(getFieldsValue());
 
   // The last attached Form owns callbacks for this model until its registration is released.
   function currentCallbackProvider() {
@@ -1382,6 +1382,7 @@ export function createForm<Values extends FormValues>({
       callbackProviders.add(getCallbacks);
       return () => { callbackProviders.delete(getCallbacks); };
     },
+    getWatchValues: () => watchValues,
     getFieldMeta(name) {
       const field = findField(name);
 

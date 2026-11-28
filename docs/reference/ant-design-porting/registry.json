@@ -7465,6 +7465,18 @@
           ]
         },
         {
+          "upstream": "Form.useFormInstance",
+          "local": [
+            "useFormInstance"
+          ]
+        },
+        {
+          "upstream": "Form.useWatch",
+          "local": [
+            "useFormWatch"
+          ]
+        },
+        {
           "upstream": "Form.Item.useStatus",
           "local": [
             "useFormItemStatus"
@@ -8004,6 +8016,25 @@
             "tests/package/form/form-lifecycle.ssr.test.ts"
           ],
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): form and field preserve precedence, local defaults on remount, duplicate paths, removal-triggered dependency checks, clearOnDestroy and reattachment over model defaults. The pinned build closes over the initial clearOnDestroy flag (detachAfterPropChange), clears data on a still-attached shared model (oneSharedOwnerLeaves), and uses obsolete indexes after keyed list moves (movedFieldUnmount, listUnmount, nestedListUnmount, rowRemoval). Svelte uses current disposal options, clears after the last owner, resolves row paths by key, and restores an entire list's default without pruning its restored descendants. Model replacement preserves the Svelte editor and invalidates old submissions."
+        },
+        {
+          "id": "watch-and-form-instance",
+          "title": "Form value watches and model context",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/form-context.ts",
+            "src/lib/form/form.model.svelte.ts",
+            "src/lib/form/form-watch.svelte.ts",
+            "tests/browser/fixtures/ant-design-form-watch-observation.json",
+            "tests/browser/form/form-watch.spec.ts",
+            "tests/browser/form/form-watch-hydration.spec.ts",
+            "tests/package/form/form-watch.ssr.test.ts",
+            "tests/package/form/form-watch.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): field, root and selector watches, explicit or nearest model, registered projection and preserve, SSR selector fallback, registration, writes, reset, list moves and disposal. Svelte uses reactive getters for the selection and context model. In the source capture, preserveToggle stays stale until another write, modelChanged and oldModelWrite show that a watcher remains connected to the previous form, and nonSerializableEquality shows distinct opaque values and null versus undefined conflated by JSON comparison. Svelte follows current options, shares the registered projection and preserves opaque identity."
         },
         {
           "id": "dayjs-values",

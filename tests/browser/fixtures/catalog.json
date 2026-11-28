@@ -169,6 +169,11 @@
     "root": "form-lifecycle-fixture"
   },
   {
+    "id": "form-watch",
+    "module": "./FormWatchFixtures.svelte",
+    "root": "form-watch-fixture"
+  },
+  {
     "id": "form-validation-triggers",
     "module": "./FormValidationTriggerFixtures.svelte",
     "root": "form-validation-trigger-fixture"

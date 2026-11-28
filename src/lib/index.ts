@@ -1063,6 +1063,10 @@ export type {
 export type { FormItemProps } from './form/FormItem.svelte';
 export type { ValidateMessage, ValidateMessages } from './form/validation-messages.types';
 export { useFormItemStatus } from './form/form-item-status';
+export { useFormInstance, type FormInstanceRef } from './form/form-context';
+export {
+  useFormWatch, type FormWatchOptions, type FormWatchPath, type FormWatchSelector, type FormWatchValue
+} from './form/form-watch.svelte.js';
 export type { FormItemStatus } from './form/form-item-status';
 export type { FormErrorListProps, FormValidateStatus } from './form/form-error-list.types';
 export type {

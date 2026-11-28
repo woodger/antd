@@ -1,0 +1,136 @@
+{
+  "upstream": {"release":"6.6.8","revision":"984592267de88fbf9cdaecc96a56629e721c709d","archiveSha256":"8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa","formPackage":"@rc-component/form@1.8.6","react":"18.3.1"},
+  "ssr": {
+    "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":{"missing":true},"full":{"missing":true},"allKeys":{"missing":true},"selected":{"missing":true},"chosen":{"missing":true},"nested":{"missing":true},"literal":{"missing":true},"row":{"missing":true},"profile":{"name":"empty"},"hidden":{"hidden":"empty"},"registeredHidden":{"hidden":"empty"},"opaque":{"missing":true},"vector":{"missing":true}},
+    "A-context": {"title":{"missing":true},"profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":{"missing":true}},
+    "inner-context": {"title":{"missing":true},"profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":{"missing":true}},
+    "B-context": {"title":{"missing":true},"profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":{"missing":true}}
+  },
+  "cases": {
+    "initial": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"alpha","full":"alpha","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"alpha","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"alpha","profile":{"name":"Anna"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": ["empty","Anna"]
+    },
+    "userEdit": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"typed","full":"typed","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"typed","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"typed","profile":{"name":"Anna"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "contextWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"context write","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"Anna"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "bulkWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"context write","nested":"merged model","literal":"literal","row":"first","profile":{"name":"merged model"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"merged model"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": ["merged model"]
+    },
+    "fieldWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"context write","nested":"field packet","literal":"literal","row":"first","profile":{"name":"field packet"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"field packet"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": ["field packet"]
+    },
+    "reset": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"context write","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"Anna"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": ["Anna"]
+    },
+    "unregisteredWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"context write","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"Anna"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": []
+    },
+    "preserveToggle": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":{"missing":true},"chosen":"context write","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"Anna"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "batchedWrites": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"private update","chosen":"context write","nested":"final name","literal":"literal","row":"first","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": ["final name"]
+    },
+    "nonSerializableEquality": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"private update","chosen":"context write","nested":"final name","literal":"literal","row":"first","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": []
+    },
+    "fieldRemoved": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":{"missing":true},"full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"private update","chosen":{"missing":true},"nested":"final name","literal":"literal","row":"first","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":{"missing":true},"profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "fieldRegistered": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"private update","chosen":"context write","nested":"final name","literal":"literal","row":"first","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "listMove": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"private update","chosen":"context write","nested":"final name","literal":"literal","row":"second","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "pathChanged": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"final name","chosen":"context write","nested":"final name","literal":"literal","row":"second","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "modelChanged": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"final name","chosen":"context write","nested":"final name","literal":"literal","row":"second","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"beta","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "newModelWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"context write","full":"context write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"final name","chosen":"context write","nested":"final name","literal":"literal","row":"second","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"context write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"B changed","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "oldModelWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"old model write","full":"old model write","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"final name","chosen":"old model write","nested":"final name","literal":"literal","row":"second","profile":{"name":"final name"},"hidden":{"hidden":"private update"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"old model write","profile":{"name":"final name"},"counts":{"hidden":"private update"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"B changed","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "clearedModel": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":{"missing":true},"full":{"missing":true},"allKeys":[],"selected":{"missing":true},"chosen":{"missing":true},"nested":{"missing":true},"literal":{"missing":true},"row":{"missing":true},"profile":{"name":"empty"},"hidden":{"hidden":"empty"},"registeredHidden":{"hidden":"empty"},"opaque":{"missing":true},"vector":{"missing":true}},
+      "B-context": {"title":"B changed","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": []
+    },
+    "detachedWrite": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":{"missing":true},"full":"detached","allKeys":["title"],"selected":{"missing":true},"chosen":{"missing":true},"nested":{"missing":true},"literal":{"missing":true},"row":{"missing":true},"profile":{"name":"empty"},"hidden":{"hidden":"empty"},"registeredHidden":{"hidden":"empty"},"opaque":{"missing":true},"vector":{"missing":true}},
+      "B-context": {"title":"B changed","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]}
+    },
+    "reattachedModel": {
+      "outer": {"outside":true,"outsideWatch":{"missing":true},"registered":"detached","full":"detached","allKeys":["hidden","opaque","profile","profile.name","rows","title","vector"],"selected":"Anna","chosen":"detached","nested":"Anna","literal":"literal","row":"first","profile":{"name":"Anna"},"hidden":{"hidden":"private A"},"registeredHidden":{"hidden":"empty"},"opaque":"first","vector":[{"missing":true}]},
+      "A-context": {"title":"detached","profile":{"name":"Anna"},"counts":{"hidden":"private A"},"matchesOwner":true,"wholeKeys":["profile","profile.name","rows","title"]},
+      "inner-context": {"title":"inner","profile":{"name":"empty"},"counts":{"hidden":"empty"},"matchesOwner":true,"wholeKeys":["title"]},
+      "B-context": {"title":"B changed","profile":{"name":"empty"},"counts":{"hidden":"private B"},"matchesOwner":true,"wholeKeys":["title"]},
+      "effects": ["empty","Anna"]
+    }
+  }
+}

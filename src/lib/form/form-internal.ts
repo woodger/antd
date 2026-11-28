@@ -1,5 +1,5 @@
 // The private link from an attached Form to the model. The same hooks are reused through proxies.
-import type { NamePath } from './form-store.engine';
+import type { FormValueProjection, NamePath } from './form-store.engine';
 import type { FormRule, FormValues } from './validation.engine';
 import type { FormFieldMeta, FormInstance } from './form.model.svelte';
 import type { FormProps, FormValidateTrigger } from './form.types';
@@ -44,6 +44,7 @@ export interface FormHooks<Values extends FormValues> {
   attachForm(getClearOnDestroy: () => boolean | undefined): () => void;
   registerValidateMessages(getMessages: () => ValidateMessages | undefined): () => void;
   registerCallbacks(getCallbacks: FormCallbackProvider<Values>): () => void;
+  getWatchValues(): FormValueProjection<Values>;
   getFieldMeta(name: NamePath): FormFieldMeta | undefined;
   handleFieldBlur(name: NamePath): void;
   registerField(field: FormFieldRegistration): () => void;

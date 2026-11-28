@@ -32,6 +32,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   FormItem can revalidate from edits to its declared field dependencies.
 - Form and FormItem support field value retention. Form can clear a detached
   model and restore its initial values on reattachment.
+- Form exposes reactive field and selector watches and access to the nearest
+  form model.
 
 ### Fixed
 

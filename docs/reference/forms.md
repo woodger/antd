@@ -7,6 +7,7 @@ handles arrays of fields.
 ## Contents
 
 - [Values and fields](#values-and-fields)
+- [Watching values](#watching-values)
 - [Validation](#validation)
 - [Change events and FormProvider](#change-events-and-formprovider)
 - [Submission](#submission)
@@ -139,6 +140,60 @@ state. It defaults to `false`. A hidden field still participates in validation,
 submission, and FormData, so a required error can block submission. Hidden
 field elements stay out of Tab navigation and the accessibility tree. Reset
 remounts their contents just as it does for visible fields.
+
+## Watching values
+
+`useFormWatch` observes a field path or a selector. Call it during component
+initialization and read its `value` getter in markup, `$derived`, or `$effect`.
+With no explicit model, it uses the nearest `Form`. `useFormInstance()` gives
+access to that model through its `current` getter, including after the form
+receives another model.
+
+```svelte
+<script lang="ts">
+  import { useFormInstance, useFormWatch } from '@woodger/antd';
+
+  type Fields = { profile: { name: string }; draft?: string };
+
+  const owner = useFormInstance<Fields>();
+  const name = useFormWatch<Fields, readonly ['profile', 'name']>(['profile', 'name']);
+  const draft = useFormWatch(
+    (values) => values.draft ?? '',
+    { get form() { return owner.current; }, preserve: true }
+  );
+</script>
+
+<p>{name.value ?? ''}</p>
+<p>{draft.value}</p>
+<button type="button" onclick={() => owner.current?.resetFields()}>Reset the form</button>
+```
+
+The observed values come from `getFieldsValue()` by default. This includes
+registered fields and their projected paths. Set `preserve: true` to select
+from the full model, including values without a mounted field. Omitting the
+path, or passing `[]`, observes the whole chosen projection. The option is
+independent of field retention through `Form.preserve`.
+
+Pass a model directly or through the `form` option. Reactive getters for
+`form`, `preserve`, and a first argument of the form `{ get path() { … } }`
+allow those selections to change in place. A path can be a literal key or an
+array of typed segments. Selectors should be pure and accept a partial model.
+
+Watches follow edits, programmatic writes, reset, field registration, list
+reordering, and model disposal. Equal object and array results keep the
+previous selection. Opaque objects such as class instances retain their
+identity. Outside a form, `useFormInstance().current` is `undefined`.
+
+During SSR and the first hydration pass, a path reads `undefined` and a
+selector reads an empty object. The watch publishes the current selection
+after mount.
+
+In the pinned React build, changing models can leave a watch connected to
+the old model, and changing the watch's `preserve` option can leave a stale
+selection until another write. JSON comparison also conflates some distinct
+selections, including opaque instances and `undefined` versus `null` in
+arrays. Svelte follows the current options and compares values structurally,
+with identity for class instances. [React observations](../../tests/browser/fixtures/ant-design-form-watch-observation.json)
 
 ## Validation
 
