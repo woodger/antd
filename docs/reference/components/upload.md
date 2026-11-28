@@ -60,6 +60,11 @@ to the React renderer. [18 raw cases](../../../tests/browser/fixtures/ant-design
 [Two transport scenarios](../../../tests/browser/fixtures/ant-design-upload-ref-transport-reference.json) · [Browser tests](../../../tests/browser/upload/upload-ref.spec.ts) ·
 [SSR tests](../../../tests/package/upload/upload-ref.ssr.test.ts) · [Controller tests](../../../src/lib/upload/upload-controller.engine.test.ts)
 
+`UploadDragger` keeps the response type `T` on the `onSuccess`
+and `onError` ref methods. The package test checks the emitted
+declarations with `skipLibCheck: false`.
+[Ref declaration test](../../../tests/package/upload/upload-ref-declarations.test.ts)
+
 If the first `onChange` synchronously unmounts the component,
 the rest of the batch stops before additional callbacks, status
 changes, and requests. In Ant Design 6.6.8, `onBatchStart`

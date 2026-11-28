@@ -18,9 +18,10 @@
   export function abort(file?: UploadFile<T> | string) {
     innerUpload?.abort(file);
   }
-  export const onBatchStart: UploadRef<T>['onBatchStart'] = batch =>
+  // Batch and progress share one signature across response types.
+  export const onBatchStart: UploadRef['onBatchStart'] = batch =>
     innerUpload?.onBatchStart(batch);
-  export const onProgress: UploadRef<T>['onProgress'] = (event, file) =>
+  export const onProgress: UploadRef['onProgress'] = (event, file) =>
     innerUpload?.onProgress(event, file);
   export const onSuccess: UploadRef<T>['onSuccess'] = (response, file, xhr) =>
     innerUpload?.onSuccess(response, file, xhr);

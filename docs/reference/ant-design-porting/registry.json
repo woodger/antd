@@ -15701,6 +15701,8 @@
             "tests/browser/fixtures/ant-design-upload-ref-reference.json",
             "tests/browser/fixtures/ant-design-upload-ref-transport-reference.json",
             "tests/package/upload/upload-ref.ssr.test.ts",
+            "tests/package/upload/upload-ref-declarations.test.ts",
+            "tests/package/upload/upload-ref.types.ts",
             "docs/reference/components/upload.md"
           ],
           "note": "Активный UploadRef из Upload.tsx предоставляет onBatchStart/onProgress/onSuccess/onError, getter текущего fileList и upload.abort; Dragger передаёт те же методы. 18 raw UMD cases задают manual/mixed batch, LIST_IGNORE, maxCount, controlled hold/accept, membership guards, JSON/plain success, xhr и error. onBatchStart не запускает beforeUpload или транспорт. Два дополнительных raw UMD cases проверяют реальный customRequest, imperative completion, повторный abort и следующий progress. Прямые callbacks не закрывают transport request; imperative success сохраняет возможность abort. Прежний прямой abort и bindable nativeElement/inputElement сохранены, refs также доступны через bind:this. Native held ref после unmount не публикует callbacks и очищает DOM refs/делегированный upload; внешний draft/focus сохраняется. SSR не запускает callbacks или browser resources. React.Component/saveUploader renderer binding и opaque ReactElement rendering относятся к отдельной framework boundary."

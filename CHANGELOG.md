@@ -30,6 +30,7 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   removed during closing. Moving an open Modal preserves its original opener.
 - Modal completes an unanimated close when its container changes in the same update.
 - The ordinary Modal footer resets the inherited disabled setting.
+- The public `UploadDragger` declarations pass strict TypeScript checking.
 
 ## [0.1.1]
 
