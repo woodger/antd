@@ -58,6 +58,9 @@
     get rules() {
       return rules;
     },
+    get validateTrigger() {
+      return form.validateTrigger;
+    },
     get initialValue() {
       return initialValue;
     },

@@ -25,6 +25,8 @@ export interface ValidationRule<Values extends FormValues = FormValues> {
   required?: boolean;
   /** By default false; the message falls into the warnings and does not block submit. */
   warningOnly?: boolean;
+  /** Filters control events. Explicit and dependency validation still run this rule. */
+  validateTrigger?: string | readonly string[];
   min?: number;
   max?: number;
   /** The exact number/length; the date compares timestamp. Priority over min/max. */

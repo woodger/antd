@@ -72,6 +72,9 @@ export interface FormSemanticSlots {
 export type FormSemantic = FormSemanticSlots
   | (<Values extends FormValues>(info: { props: FormProps<Values> }) => FormSemanticSlots | undefined);
 
+/** Events that validate a field. An empty array or false disables control-triggered validation. */
+export type FormValidateTrigger = string | readonly string[] | false;
+
 /** The currently mounted named models in a FormProvider subtree. */
 export type FormProviderForms = Readonly<Partial<Record<string, FormInstance<FormValues>>>>;
 
@@ -130,6 +133,8 @@ export interface FormProps<Values extends FormValues> extends Omit<
   feedbackIcons?: FormFeedbackIcons;
   /** Local groups replace config entirely; the message of a separate rule is more prioritized. */
   validateMessages?: ValidateMessages;
+  /** Default validation events for this form's fields. */
+  validateTrigger?: FormValidateTrigger;
   /** By default, form; false leaves context without native wrapper and DOM attributes. */
   component?: 'form' | false;
   /** Defaults disabled for children; the nearest ConfigProvider and prop control priority. */

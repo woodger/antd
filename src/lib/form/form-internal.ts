@@ -2,7 +2,7 @@
 import type { NamePath } from './form-store.engine';
 import type { FormRule, FormValues } from './validation.engine';
 import type { FormFieldMeta, FormInstance } from './form.model.svelte';
-import type { FormProps } from './form.types';
+import type { FormProps, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
 
 export interface FormFieldRegistration {
@@ -10,6 +10,8 @@ export interface FormFieldRegistration {
   // Symbol preserves when identity registration is stored inside Svelte proxy.
   readonly mountKey?: symbol;
   readonly rules?: readonly FormRule[];
+  readonly dependencies?: readonly NamePath[];
+  readonly validateTrigger?: FormValidateTrigger;
   readonly validateFirst?: boolean | 'parallel';
   readonly validateDebounce?: number;
   readonly isList?: boolean;

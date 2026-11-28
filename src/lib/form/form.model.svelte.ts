@@ -4,7 +4,7 @@ import { tick, untrack } from 'svelte';
 import { FormValidationError } from './FormValidationError';
 import { setFormHooks, type FormCallbackProvider, type FormFieldRegistration } from './form-internal';
 import { focusFormField, getFormFieldElement, scrollFormField } from './form-field.dom';
-import type { FormScrollOptions } from './form.types';
+import type { FormScrollOptions, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
 import { mergeValidationMessages } from './validation-message.engine';
 import {
@@ -146,8 +146,14 @@ export interface FormInstance<Values extends FormValues> {
 
 /** The model created by createForm, with an explicit entry point for control events. */
 export interface FormModel<Values extends FormValues> extends FormInstance<Values> {
-  /** Records a control edit, publishes its change and automatically validates the edited field. */
-  changeFieldValue<const Path extends NamePath>(name: Path, value: NamePathValue<Values, Path>): void;
+  /** Records a control edit and runs validation for the event. The default is onChange. */
+  changeFieldValue<const Path extends NamePath>(
+    name: Path,
+    value: NamePathValue<Values, Path>,
+    trigger?: string
+  ): void;
+  /** Handles a validation event without writing a value or marking the field touched. */
+  validateFieldOn(name: NamePath, trigger: string): void;
 }
 
 interface StoredField {
@@ -172,12 +178,20 @@ interface FieldSelection {
 }
 
 interface ValidationRequest {
-  source: 'explicit' | 'control' | 'refresh';
+  source: 'explicit' | 'control' | 'dependency' | 'refresh';
   validateOnly?: boolean;
+  trigger?: string;
   changedList?: StoredField;
 }
 
 type FieldBinding = FieldSelection & { field: StoredField; };
+
+/** Matches configured event names without treating false as a trigger. */
+function allowsValidationTrigger(triggers: FormValidateTrigger, event: string): boolean {
+  return typeof triggers === 'string'
+    ? triggers !== '' && triggers === event
+    : triggers !== false && triggers.includes(event);
+}
 
 /** Preserves numeric path segments, including infinities and the strict equality rule for NaN. */
 function fieldSelectionKey(path: FieldSelection['path']): string | symbol {
@@ -244,7 +258,7 @@ export function createForm<Values extends FormValues>({
   const validationDelays = new Map<StoredField, () => void>();
   const messageProviders = new Set<() => ValidateMessages | undefined>();
   const callbackProviders = new Set<FormCallbackProvider<Values>>();
-  const changeDrivenFields = new WeakSet<StoredField>();
+  const controlDrivenFields = new WeakSet<StoredField>();
   let fields = $state.raw<StoredField[]>([]);
   let isSubmitting = $state(false);
   let submissionError = $state.raw<unknown>();
@@ -335,6 +349,56 @@ export function createForm<Values extends FormValues>({
       ?? (path.length === 1 && Object.hasOwn(rules, path[0])
         ? rules[path[0] as keyof typeof rules] : undefined)
       ?? [];
+  }
+
+  // Falsy defined initial values count, even when the field has never been touched.
+  function isValidationDirty(field: StoredField, path = fieldPath(field)) {
+    return field.dirty || field.touched || field.registration?.initialValue !== undefined
+      || getFormValue(defaults, path) !== undefined;
+  }
+
+  // Follow the live paths and stop at pristine fields. Visit each registration once even in cycles.
+  function dependentFields(name: NamePath): FieldBinding[] {
+    const byDependency = new Map<string | symbol, StoredField[]>();
+    for (const field of fields) {
+      for (const path of field.registration?.dependencies ?? []) {
+        const key = fieldSelectionKey(formNamePath(path));
+        const group = byDependency.get(key);
+        if (group) {
+          group.push(field);
+        }
+        else {
+          byDependency.set(key, [field]);
+        }
+      }
+    }
+
+    const visited = new Set<StoredField>();
+    const result: FieldBinding[] = [];
+    visit(formNamePath(name));
+
+    return result;
+
+    // Preserve the registration and path at the time an edit traverses the graph.
+    function visit(namePath: (string | number)[]) {
+      const list = byDependency.get(fieldSelectionKey(namePath));
+      if (!list) {
+        return;
+      }
+
+      for (const field of list) {
+        if (visited.has(field)) {
+          continue;
+        }
+        visited.add(field);
+
+        const path = fieldPath(field);
+        if (path.length && isValidationDirty(field, path)) {
+          result.push({ path, field });
+          visit(path);
+        }
+      }
+    }
   }
 
   function rootErrors(entries: readonly FieldError[]): FieldErrors<Values> {
@@ -506,7 +570,7 @@ export function createForm<Values extends FormValues>({
   }
 
   // The edited path can include data outside the projection of mounted fields, such as a list row.
-  function publishValueChange(name: NamePath) {
+  function publishValueChange(name: NamePath, dependencies: readonly NamePath[]) {
     untrack(() => {
       const onValuesChange = currentCallbackProvider()?.()?.onValuesChange;
       if (onValuesChange) {
@@ -516,11 +580,11 @@ export function createForm<Values extends FormValues>({
         onValuesChange(changed, all);
       }
 
-      publishFieldsChange([name]);
+      publishFieldsChange([name, ...dependencies]);
     });
   }
 
-  // Confirms that for the field there was and the expectation of debounce was canceled.
+  // Releases a waiting debounce timer or dependency frame when its field is superseded.
   function cancelValidationDelay(field: StoredField): boolean {
     const cancel = validationDelays.get(field);
     if (!cancel) {
@@ -532,25 +596,43 @@ export function createForm<Values extends FormValues>({
     return true;
   }
 
-  // Finishes waiting both after the timer and after an obvious cancellation.
-  function delayValidation(field: StoredField, delay: number): Promise<boolean> {
+  // Resolves true when the scheduled wait elapses, or false when the owner cancels it.
+  function delayValidation(field: StoredField, delay: number | 'frame'): Promise<boolean> {
     return new Promise((resolve) => {
-      const timer = setTimeout(() => {
-        validationDelays.delete(field);
-        resolve(true);
-      }, delay);
-      validationDelays.set(field, () => {
+      let cancel: () => void;
+
+      function finish(elapsed: boolean) {
+        if (validationDelays.get(field) === cancel) {
+          validationDelays.delete(field);
+        }
+        resolve(elapsed);
+      }
+
+      if (delay === 'frame' && typeof requestAnimationFrame === 'function'
+        && typeof cancelAnimationFrame === 'function') {
+        const frame = requestAnimationFrame(() => finish(true));
+        cancel = () => {
+          cancelAnimationFrame(frame);
+          finish(false);
+        };
+        validationDelays.set(field, cancel);
+
+        return;
+      }
+
+      const timer = setTimeout(() => finish(true), delay === 'frame' ? 0 : delay);
+      cancel = () => {
         clearTimeout(timer);
-        validationDelays.delete(field);
-        resolve(false);
-      });
+        finish(false);
+      };
+      validationDelays.set(field, cancel);
     });
   }
 
   // Runs selected checks at the same time and rejects an outdated shot.
   async function validate(
     selected: readonly StoredField[],
-    { source, validateOnly = false, changedList }: ValidationRequest
+    { source, validateOnly = false, trigger, changedList }: ValidationRequest
   ): Promise<Values> {
     if (!validateOnly) {
       for (const field of selected) {
@@ -571,9 +653,11 @@ export function createForm<Values extends FormValues>({
     const entries = selected.map((field) => {
       const hasRules = fieldRules(field).length > 0;
       const publishes = Boolean(callbacks && hasRules && (!changedList || changedList === field));
+      const event = source === 'control' ? trigger : field === changedList ? 'onChange' : undefined;
+      const debounced = source === 'refresh' || (source === 'control' && !!event);
       return {
-        field, path: fieldPath(field), run: field.run, hasRules, publishes,
-        delay: source !== 'explicit' ? field.registration?.validateDebounce : undefined
+        field, path: fieldPath(field), run: field.run, hasRules, publishes, event,
+        delay: debounced ? field.registration?.validateDebounce : undefined
       };
     });
 
@@ -588,7 +672,7 @@ export function createForm<Values extends FormValues>({
 
         field.run = validationRun;
         field.validating = true;
-        if (source === 'control') {
+        if (source === 'control' || source === 'dependency' || field === changedList) {
           field.errors = [];
         }
         field.warnings = [];
@@ -637,11 +721,30 @@ export function createForm<Values extends FormValues>({
 
     return snapshot;
 
-    // Rules and messages are read when you start a specific field. After await, only the owner of
-    // the current inspection can publish its result.
-    async function validateEntry({ field, path, hasRules, delay }: (typeof entries)[number]) {
+    // A control event publishes pending metadata before the control finishes its own handler.
+    // Dependent rule factories run after the UI has had a frame to apply changes from the edit.
+    async function validateEntry(
+      { field, path, hasRules, delay, event }: (typeof entries)[number]
+    ): Promise<FieldError & { cancelled?: boolean }> {
       if (!hasRules) {
         return { name: path, errors: [], warnings: [] };
+      }
+
+      if (source === 'dependency') {
+        if (!isCurrent(field, path)) {
+          return cancelledEntry(field, path);
+        }
+
+        const elapsed = await delayValidation(field, 'frame');
+        if (!elapsed || !isCurrent(field, path)) {
+          return cancelledEntry(field, path);
+        }
+      }
+      else if (source === 'control') {
+        await tick();
+        if (!isCurrent(field, path)) {
+          return cancelledEntry(field, path);
+        }
       }
 
       let rules: readonly ValidationRule<Values>[];
@@ -656,6 +759,12 @@ export function createForm<Values extends FormValues>({
         throw error;
       }
 
+      if (event) {
+        rules = rules.filter(({ validateTrigger }) =>
+          !validateTrigger || allowsValidationTrigger(validateTrigger, event)
+        );
+      }
+
       const messageContext = {
         name: path.map(String).join('.'),
         variables: { label: path.map(String).join('.'), ...field.registration?.messageVariables },
@@ -663,15 +772,13 @@ export function createForm<Values extends FormValues>({
       };
       const validateFirst = field.registration?.validateFirst;
       if (delay) {
-        const elapsed = await delayValidation(field, delay);
-        if (!elapsed || field.run !== validationRun || valuesRevision !== snapshotRevision
-          || !fields.includes(field) || !sameFormPath(path, fieldPath(field))) {
-          if (field.run === validationRun) {
-            field.validating = false;
-            notifyFieldMeta(field);
-          }
+        if (!isCurrent(field, path)) {
+          return cancelledEntry(field, path);
+        }
 
-          return { name: path, errors: [], warnings: [], cancelled: true };
+        const elapsed = await delayValidation(field, delay);
+        if (!elapsed || !isCurrent(field, path)) {
+          return cancelledEntry(field, path);
         }
       }
 
@@ -690,6 +797,22 @@ export function createForm<Values extends FormValues>({
       }
 
       return { name: path, ...messages };
+    }
+
+    // A pending timer or frame cannot continue with another value or a reassigned list row.
+    function isCurrent(field: StoredField, path: NamePath) {
+      return field.run === validationRun && valuesRevision === snapshotRevision
+        && fieldRegistry.has(field) && sameFormPath(path, fieldPath(field));
+    }
+
+    // Only clear the pending flag if a newer check has not claimed this field.
+    function cancelledEntry(field: StoredField, path: (string | number)[]) {
+      if (field.run === validationRun) {
+        field.validating = false;
+        notifyFieldMeta(field);
+      }
+
+      return { name: path, errors: [], warnings: [], cancelled: true };
     }
   }
 
@@ -719,9 +842,7 @@ export function createForm<Values extends FormValues>({
     }
 
     if (settings?.dirty) {
-      selected = selected.filter((field) => field.dirty || field.touched
-        || field.registration?.initialValue !== undefined
-        || getFormValue(defaults, fieldPath(field)) !== undefined);
+      selected = selected.filter((field) => isValidationDirty(field));
     }
 
     return validate(selected, { source: 'explicit', validateOnly: settings?.validateOnly });
@@ -736,6 +857,31 @@ export function createForm<Values extends FormValues>({
     });
   }
 
+  // A declared event or dependency opts a binding into the control validation path.
+  function usesControlValidation(field: StoredField) {
+    const registration = field.registration;
+    return controlDrivenFields.has(field) || registration?.validateTrigger !== undefined
+      || registration?.dependencies !== undefined;
+  }
+
+  // Checks the field's event configuration before individual rules are filtered.
+  function validateControlEvent(field: StoredField, trigger: string) {
+    const triggers = field.registration?.validateTrigger ?? 'onChange';
+    if (allowsValidationTrigger(triggers, trigger) && fieldRules(field).length) {
+      validateAutomatically([field], { source: 'control', trigger });
+    }
+  }
+
+  // Dependent fields enter validation before either value-change callback sees the new store.
+  function publishControlEdit(name: NamePath) {
+    const dependents = untrack(() => dependentFields(name));
+    if (dependents.length) {
+      validateAutomatically(dependents.map(({ field }) => field), { source: 'dependency' });
+    }
+
+    publishValueChange(name, dependents.map(({ path }) => path));
+  }
+
   // Compatibility for manually wired fields, including list paths that change after a flush.
   function revalidateTouched(
     { explicitTouch = false, changedList }: { explicitTouch?: boolean; changedList?: StoredField } = {}
@@ -744,9 +890,13 @@ export function createForm<Values extends FormValues>({
       return;
     }
 
-    const selected = fields.filter((field) =>
-      field.touched && (explicitTouch || !changeDrivenFields.has(field))
-    );
+    const selected = fields.filter((field) => {
+      if (field === changedList) {
+        return allowsValidationTrigger(field.registration?.validateTrigger ?? 'onChange', 'onChange');
+      }
+
+      return field.touched && (explicitTouch || !usesControlValidation(field));
+    });
 
     if (selected.length) {
       validateAutomatically(selected, { source: 'refresh', changedList });
@@ -850,9 +1000,9 @@ export function createForm<Values extends FormValues>({
       return field ? resolveValidationRules(fieldRules(field), form)
         .some((rule) => rule.required && !rule.warningOnly) : false;
     },
-    changeFieldValue(name, value) {
+    changeFieldValue(name, value, trigger = 'onChange') {
       const field = ensureField(name);
-      changeDrivenFields.add(field);
+      controlDrivenFields.add(field);
       markTouched(field);
 
       if (getFormValue(values, name) !== value) {
@@ -860,11 +1010,16 @@ export function createForm<Values extends FormValues>({
         updateValues(next);
         valuesRevision++;
         submissionError = undefined;
-        publishValueChange(name);
+        publishControlEdit(name);
       }
 
-      if (fieldRules(field).length) {
-        validateAutomatically([field], { source: 'control' });
+      validateControlEvent(field, trigger);
+    },
+    validateFieldOn(name, trigger) {
+      const field = findField(name);
+      if (field) {
+        controlDrivenFields.add(field);
+        validateControlEvent(field, trigger);
       }
     },
     setFieldValue(name, value) {
@@ -1095,7 +1250,10 @@ export function createForm<Values extends FormValues>({
     },
     handleFieldBlur(name) {
       const field = ensureField(name);
-      if (!changeDrivenFields.has(field)) {
+      if (usesControlValidation(field)) {
+        validateControlEvent(field, 'onBlur');
+      }
+      else {
         markTouched(field);
         revalidateTouched();
       }
@@ -1111,9 +1269,16 @@ export function createForm<Values extends FormValues>({
       valuesRevision++;
       submissionError = undefined;
       const list = ensureField(name);
-      clearField(list);
-      list.touched = true;
-      list.dirty = true;
+      if (list.registration?.validateTrigger === undefined) {
+        clearField(list);
+      }
+      else {
+        // With explicit triggers, an edit retains the manual result until validation runs again.
+        cancelValidationDelay(list);
+        list.run = ++validationSequence;
+        list.validating = false;
+      }
+      markTouched(list);
 
       for (const field of fields) {
         if (field !== list && containsFormPath(name, fieldPath(field))) {
@@ -1124,7 +1289,7 @@ export function createForm<Values extends FormValues>({
         }
       }
 
-      publishValueChange(name);
+      publishControlEdit(name);
 
       // The names of keyed rows will be updated with flush; the metadata remains with the previous line instance.
       void tick().then(() => revalidateTouched({ changedList: list }));
@@ -1148,7 +1313,7 @@ export function createForm<Values extends FormValues>({
         }
 
         return () => {
-          changeDrivenFields.delete(registered);
+          controlDrivenFields.delete(registered);
           notifyFieldMeta(registered, true);
           if (cancelValidationDelay(registered)) {
             registered.run = ++validationSequence;

@@ -1,0 +1,166 @@
+{
+  "upstream": {"release":"6.6.8","revision":"984592267de88fbf9cdaecc96a56629e721c709d","archiveSha256":"8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa","formPackage":"@rc-component/form@1.8.6","react":"18.3.1"},
+  "blurWrite": {"value":"from blur handler","errors":["Stale blur error"]},
+  "cases": {
+    "initial": [],
+    "untouchedBlur": [
+      ["fields",[[["inherited"],true,[],false,false]]],
+      ["rule","inherited","",null],
+      ["fields",[[["inherited"],false,[],false,true]]]
+    ],
+    "inheritedChange": [
+      ["values",{"inherited":"new"}],
+      ["fields",[[["inherited"],false,[],true,true]]]
+    ],
+    "inheritedBlur": [
+      ["fields",[[["inherited"],true,[],true,false]]],
+      ["rule","inherited","new",null],
+      ["fields",[[["inherited"],false,[],true,true]]]
+    ],
+    "overrideChange": [
+      ["values",{"both":"two"}],
+      ["fields",[[["both"],false,[],true,false]]],
+      ["fields",[[["both"],true,[],true,false]]],
+      ["rule","change-only","two",null],
+      ["rule","all","two",null],
+      ["fields",[[["both"],false,[],true,true]]]
+    ],
+    "overrideBlur": [
+      ["fields",[[["both"],true,[],true,false]]],
+      ["rule","blur-only","two",null],
+      ["rule","all","two",null],
+      ["fields",[[["both"],false,[],true,true]]]
+    ],
+    "disabledAutomatic": [
+      ["values",{"disabled":"disabled"}],
+      ["fields",[[["disabled"],false,[],true,false]]]
+    ],
+    "filteredOut": [
+      ["values",{"unmatched":"skip"}],
+      ["fields",[[["unmatched"],false,[],true,false]]],
+      ["fields",[[["unmatched"],true,[],true,false]]],
+      ["fields",[[["unmatched"],false,[],true,true]]]
+    ],
+    "writeDuringBlur": [
+      ["fields",[[["write"],true,[],false,false]]],
+      ["user-blur","before blur"],
+      ["rule","write","before blur",null],
+      ["fields",[[["write"],false,["Stale blur error"],true,true]]]
+    ],
+    "customValue": [
+      ["values",{"custom":"selected"}],
+      ["fields",[[["custom"],false,[],true,false]]],
+      ["fields",[[["custom"],true,[],true,false]]],
+      ["rule","custom-pick","selected",null],
+      ["fields",[[["custom"],false,[],true,true]]]
+    ],
+    "customValidation": [
+      ["fields",[[["custom"],true,[],true,false]]],
+      ["rule","custom-check","selected",null],
+      ["fields",[[["custom"],false,[],true,true]]]
+    ],
+    "listInherited": [
+      ["values",{"rows":["row"]}],
+      ["fields",[[["rows"],false,[],true,false]]]
+    ],
+    "reactiveTrigger": [
+      ["values",{"inherited":"changed default"}],
+      ["fields",[[["inherited"],false,[],true,true]]],
+      ["fields",[[["inherited"],true,[],true,false]]],
+      ["rule","inherited","changed default",null],
+      ["fields",[[["inherited"],false,[],true,true]]]
+    ],
+    "listChangeTrigger": [
+      ["values",{"rows":["row","row"]}],
+      ["fields",[[["rows"],false,[],true,false]]],
+      ["fields",[[["rows"],true,[],true,false]]],
+      ["rule","list",["row","row"],null],
+      ["fields",[[["rows"],false,[],true,true]]]
+    ],
+    "manual": [
+      ["fields",[[["both"],true,[],true,false],[["disabled"],true,[],true,false],[["unmatched"],true,[],true,false]]],
+      ["rule","change-only","two",null],
+      ["rule","blur-only","two",null],
+      ["rule","all","two",null],
+      ["rule","disabled","disabled",null],
+      ["rule","unmatched","skip",null],
+      ["fields",[[["both"],false,[],true,true],[["disabled"],false,[],true,true],[["unmatched"],false,[],true,true]]]
+    ],
+    "dependencies": [
+      ["fields",[[["direct"],true,[],false,false],[["tail"],true,[],false,false]]],
+      ["values",{"source":"next"}],
+      ["fields",[[["source"],false,[],true,false],[["direct"],true,[],false,false],[["tail"],true,[],false,false]]],
+      ["fields",[[["source"],true,[],true,false]]],
+      ["rule","source","next",null],
+      ["fields",[[["source"],false,[],true,true]]],
+      ["rule","direct",0,["updated","next"]],
+      ["rule","tail","",null],
+      ["fields",[[["direct"],false,[],false,true],[["tail"],false,[],false,true]]]
+    ],
+    "dirtyField": [
+      ["fields",[[["afterClean"],true,[],false,false]]],
+      ["values",{"clean":"made dirty"}],
+      ["fields",[[["clean"],false,[],true,false],[["afterClean"],true,[],false,false]]],
+      ["rule","after-clean",false,null],
+      ["fields",[[["afterClean"],false,[],false,true]]]
+    ],
+    "dirtyChain": [
+      ["fields",[[["direct"],true,[],false,false],[["tail"],true,[],false,false],[["clean"],true,[],true,false],[["afterClean"],true,[],false,false]]],
+      ["values",{"source":"again"}],
+      ["fields",[[["source"],false,[],true,true],[["direct"],true,[],false,false],[["tail"],true,[],false,false],[["clean"],true,[],true,false],[["afterClean"],true,[],false,false]]],
+      ["fields",[[["source"],true,[],true,false]]],
+      ["rule","source","again",null],
+      ["fields",[[["source"],false,[],true,true]]],
+      ["rule","direct",0,["updated","again"]],
+      ["rule","tail","",null],
+      ["rule","clean","made dirty",null],
+      ["rule","after-clean",false,null],
+      ["fields",[[["direct"],false,[],false,true],[["tail"],false,[],false,true],[["clean"],false,[],true,true],[["afterClean"],false,[],false,true]]]
+    ],
+    "silentWrites": [],
+    "reactiveDependency": [
+      ["fields",[[["direct"],true,[],false,false],[["tail"],true,[],false,false]]],
+      ["values",{"alternate":"connected"}],
+      ["fields",[[["alternate"],false,[],true,false],[["direct"],true,[],false,false],[["tail"],true,[],false,false]]],
+      ["rule","direct",0,["updated","set metadata"]],
+      ["rule","tail","",null],
+      ["fields",[[["direct"],false,[],false,true],[["tail"],false,[],false,true]]]
+    ],
+    "exactPath": [
+      ["fields",[[["watchedRow"],true,[],false,false]]],
+      ["values",{"rows":[{"rowValue":"typed first"}]}],
+      ["fields",[[["rows",0,"rowValue"],false,[],true,false],[["watchedRow"],true,[],false,false]]],
+      ["rule","row","watch",null],
+      ["fields",[[["watchedRow"],false,[],false,true]]]
+    ],
+    "listRoot": [
+      ["fields",[[["watchedList"],true,[],false,false]]],
+      ["values",{"rows":[{"rowValue":"inserted"},{"rowValue":"typed first"}]}],
+      ["fields",[[["rows"],false,[],true,false],[["watchedList"],true,[],false,false]]],
+      ["rule","list-path","list watch",null],
+      ["fields",[[["watchedList"],false,[],false,true]]]
+    ],
+    "movedPath": [
+      ["values",{"rows":[null,{"rowValue":"old row"}]}],
+      ["fields",[[["rows",1,"rowValue"],false,[],true,false]]]
+    ],
+    "newPath": [
+      ["fields",[[["watchedRow"],true,[],false,false]]],
+      ["values",{"rows":[{"rowValue":"new row"}]}],
+      ["fields",[[["watchedRow"],true,[],false,false],[["rows",0,"rowValue"],false,[],true,false]]],
+      ["rule","row","watch",null],
+      ["fields",[[["watchedRow"],false,[],false,true]]]
+    ],
+    "cycle": [
+      ["fields",[[["cycleA"],true,[],true,false],[["cycleB"],true,[],false,false]]],
+      ["values",{"cycleA":"cycle change"}],
+      ["fields",[[["cycleA"],true,[],true,false],[["cycleB"],true,[],false,false]]],
+      ["fields",[[["cycleA"],true,[],true,false]]],
+      ["rule","cycle-a","cycle change",null],
+      ["fields",[[["cycleA"],false,[],true,true]]],
+      ["rule","cycle-a","cycle change",null],
+      ["rule","cycle-b","",null],
+      ["fields",[[["cycleA"],false,[],true,true],[["cycleB"],false,[],false,true]]]
+    ]
+  }
+}

@@ -191,17 +191,74 @@ including while awaiting an asynchronous validator.
 FormItem puts errors before warnings, with errors taking priority. A warning
 contributes to the accessible description and leaves aria-invalid unset. Stale
 validation results stay discarded after an edit, reset, or field removal.
-Blur marks a field touched. Changing any field revalidates touched fields,
-including validators that depend on other values. The dependencies prop is
-outside the current API. Once a control uses `changeFieldValue`, its edits start
-validation on change and blur preserves the result.
+Controls using `setFieldValue` with neither configured validation events nor
+dependencies retain the original behavior. Blur marks a field touched, and
+writes revalidate touched fields.
+
+### Validation triggers and dependencies
+
+`Form.validateTrigger` configures the default validation events for its fields.
+`FormItem.validateTrigger` replaces that setting for one field. The default
+event for controls wired with `changeFieldValue` is `onChange`. Pass an event
+name or a list of names. `false` and `[]` disable control-triggered validation.
+Each rule can restrict its own events with `validateTrigger`. Validation from
+`validateFields`, submission, or a dependency checks all the field's rules.
+
+Form-aware controls such as Input report blur to the enclosing FormItem. With
+`validateTrigger="onBlur"`, changing the value still updates the store and
+sends change notifications. Blur starts validation without marking an
+untouched field touched. A custom control can pass an event name as the third
+argument to `changeFieldValue`, or call `validateFieldOn(name, event)` for an
+event that does not change the value.
+
+```svelte
+<Form {form} validateTrigger="onBlur">
+  <FormItem name="password" label="Password">
+    <InputPassword
+      value={form.values.password}
+      onValueChange={(value) => form.changeFieldValue('password', value)}
+    />
+  </FormItem>
+  <FormItem
+    name="confirmation"
+    label="Confirm password"
+    dependencies={['password']}
+    rules={[{
+      validator: (value, values) => {
+        if (value !== values.password) return 'Passwords do not match.';
+      }
+    }]}
+  >
+    <InputPassword
+      value={form.values.confirmation}
+      onValueChange={(value) => form.changeFieldValue('confirmation', value)}
+    />
+  </FormItem>
+</Form>
+```
+
+Dependencies are full paths from the form root, including numeric indices
+inside a list. A change along a dependency path revalidates the dependent
+field after it has been edited, validated, or initialized with a defined value.
+Chains stop at pristine fields. A `FormList` operation changes the list path,
+and editing one row changes that row's field path. Programmatic setters do
+not trigger dependency validation.
+
+Dependent fields enter validation before `onValuesChange`. Their rules run
+after the UI has applied changes from the edit, without waiting for the event
+debounce. Svelte snippets can read reactive model values directly when they
+only need to update the UI.
+
+The pinned React build can apply an error from a blur check after the
+user's blur handler has replaced the value. In a dependency cycle, it
+also invokes the edited field's already superseded validator a second time.
+Svelte cancels both obsolete checks. [React observations](../../tests/browser/fixtures/ant-design-form-validation-trigger-observation.json)
 
 ## Change events and FormProvider
 
 Connect a control's value event to `form.changeFieldValue(name, value)` to
-publish user edits. It marks the field touched and runs the edited field's
-rules, with the same `validateDebounce` as other automatic checks. Existing
-bindings that call `setFieldValue` keep their validation behavior.
+publish user edits. It marks the field touched and applies the configured
+validation triggers and debounce.
 
 ```svelte
 <FormProvider onFormFinish={(name, { values, forms }) => {
@@ -237,9 +294,9 @@ snapshots and the form's field snapshots. Each includes the path, value, touched
 and validation flags, errors, and warnings. The changed entries are also
 entries of the second array.
 
-When a control's value changes, values are published first, then field metadata.
-The start and completion of validation publish field metadata again.
-Explicit `validateFields` also
+For the edit itself, `onValuesChange` precedes `onFieldsChange`. Dependent
+validation can start before both. Validation start and completion publish
+field metadata as well. Explicit `validateFields` also
 publishes field events, including a `validateOnly` check that leaves metadata
 unchanged. Superseded results stay out of the callbacks. `FormList` operations
 publish their array path, and automatic list validation waits for keyed rows to
@@ -628,11 +685,12 @@ blocking rule passes. Changes to validateFirst take effect on the next run.
 Late results after completion leave messages intact. ValidateOnly uses the
 selected mode without changing visible field state.
 
-FormItem.validateDebounce delays automatic validation by the given number of
+FormItem.validateDebounce delays control validation by the given number of
 milliseconds. Undefined or 0 starts it immediately. The waiting period counts
 as validating. Restarting replaces the timer and keeps stale values from
 validator. Rules, validateFirst, and the delay are captured for the run.
-Prop changes apply next time. ValidateFields and submit bypass the delay.
+Prop changes apply next time. ValidateFields, submit, and dependency checks
+bypass the delay.
 ValidateOnly starts immediately and leaves pending visible validation running.
 Reset, manually setting value or validating, and unmount cancel delayed
 validation. Started runs guard against stale results.

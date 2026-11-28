@@ -34,6 +34,7 @@
     tooltip,
     feedbackIcons,
     validateMessages,
+    validateTrigger,
     component = 'form',
     disabled,
     onValuesChange,
@@ -165,6 +166,9 @@
     },
     get feedbackIcons() {
       return feedbackIcons;
+    },
+    get validateTrigger() {
+      return validateTrigger;
     },
     get resetKey() {
       return getFormHooks(form)?.resetKey ?? form.values;

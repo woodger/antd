@@ -27,6 +27,8 @@ export interface FormListRule {
   message?: string;
   /** Warning is displayed in meta.warnings and does not block submit. */
   warningOnly?: boolean;
+  /** Participates only in these control events when the list is edited. */
+  validateTrigger?: ValidationRule['validateTrigger'];
 }
 
 /** Manages the array in the nearest Form; the nested name is counted from the parent record FormList. */

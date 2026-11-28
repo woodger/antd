@@ -7968,6 +7968,25 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6) receives value, field, and validation events and forwards descendant fields and successful submissions through nested providers in inside-out order. Svelte controls use changeFieldValue, while programmatic setters stay silent. Existing submit passes the full model snapshot and marks fields touched. The firstValidationFinished and duplicatePreviousUnmounted observations show two upstream defects: reject the first validator after a second edit has validated successfully to see the rejection reported against the newer value, or unmount a previous form from its own subtree to see the same-name peer disappear from the ancestor registry. Svelte suppresses the stale completion and retains live registrations."
         },
         {
+          "id": "field-triggers-and-dependencies",
+          "title": "Form validation triggers and field dependencies",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/FormItem.svelte",
+            "src/lib/form/FormList.svelte",
+            "src/lib/form/form.model.svelte.ts",
+            "src/lib/form/validation.engine.ts",
+            "tests/browser/fixtures/FormValidationTriggerFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-validation-trigger-observation.json",
+            "tests/browser/form/form-validation-triggers.spec.ts",
+            "tests/package/form/form-validation-triggers.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): Form and local event name/array/false with inheritance, rule filters, silent programmatic writes and explicit validation, list inheritance and indexed paths, absolute dependencies and dirty transitive traversal, pending callbacks before onValuesChange, rule factories after the UI update without event debounce. Custom Svelte controls send events through changeFieldValue or validateFieldOn. The writeDuringBlur capture shows that the source applies an old value's error after a blur callback replaces the value. The cycle capture shows the edited field's validator running again after the direct check has superseded it. The port cancels both stale checks and also cancels pending dependency frames on reset or removal. Svelte snippets read reactive values for render-only dependencies."
+        },
+        {
           "id": "dayjs-values",
           "title": "Immutable Dayjs|null и диапазоны без преобразования в строку",
           "state": "supported",
@@ -8374,7 +8393,7 @@
             "tests/browser/fixtures/ant-design-form-debounce-observation.json",
             "tests/package/form/form-validate-debounce.ssr.test.ts"
           ],
-          "note": "FormItem.validateDebounce задаёт задержку в ms для автоматической validation; undefined/0 сохраняют немедленный запуск. Pending входит в validating; новый автоматический/обычный запрос отменяет прежний timer. Rules/validateFirst/delay и snapshot значения фиксируются до ожидания; props действуют на следующий запуск. ValidateFields/submit обходят задержку, validateOnly выполняется сразу и не отменяет видимую попытку. Сохранены прежние native blur/touched triggers, повторная проверка touched bindings при записи, model-owned rules, ручная ruleless metadata, полный snapshot и защита outOfDate. Reset/setFields value/validating, unmount и смена list path исключают устаревшие validators. Таймеры очищаются при field cleanup; уже запущенные Promise не заменяют свежие сообщения. 35 raw UMD-состояний с управляемыми часами подтверждают burst, explicit/silent/submit, reset, изменения delay и нулевой режим. Отдельно записан дефект source: validator стартует после unmount; Svelte отменяет такую работу. Browser проверяет реальный input/blur, ARIA, FormData, focus/selection, remount; unit покрывает независимые задержки, rules snapshots и model lifecycle. SSR не регистрирует browser field и не запускает validation. Полный validateTrigger/event adapter API пока не перенесён."
+          "note": "FormItem.validateDebounce задаёт задержку в ms для автоматической validation; undefined/0 сохраняют немедленный запуск. Pending входит в validating; новый автоматический/обычный запрос отменяет прежний timer. Rules/validateFirst/delay и snapshot значения фиксируются до ожидания; props действуют на следующий запуск. ValidateFields/submit обходят задержку, validateOnly выполняется сразу и не отменяет видимую попытку. Сохранены прежние native blur/touched triggers, повторная проверка touched bindings при записи, model-owned rules, ручная ruleless metadata, полный snapshot и защита outOfDate. Reset/setFields value/validating, unmount и смена list path исключают устаревшие validators. Таймеры очищаются при field cleanup; уже запущенные Promise не заменяют свежие сообщения. 35 raw UMD-состояний с управляемыми часами подтверждают burst, explicit/silent/submit, reset, изменения delay и нулевой режим. Отдельно записан дефект source: validator стартует после unmount; Svelte отменяет такую работу. Browser проверяет реальный input/blur, ARIA, FormData, focus/selection, remount; unit покрывает независимые задержки, rules snapshots и model lifecycle. SSR не регистрирует browser field и не запускает validation. validateTrigger и явная передача событий описаны в field-triggers-and-dependencies. React-адаптеры пропсов проверяются отдельно."
         },
         {
           "id": "columns",

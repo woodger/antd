@@ -23,7 +23,9 @@
   import NoFormItemColumns from './NoFormItemColumns.svelte';
   import type { ColProps } from '../grid/grid.types';
   import { resolveFormWrapperCol } from './form-columns.engine';
-  import type { FormFeedbackIcons, FormItemTooltip as FormItemTooltipContent } from './form.types';
+  import type {
+    FormFeedbackIcons, FormItemTooltip as FormItemTooltipContent, FormValidateTrigger
+  } from './form.types';
   import type { FormValidateStatus } from './form-error-list.types';
   import { resolveFormStatus } from './form-status.engine';
   import { resolveFormTooltip } from './form-tooltip.engine';
@@ -70,6 +72,10 @@
     colon?: boolean;
     /** Local field rules. When omitted, uses the rules from the top-level model. */
     rules?: readonly FormRule[];
+    /** Absolute paths whose control edits can revalidate this field. */
+    dependencies?: readonly NamePath[];
+    /** Overrides the Form's validation events. Empty or false disables control-triggered checks. */
+    validateTrigger?: FormValidateTrigger;
     /** Overrides label, name, and other ${variables} in messages for this field. */
     messageVariables?: Readonly<Record<string, string>>;
     /**
@@ -78,7 +84,7 @@
      * blocking rules.
      */
     validateFirst?: boolean | 'parallel';
-    /** Automatic validation delay in ms. validateFields and submit run immediately. */
+    /** Delay in ms for control validation. Dependencies, validateFields, and submit skip the delay. */
     validateDebounce?: number;
     /** Visual status override for the metadata. '' disables automatic status and preserves errors and ARIA. */
     validateStatus?: FormValidateStatus;
@@ -114,6 +120,8 @@
     wrapperCol,
     colon,
     rules,
+    dependencies,
+    validateTrigger,
     messageVariables,
     validateFirst,
     validateDebounce,
@@ -317,6 +325,12 @@
       },
       get rules() {
         return rules;
+      },
+      get dependencies() {
+        return dependencies;
+      },
+      get validateTrigger() {
+        return validateTrigger ?? form?.validateTrigger;
       },
       get validateFirst() {
         return validateFirst;

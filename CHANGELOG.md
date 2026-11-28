@@ -28,6 +28,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 - Form publishes value and field changes from explicitly wired control events
   and FormList operations. FormProvider coordinates changes and successful
   submissions across named forms.
+- Form, FormItem, and validation rules support configurable validation events.
+  FormItem can revalidate from edits to its declared field dependencies.
 
 ### Fixed
 
