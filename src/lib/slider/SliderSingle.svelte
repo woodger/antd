@@ -23,6 +23,7 @@
   } from './slider-range.engine';
   import { sliderSemantics } from './slider-semantic.engine';
   import { getSliderPrefixCss } from './slider-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import TooltipPopup from '../tooltip/TooltipPopup.svelte';
 
@@ -122,7 +123,8 @@
   let orientation = $derived(orientationProp ?? 'horizontal');
   let prefix = $derived(config.getPrefixCls('slider', prefixCls));
   let customPrefix = $derived(prefix !== 'ant-slider');
-  let prefixCss = $derived(getSliderPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getSliderPrefixCss(prefix));
   let options = $derived(resolveSliderOptions({ min, max, step: step ?? undefined }));
   let markEntries = $derived(sliderRangeMarks(marks));
   let hasDecorations = $derived(markEntries.length > 0 || Boolean(dots));

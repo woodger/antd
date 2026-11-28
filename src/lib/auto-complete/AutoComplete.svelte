@@ -57,7 +57,7 @@
   import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import { createPopupContainer } from '../popup/popup-container.model.svelte.js';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import SelectIcon from '../select/SelectIcon.svelte';
   import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectClear } from '../select/select-icons.engine';
@@ -140,7 +140,8 @@
   let prefix = $derived(config.getPrefixCls('select', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
-  let prefixCss = $derived(getSelectPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getSelectPrefixCss(prefix, rootPrefix));
   const variantContext = useVariant('select', () => ({ variant }));
   let appearance = $derived(variantContext.variant);
   const controlRef = {

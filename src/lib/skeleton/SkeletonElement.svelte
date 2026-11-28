@@ -1,6 +1,7 @@
 <script lang="ts">
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSkeletonPrefixCss } from './skeleton-prefix.engine';
   import type { Snippet } from 'svelte';
@@ -31,7 +32,9 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Skeleton');
   let prefix = $derived(config.getPrefixCls('skeleton', prefixCls));
-  let prefixCss = $derived(getSkeletonPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-skeleton');
+  let prefixCss = $derived(runtimeStyles && getSkeletonPrefixCss(prefix));
   let mergedSize = $derived(size ?? config.componentSize);
   let contentClass = $derived(kind === 'node' && internalClassName
     ? internalClassName : `${prefix}-${kind}`);
@@ -56,7 +59,7 @@
     componentTheme.className, classNames?.root, className, rootClassName
   ]} style={[componentTheme.style, styles?.root].filter(Boolean).join(';') || undefined}
   data-ant-skeleton-element={kind} data-ant-skeleton-active={active || undefined}
-  data-ant-skeleton-prefix={prefixCss ? prefix : undefined}>
+  data-ant-skeleton-prefix={hasCustomPrefix ? prefix : undefined}>
   {#if kind === 'node' || kind === 'image'}
     <div class={[classNames?.content, contentClass]} data-ant-skeleton-content
       style={[styles?.content, style].filter(Boolean).join(';') || undefined}>

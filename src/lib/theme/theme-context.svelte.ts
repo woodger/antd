@@ -1,4 +1,4 @@
-import { getContext, setContext } from 'svelte';
+import { getContext, setContext, untrack } from 'svelte';
 import {
   createDesignTokenState,
   defaultThemeConfig,
@@ -21,6 +21,13 @@ const defaultContext: DesignTokenContext = {
 
 export function useDesignTokenContext(): DesignTokenContext {
   return getContext<DesignTokenContext | undefined>(designTokenKey) ?? defaultContext;
+}
+
+/** Captures component stylesheet registration for the lifetime of the mounted instance. */
+export function useRuntimeStyles(): boolean {
+  const context = useDesignTokenContext();
+
+  return untrack(() => !context.config.zeroRuntime);
 }
 
 /** Local theme creates scope, missing theme preserves parent token/state. */

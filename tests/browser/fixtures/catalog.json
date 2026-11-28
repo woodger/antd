@@ -1233,6 +1233,11 @@
     "root": "theme-context-fixture"
   },
   {
+    "id": "theme-zero-runtime",
+    "module": "./ThemeZeroRuntimeFixtures.svelte",
+    "root": "theme-zero-runtime-fixture"
+  },
+  {
     "id": "control-theme",
     "module": "./ControlThemeFixtures.svelte",
     "root": "control-theme-fixture"

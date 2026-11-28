@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { generateColor, isBrightColor } from './color-picker.engine';
   import { toggleCollapseKey } from '../collapse/collapse.engine';
   import { colorPickerRuRU } from './color-picker.locale';
@@ -24,7 +24,9 @@
   const designTheme = useDesignTokenContext();
   const id = $props.id();
   let collapsePrefix = $derived(config.getPrefixCls('collapse'));
-  let collapseCss = $derived(getCollapsePrefixCss(collapsePrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomCollapsePrefix = $derived(collapsePrefix !== 'ant-collapse');
+  let collapseCss = $derived(runtimeStyles && getCollapsePrefixCss(collapsePrefix));
   let opened = $state(untrack(() => presets.flatMap((preset, index) =>
     preset.defaultOpen === false ? [] : [`panel-${preset.key ?? index}`])));
   let locale = $derived({ ...colorPickerRuRU, ...config.locale.colorPicker });
@@ -65,7 +67,7 @@
   <div class={[collapsePrefix, 'ant-collapse-css-var', `${collapsePrefix}-ghost`,
     `${collapsePrefix}-icon-placement-start`,
     collapseTheme.className, config.direction === 'rtl' && `${collapsePrefix}-rtl`]}
-    data-ant-collapse-prefix={collapseCss ? collapsePrefix : undefined}
+    data-ant-collapse-prefix={hasCustomCollapsePrefix ? collapsePrefix : undefined}
     style={collapseTheme.style}>
     {#each presets as preset, index (preset.key ?? index)}
       {@const key = `panel-${preset.key ?? index}`}

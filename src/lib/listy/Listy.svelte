@@ -1,7 +1,7 @@
 <script lang="ts" generics="T = unknown, K extends ListyKey = ListyKey">
   import { tick, untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { captureListyFocus } from './listy.dom';
   import { listyItemHeight } from './listy.engine';
@@ -37,7 +37,8 @@
 
   const config = useConfig();
   let prefixCls = $derived(config.getPrefixCls('listy', customizePrefixCls));
-  let prefixCss = $derived(getListyPrefixCss(prefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getListyPrefixCss(prefixCls));
   const tokens = useDesignTokenContext();
   const componentTheme = useComponentTheme('Listy');
   let contextClasses = $derived(resolve(config.listy?.classNames));

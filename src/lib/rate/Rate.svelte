@@ -4,7 +4,7 @@
   import { onMount, untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { getRateKeyValue, getRatePointerValue, getRateStarClass } from './rate.engine';
   import { getRatePrefixCss } from './rate-prefix.engine';
@@ -41,7 +41,8 @@
   }: RateProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('rate', customizePrefixCls));
-  let prefixCss = $derived(getRatePrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getRatePrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Rate');
   const tokens = useDesignTokenContext();
   let transformFallback = $derived.by(() => {

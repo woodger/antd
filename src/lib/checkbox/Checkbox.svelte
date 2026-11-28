@@ -13,6 +13,7 @@
   import { useCheckboxGroup } from './checkbox-context';
   import { createCheckableClickLock } from '../checkable.dom';
   import { getCheckboxPrefixCss } from './checkbox-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { CheckboxChangeEvent, CheckboxProps } from './checkbox.types';
 
@@ -37,7 +38,9 @@
   let alive = true;
   let prefix = $derived(config.getPrefixCls('checkbox', props.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getCheckboxPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-checkbox' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getCheckboxPrefixCss(prefix, rootPrefix));
   let inGroup = $derived(Boolean(group && !props.skipGroup));
   let groupValue = $derived(typeof value === 'string' || typeof value === 'number'
     || typeof value === 'boolean' ? value : undefined);
@@ -196,8 +199,8 @@
   props.rootClassName
 ]} style={rootStyle} onclick={clickLock.label} {@attach wave}
   data-ant-checkbox-wrapper
-  data-ant-checkbox-prefix={prefixCss ? prefix : undefined}
-  data-ant-checkbox-global={prefixCss ? rootPrefix : undefined}
+  data-ant-checkbox-prefix={hasCustomPrefix ? prefix : undefined}
+  data-ant-checkbox-global={hasCustomPrefix ? rootPrefix : undefined}
   onmouseenter={event => props.onMouseEnter?.(event)}
   onmouseleave={event => props.onMouseLeave?.(event)}>
   <span bind:this={nativeElement} class={[

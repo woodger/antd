@@ -15,6 +15,7 @@
   import { isOTPCompleteChange, patchOTPCells } from './input-otp.engine';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getInputOTPPrefixCss } from './input-otp-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { InputOTPProps } from './input-otp.types';
 
@@ -51,7 +52,9 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Input');
   let componentPrefix = $derived(config.getPrefixCls('otp', customizePrefixCls));
-  let prefixCss = $derived(getInputOTPPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-otp');
+  let prefixCss = $derived(runtimeStyles && getInputOTPPrefixCss(componentPrefix));
   const variantContext = useVariant('otp', () => ({ variant }), 'input');
   const form = useForm();
   const controlRef = {
@@ -199,7 +202,7 @@
   {...(field ? { tabindex: -1 } : {})}
   {...attributes}
   bind:this={nativeElement}
-  data-ant-otp-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-otp-prefix={hasCustomPrefix ? componentPrefix : undefined}
   id={attributes.id ?? field?.id}
   role="group"
   aria-label={attributes['aria-label'] ?? (attributes['aria-labelledby'] ? undefined : field?.label)}

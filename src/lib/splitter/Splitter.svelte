@@ -2,6 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getSplitterPrefixCss } from './splitter-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSplitterAria, splitterDraggerClasses } from './splitter.engine';
   import { observeSplitterSize } from './splitter.dom';
@@ -36,7 +37,9 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('splitter', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getSplitterPrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-splitter' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getSplitterPrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Splitter');
   let actualOrientation = $derived(spaceOrientation(orientation, vertical));
   let isVertical = $derived(actualOrientation === 'vertical');
@@ -106,8 +109,8 @@
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`splitter-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div
   bind:this={nativeElement}
   data-ant-splitter-native={!componentTheme.className || undefined}
-  data-ant-splitter-prefix={prefixCss ? componentPrefix : undefined}
-  data-ant-splitter-vars={prefixCss ? rootPrefix.replace(/\./g, '') : undefined}
+  data-ant-splitter-prefix={hasCustomPrefix ? componentPrefix : undefined}
+  data-ant-splitter-vars={hasCustomPrefix ? rootPrefix.replace(/\./g, '') : undefined}
   class={[
     componentPrefix,
     componentTheme.className,

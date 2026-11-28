@@ -4,7 +4,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { presetColors } from '../theme/theme-token.types';
   import { connectBadgeRibbonStyle } from './badge-ribbon.dom';
   import { getBadgeRibbonPrefixCss } from './badge-ribbon-prefix.engine';
@@ -31,7 +31,8 @@
   // The indicator inherits Badge aliases from the wrapper without resetting the CSS variable scope again.
   let indicatorHash = $derived(componentTheme.className ? token.hashId : undefined);
   let prefix = $derived(config.getPrefixCls('ribbon', prefixCls));
-  let prefixCss = $derived(getBadgeRibbonPrefixCss(config.getPrefixCls()));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getBadgeRibbonPrefixCss(config.getPrefixCls()));
   let isPreset = $derived(presetColors.some(preset => preset === color));
   let info = $derived({ props: { ...props, placement } });
   const resolve = (value: BadgeRibbonSemantic | undefined) =>

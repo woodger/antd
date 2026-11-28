@@ -2,6 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getFlexPrefixCss } from './flex-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { FlexComponentProps, FlexRootProps } from './flex.types';
 
@@ -25,7 +26,9 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Flex');
   let prefix = $derived(config.getPrefixCls('flex', prefixCls));
-  let prefixCss = $derived(getFlexPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-flex');
+  let prefixCss = $derived(runtimeStyles && getFlexPrefixCss(prefix));
   let isVertical = $derived(orientation ? orientation === 'vertical'
     : vertical ?? config.flex?.vertical ?? false);
   let wrapping = $derived(wrap === true ? 'wrap' : wrap);
@@ -58,7 +61,7 @@
       presetGap && `${prefix}-gap-${gap}`
     ],
     style: rootStyle,
-    'data-ant-flex-prefix': prefixCss ? prefix : undefined
+    'data-ant-flex-prefix': hasCustomPrefix ? prefix : undefined
   });
   let Root = $derived(typeof component === 'string' ? undefined : component);
   // Optional ref forwarding keeps the accessor out of the root's DOM spread without $bindable. TS

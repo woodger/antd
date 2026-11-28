@@ -3,6 +3,7 @@
   import ProgressCircle from './ProgressCircle.svelte';
   import { progressCircleIcons } from './progress-circle-icons';
   import { statusIcons } from '../icon/status-icons';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
@@ -65,7 +66,9 @@
   } as const;
   let host = $state<HTMLDivElement>();
   let prefix = $derived(config.getPrefixCls('progress', prefixCls));
-  let prefixCss = $derived(getProgressPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-progress');
+  let prefixCss = $derived(runtimeStyles && getProgressPrefixCss(prefix));
   let size = $derived(providedSize ?? 'medium');
   let value = $derived(normalizeProgressPercent(percent));
   let successValue = $derived(progressSuccessPercent(success));
@@ -231,7 +234,7 @@
   aria-valuemin="0" aria-valuemax="100" aria-valuenow={value} aria-valuetext={valueText}
   dir={config.direction} data-ant-progress-root data-ant-progress-type={type}
   data-ant-progress-steps={Boolean(steps) || undefined}
-  data-ant-progress-prefix={prefixCss ? prefix : undefined}
+  data-ant-progress-prefix={hasCustomPrefix ? prefix : undefined}
   data-ant-progress-direction={config.direction}
   data-ant-progress-active={resolvedStatus === 'active' || undefined}
   class={[

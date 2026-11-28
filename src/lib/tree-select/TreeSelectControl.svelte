@@ -69,7 +69,7 @@
   import { createOverlayStyle } from '../popup/overlay-style.model.svelte';
   import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import Tree from '../tree/Tree.svelte';
   import TreeTitle from '../tree/TreeTitle.svelte';
@@ -185,10 +185,11 @@
   let treePrefix = $derived(config.getPrefixCls('tree-select', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
-  let selectPrefixCss = $derived(getSelectPrefixCss(prefix, rootPrefix));
-  let treePrefixCss = $derived(getTreeSelectPrefixCss(treePrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let selectPrefixCss = $derived(runtimeStyles && getSelectPrefixCss(prefix, rootPrefix));
+  let treePrefixCss = $derived(runtimeStyles && getTreeSelectPrefixCss(treePrefix, rootPrefix));
   let popupMotionName = $derived(treeSelectMotionName(animation, transitionName, prefix, rootPrefix));
-  let popupMotionCss = $derived(treeSelectMotionCss(prefix, rootPrefix));
+  let popupMotionCss = $derived(runtimeStyles && treeSelectMotionCss(prefix, rootPrefix));
   const variantContext = useVariant('treeSelect', () => ({ variant }));
   let appearance = $derived(variantContext.variant);
   const form = useForm();

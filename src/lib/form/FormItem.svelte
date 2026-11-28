@@ -6,7 +6,7 @@
   import type { FormFieldMeta } from './form.model.svelte';
   import { useForm, type FormFieldContext } from './form-context';
   import { useConfig } from '../config-provider/config-context';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getFormPrefixCss, getFormPrefixScope } from './form-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { provideFormPrefix, useFormPrefix } from './form-prefix-context';
@@ -133,7 +133,8 @@
   let prefixScope = $derived(getFormPrefixScope(
     componentPrefix, config.getPrefixCls(), designTokens.state.token
   ));
-  let prefixCss = $derived(getFormPrefixCss(
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getFormPrefixCss(
     componentPrefix, config.getPrefixCls(), designTokens.state.token
   ));
   let prefixAttributes = $derived({ 'data-ant-form-prefix': prefixScope });

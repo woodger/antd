@@ -18,6 +18,7 @@
   import { inputCountInfo, inputExceedValue, resolveInputClear } from './input-count.engine';
   import { inputChangeEvent } from './input-event.dom';
   import { getInputPrefixCss } from './input-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { InputProps, InputContent } from './input.types';
   import Icon from '../icon/Icon.svelte';
@@ -76,7 +77,9 @@
   const variantContext = useVariant('input', () => ({ variant }));
   const componentTheme = useComponentTheme('Input');
   let componentPrefix = $derived(config.getPrefixCls('input', customizePrefixCls));
-  let prefixCss = $derived(getInputPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-input');
+  let prefixCss = $derived(runtimeStyles && getInputPrefixCss(componentPrefix));
   const compact = useCompact();
   const form = useForm();
   const controlRef = {
@@ -334,7 +337,7 @@
     {...attributes}
     bind:this={inputElement}
     data-ant-input-node
-    data-ant-input-prefix={prefixCss ? componentPrefix : undefined}
+    data-ant-input-prefix={hasCustomPrefix ? componentPrefix : undefined}
     id={id ?? field?.id}
     name={name ?? field?.name}
     {type}
@@ -429,7 +432,7 @@
     <span
       bind:this={affix}
       data-ant-input-affix
-      data-ant-input-prefix={prefixCss ? componentPrefix : undefined}
+      data-ant-input-prefix={hasCustomPrefix ? componentPrefix : undefined}
       use:focusOnClick
       {hidden}
       class={[

@@ -34,6 +34,7 @@
   } from './cascader.engine';
   import { connectCascaderTags, measureCascaderInput } from './cascader.dom';
   import { useConfig } from '../config-provider/config-context';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from '../select/select-prefix.engine';
   import { getCascaderPrefixCss } from './cascader-prefix.engine';
@@ -134,8 +135,13 @@
   let cascaderPrefix = $derived(config.getPrefixCls('cascader', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
-  let selectPrefixCss = $derived(!panel && getSelectPrefixCss(selectPrefix, rootPrefix));
-  let cascaderPrefixCss = $derived(getCascaderPrefixCss(cascaderPrefix, selectPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let selectPrefixCss = $derived(
+    runtimeStyles && !panel && getSelectPrefixCss(selectPrefix, rootPrefix)
+  );
+  let cascaderPrefixCss = $derived(
+    runtimeStyles && getCascaderPrefixCss(cascaderPrefix, selectPrefix, rootPrefix)
+  );
   const variantContext = useVariant('cascader', () => ({ variant }));
   const controlRef = {
     get nativeElement() {

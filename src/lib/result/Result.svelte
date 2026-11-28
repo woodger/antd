@@ -4,6 +4,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { getResultPrefixCss } from './result-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import RenderContent from '../RenderContent.svelte';
   import Icon from '../icon/Icon.svelte';
@@ -45,7 +46,9 @@
   } as const;
   let host = $state<HTMLDivElement>();
   let prefix = $derived(config.getPrefixCls('result', prefixCls));
-  let prefixCss = $derived(getResultPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-result');
+  let prefixCss = $derived(runtimeStyles && getResultPrefixCss(prefix));
   let kind = $derived(
     String(status) as 'success' | 'error' | 'info' | 'warning' | '403' | '404' | '500'
   );
@@ -149,7 +152,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`result-prefix:${prefix}`} />{/if}<div
   {...attributes} bind:this={host} {id} data-ant-result
-  data-ant-result-prefix={prefixCss ? prefix : undefined}
+  data-ant-result-prefix={hasCustomPrefix ? prefix : undefined}
   role={role ?? (ariaLabel || ariaLabelledby ? 'group' : undefined)}
   aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}
   dir={config.direction} class={[

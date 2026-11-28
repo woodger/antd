@@ -19,6 +19,7 @@
   } from './textarea.engine';
   import { createTextAreaMeasure, textAreaChangeEvent } from './textarea.dom';
   import { getInputPrefixCss } from './input-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { TextAreaProps } from './textarea.types';
   import Icon from '../icon/Icon.svelte';
@@ -74,7 +75,9 @@
   const variantContext = useVariant('textArea', () => ({ variant }));
   const componentTheme = useComponentTheme('Input');
   let componentPrefix = $derived(config.getPrefixCls('input', customizePrefixCls));
-  let prefixCss = $derived(getInputPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-input');
+  let prefixCss = $derived(runtimeStyles && getInputPrefixCss(componentPrefix));
   const compact = useCompact();
   const form = useForm();
   const controlRef = {
@@ -343,7 +346,7 @@
 
 {#snippet control()}
   <textarea {...attributes} bind:this={nativeElement} id={id ?? field?.id} name={name ?? field?.name} value={text}
-    data-ant-input-node data-ant-input-prefix={prefixCss ? componentPrefix : undefined}
+    data-ant-input-node data-ant-input-prefix={hasCustomPrefix ? componentPrefix : undefined}
     data-ant-input-mouse-active={mouseDown || undefined}
     required={attributes.required ?? field?.required} disabled={blocked} readonly={read} maxlength={maximum} hidden={wrapped ? undefined : hidden}
     autocomplete={attributes.autocomplete
@@ -405,7 +408,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-prefix:${componentPrefix}`} />{/if}{#if wrapped}
   <span bind:this={wrapper} {hidden} dir={config.direction}
-    data-ant-input-affix data-ant-input-prefix={prefixCss ? componentPrefix : undefined} class={[
+    data-ant-input-affix data-ant-input-prefix={hasCustomPrefix ? componentPrefix : undefined} class={[
       `${componentPrefix}-affix-wrapper ${componentPrefix}-textarea-affix-wrapper`,
       rootClasses,
       variantClasses,

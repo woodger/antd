@@ -279,5 +279,120 @@
         }
       }
     ]
+  },
+  "prefixChanges": [
+    {
+      "phase": 0,
+      "registered": [
+        "ant-btn"
+      ]
+    },
+    {
+      "phase": 1,
+      "registered": [
+        "ant-btn",
+        "active-rename-btn"
+      ]
+    },
+    {
+      "phase": 2,
+      "registered": [
+        "ant-btn",
+        "active-rename-btn",
+        "fresh-btn"
+      ]
+    }
+  ],
+  "layout": {
+    "token": {
+      "screenMD": 960,
+      "screenMDMin": 960
+    },
+    "width": {
+      "xs": 266,
+      "md": 438
+    },
+    "cases": [
+      {
+        "zeroRuntime": false,
+        "staticCSS": false,
+        "geometry": [
+          {
+            "width": 820,
+            "breakpointMD": false,
+            "columnWidth": 400,
+            "modalWidth": 266,
+            "customMediaInRuntimeStyle": true
+          },
+          {
+            "width": 1010,
+            "breakpointMD": true,
+            "columnWidth": 200,
+            "modalWidth": 438,
+            "customMediaInRuntimeStyle": true
+          }
+        ]
+      },
+      {
+        "zeroRuntime": false,
+        "staticCSS": true,
+        "geometry": [
+          {
+            "width": 820,
+            "breakpointMD": false,
+            "columnWidth": 200,
+            "modalWidth": 438,
+            "customMediaInRuntimeStyle": true
+          },
+          {
+            "width": 1010,
+            "breakpointMD": true,
+            "columnWidth": 200,
+            "modalWidth": 438,
+            "customMediaInRuntimeStyle": true
+          }
+        ]
+      },
+      {
+        "zeroRuntime": true,
+        "staticCSS": true,
+        "geometry": [
+          {
+            "width": 820,
+            "breakpointMD": false,
+            "columnWidth": 200,
+            "modalWidth": 438,
+            "customMediaInRuntimeStyle": false
+          },
+          {
+            "width": 1010,
+            "breakpointMD": true,
+            "columnWidth": 200,
+            "modalWidth": 438,
+            "customMediaInRuntimeStyle": false
+          }
+        ]
+      },
+      {
+        "zeroRuntime": true,
+        "staticCSS": false,
+        "geometry": [
+          {
+            "width": 820,
+            "breakpointMD": false,
+            "columnWidth": 400,
+            "modalWidth": 804,
+            "customMediaInRuntimeStyle": false
+          },
+          {
+            "width": 1010,
+            "breakpointMD": true,
+            "columnWidth": 400,
+            "modalWidth": 994,
+            "customMediaInRuntimeStyle": false
+          }
+        ]
+      }
+    ]
   }
 }

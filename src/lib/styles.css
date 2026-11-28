@@ -11,6 +11,7 @@
 @import './popup/overlay-motion.css';
 @import './vendor/overlay-color.css';
 @import './vendor/dropdown.css';
+@import './vendor/dropdown-motion.css';
 @import './vendor/tabs.css';
 @import './vendor/tabs-editable.css';
 @import './vendor/tabs-layout.css';

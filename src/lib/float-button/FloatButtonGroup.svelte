@@ -9,6 +9,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import { getFloatButtonPrefixCss } from './float-button-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useForm } from '../form/form-context';
   import { floatButtonPlacement } from './float-button.engine';
@@ -45,7 +46,9 @@
   const form = useForm();
   let prefixCls = $derived(config.getPrefixCls('float-btn', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getFloatButtonPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-float-btn' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getFloatButtonPrefixCss(prefixCls, rootPrefixCls));
   let internalOpen = $state(false);
   let opened = $derived(open ?? internalOpen);
   let menu = $derived(trigger === 'click' || trigger === 'hover');
@@ -229,8 +232,8 @@
 {#snippet content()}{#if items}{#each items as item (item.key)}{@render item.children()}{/each}{:else}{@render children?.()}{/if}{/snippet}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`float-button-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}<div bind:this={nativeElement} role="group" dir={config.direction}
   data-ant-float-group
-  data-ant-float-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-float-global={prefixCss ? rootPrefixCls : undefined}
+  data-ant-float-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-float-global={hasCustomPrefix ? rootPrefixCls : undefined}
   class={[
       `${prefixCls}-group ant-float-btn-css-var`,
       componentTheme.className,

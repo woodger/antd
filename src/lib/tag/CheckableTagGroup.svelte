@@ -5,6 +5,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectTagStyle } from './tag-style.dom';
   import { getTagPrefixCss } from './tag-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type {
     CheckableTagGroupProps,
@@ -17,7 +18,8 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Tag');
   let prefix = $derived(config.getPrefixCls('tag', props.prefixCls));
-  let prefixCss = $derived(getTagPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTagPrefixCss(prefix));
   let groupPrefix = $derived(`${prefix}-checkable-group`);
   let innerValue = $state.raw<Value | Value[] | null | undefined>(
     untrack(() => props.defaultValue)

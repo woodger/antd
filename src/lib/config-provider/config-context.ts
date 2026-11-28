@@ -89,6 +89,8 @@ export interface ConfigContext {
   readonly timeline?: TimelineConfig;
   readonly steps?: StepsConfig;
   readonly layout?: LayoutConfig;
+  /** Scope of the registered Grid media rules for the current theme. */
+  readonly gridMediaScope?: string;
   readonly select?: SelectConfig;
   readonly treeSelect?: TreeSelectConfig;
   readonly tree?: TreeConfig;

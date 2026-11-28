@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getGridMediaQueries } from '../grid/grid.engine';
   import { getDescriptionsPrefixCss } from './descriptions-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
@@ -34,7 +34,9 @@
   const componentTheme = useComponentTheme('Descriptions');
   let prefixCls = $derived(config.getPrefixCls('descriptions', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getDescriptionsPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-descriptions' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getDescriptionsPrefixCss(prefixCls, rootPrefixCls));
   const breakpoint = createBreakpoint();
   const designTokens = useDesignTokenContext();
   let mediaQueries = $derived(designTokens.enabled
@@ -75,8 +77,8 @@
   {#if typeof node === 'function'}{@render node()}{:else if node !== true && node !== false}{node ?? ''}{/if}
 {/snippet}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`descriptions-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}<div {...rest} bind:this={nativeElement} dir={config.direction}
-  data-ant-descriptions-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-descriptions-global={prefixCss ? rootPrefixCls : undefined}
+  data-ant-descriptions-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-descriptions-global={hasCustomPrefix ? rootPrefixCls : undefined}
   class={[
       prefixCls,
       'ant-descriptions-css-var',

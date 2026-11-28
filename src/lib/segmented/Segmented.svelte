@@ -6,6 +6,7 @@
   import { connectFeedbackFocus } from '../feedback.dom';
   import { animateSegmentedThumb } from './segmented.dom';
   import { getSegmentedPrefixCss } from './segmented-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import Tooltip from '../tooltip/Tooltip.svelte';
   import type {
@@ -46,7 +47,9 @@
   let isVertical = $derived(orientation ? orientation === 'vertical' : vertical);
   let mergedSize = $derived(size ?? config.componentSize);
   let prefix = $derived(config.getPrefixCls('segmented', prefixCls));
-  let prefixCss = $derived(getSegmentedPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-segmented');
+  let prefixCss = $derived(runtimeStyles && getSegmentedPrefixCss(prefix));
   let info = $derived(
     {
       props: {
@@ -248,7 +251,7 @@
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`segmented-prefix:${prefix}`} />{/if}<div {...rest} bind:this={nativeElement} data-ant-segmented
-  data-ant-segmented-prefix={prefixCss ? prefix : undefined} role="radiogroup" aria-label={rest['aria-label']
+  data-ant-segmented-prefix={hasCustomPrefix ? prefix : undefined} role="radiogroup" aria-label={rest['aria-label']
     ?? (rest['aria-labelledby']
       ? undefined
       : 'segmented control')}

@@ -2,6 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getDividerPrefixCss } from './divider-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { DividerProps, DividerOrientation, DividerSemanticInfo } from './divider.types';
 
@@ -26,7 +27,9 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Divider');
   let prefix = $derived(config.getPrefixCls('divider', prefixCls));
-  let prefixCss = $derived(getDividerPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-divider');
+  let prefixCss = $derived(runtimeStyles && getDividerPrefixCss(prefix));
   let direction = $derived<DividerOrientation>(
     orientation === 'horizontal' || orientation === 'vertical'
       ? orientation : typeof vertical === 'boolean'
@@ -92,7 +95,7 @@
   bind:this={nativeElement}
   role="separator"
   aria-orientation={direction}
-  data-ant-divider-prefix={prefixCss ? prefix : undefined}
+  data-ant-divider-prefix={hasCustomPrefix ? prefix : undefined}
   dir={config.direction}
   class={[
       prefix,

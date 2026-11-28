@@ -20,7 +20,7 @@
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useVariant } from '../config-provider/variant.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getInlineZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { inputCountInfo, inputExceedValue, resolveInputClear } from '../input/input-count.engine';
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
@@ -101,7 +101,8 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('mentions', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getMentionsPrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getMentionsPrefixCss(componentPrefix, rootPrefix));
   let prefixAttributes = $derived({
     'data-ant-mentions-prefix': componentPrefix, 'data-ant-mentions-global': rootPrefix
   });

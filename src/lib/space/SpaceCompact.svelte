@@ -1,6 +1,7 @@
 <script lang="ts">
   import { useConfig } from '../config-provider/config-context';
   import { getSpaceCompactPrefixCss } from './space-compact-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useCompact } from './space-compact-context';
   import { compactEntries } from './space-compact.engine';
@@ -25,7 +26,9 @@
   }: SpaceCompactProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('space-compact', prefixCls));
-  let prefixCss = $derived(getSpaceCompactPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-space-compact');
+  let prefixCss = $derived(runtimeStyles && getSpaceCompactPrefixCss(componentPrefix));
   const parent = useCompact();
   let entries = $derived(compactEntries(items, children));
   let actualOrientation = $derived(spaceOrientation(orientation, vertical));
@@ -78,7 +81,7 @@
       config.direction === 'rtl' && `${componentPrefix}-rtl`,
       className,
       rootClassName
-    ]} data-ant-space-compact-prefix={prefixCss ? componentPrefix : undefined} {style}>
+    ]} data-ant-space-compact-prefix={hasCustomPrefix ? componentPrefix : undefined} {style}>
     {#each entries as item, index (item.key)}
       <SpaceCompactItem children={item.children} size={actualSize} orientation={actualOrientation} first={index === 0 && (!parent || parent.first)} last={index === entries.length - 1 && (!parent || parent.last)} />
     {/each}

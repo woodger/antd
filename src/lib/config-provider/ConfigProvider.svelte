@@ -76,7 +76,7 @@
   import type { TextAreaConfig } from '../input/textarea.types';
   import type { Snippet } from 'svelte';
   import { provideConfig, useConfig, type ConfigContext } from './config-context';
-  import { provideDesignTokens, useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { provideDesignTokens, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getGridMediaCss, getGridMediaScope } from '../grid/grid-style.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { ComponentSize, CSPConfig, Variant, Locale, ThemeConfig } from '../types';
@@ -315,7 +315,6 @@
   }: ConfigProviderProps = $props();
 
   const parent = useConfig();
-  const parentDesignTokens = useDesignTokenContext();
   const themeId = $props.id();
   let element = $state<HTMLDivElement>();
   function getPrefixCls(suffix?: string, custom?: string) {
@@ -331,11 +330,12 @@
     () => element,
     () => getPrefixCls()
   );
-  let gridMediaScope = $derived(designTokens.enabled
+  const runtimeStyles = useRuntimeStyles();
+  let requestedGridMediaScope = $derived(designTokens.enabled
     ? getGridMediaScope(designTokens.state.token) : undefined);
-  let parentGridMediaScope = $derived(parentDesignTokens.enabled
-    ? getGridMediaScope(parentDesignTokens.state.token) : undefined);
-  let gridMediaCss = $derived(gridMediaScope && gridMediaScope !== parentGridMediaScope
+  let gridMediaScope = $derived(runtimeStyles || requestedGridMediaScope === parent.gridMediaScope
+    ? requestedGridMediaScope : undefined);
+  let gridMediaCss = $derived(gridMediaScope && gridMediaScope !== parent.gridMediaScope
     ? getGridMediaCss(designTokens.state.token) : undefined);
   let providerLocale = $derived(resolveProviderLocale(locale));
   $effect(() => {
@@ -617,6 +617,9 @@
     },
     get theme() {
       return designTokens.config;
+    },
+    get gridMediaScope() {
+      return gridMediaScope;
     },
     get themeStyle() {
       return designTokens.style;

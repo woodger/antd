@@ -6,6 +6,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { getAvatarPrefixCss } from './avatar-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { ruRU } from '../types';
   import type { AvatarGroupProps } from './avatar-group.types';
@@ -30,7 +31,8 @@
   let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
   let host = $derived(nativeElement);
   let prefix = $derived(config.getPrefixCls('avatar', prefixCls));
-  let prefixCss = $derived(getAvatarPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getAvatarPrefixCss(prefix));
   let resolvedMax = $derived(max ?? {});
   let layout = $derived(getAvatarGroupItems(items, resolvedMax.count));
   let strings = $derived({ ...ruRU.avatarGroup, ...config.locale.avatarGroup });

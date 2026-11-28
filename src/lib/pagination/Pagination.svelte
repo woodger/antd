@@ -9,7 +9,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useVariant } from '../config-provider/variant.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { provideFormField, useFormField } from '../form/form-context';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { getGridMediaQueries } from '../grid/grid.engine';
@@ -73,7 +73,8 @@
   const config = useConfig();
   let prefixCls = $derived(config.getPrefixCls('pagination', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getPaginationPrefixCss(prefixCls, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getPaginationPrefixCss(prefixCls, rootPrefix));
   const variantContext = useVariant('input');
   const componentTheme = useComponentTheme('Pagination');
   const designToken = useDesignTokenContext();

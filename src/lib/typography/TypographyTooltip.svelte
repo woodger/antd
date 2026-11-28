@@ -1,6 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getTooltipActions, getTooltipDelay } from '../tooltip/tooltip.engine';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import TooltipPopup from '../tooltip/TooltipPopup.svelte';
@@ -15,6 +16,7 @@
   } = $props();
 
   const config = useConfig();
+  const runtimeStyles = useRuntimeStyles();
   let resolvedTitle = $derived(toTooltipContent(title === 0 ? title : options.overlay || title));
   let resolvedTrigger = $derived<TooltipTrigger | readonly TooltipTrigger[]>(
     options.trigger || config.tooltip?.trigger || 'hover'
@@ -287,7 +289,7 @@
 
 {#if mounted}
   <NoCompactStyle>
-    <TooltipPopup title={resolvedTitle} contentAvailable={available}
+    <TooltipPopup title={resolvedTitle} contentAvailable={available} {runtimeStyles}
       open={visible} anchor={target} describe={target} trigger={target}
       color={options.color} prefixCls={options.prefixCls} openClassName={options.openClassName}
       semanticProps={{

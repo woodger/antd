@@ -5,6 +5,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getAlertPrefixCss } from './alert-prefix.engine';
   import { resolveAlertClose } from './alert.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import RenderContent from '../RenderContent.svelte';
   import { closeAlert, focusAfterAlert } from './alert.dom';
@@ -50,7 +51,9 @@
   let disposeMotion: (() => void) | undefined;
   let active = true;
   let prefix = $derived(config.getPrefixCls('alert', prefixCls));
-  let prefixCss = $derived(getAlertPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-alert');
+  let prefixCss = $derived(runtimeStyles && getAlertPrefixCss(prefix));
   let resolvedVariant = $derived(variant ?? config.alert?.variant ?? 'outlined');
   let resolvedType = $derived(type ?? (banner ? 'warning' : 'info'));
   let hasIcon = $derived(banner && showIcon === undefined ? true : showIcon);
@@ -180,7 +183,7 @@
 
 {#if phase !== 'closed'}
   {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`alert-prefix:${prefix}`} />{/if}<div {...attributes} bind:this={root} {id} {role} data-ant-alert
-    data-ant-alert-prefix={prefixCss ? prefix : undefined} dir={config.direction}
+    data-ant-alert-prefix={hasCustomPrefix ? prefix : undefined} dir={config.direction}
     aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}
     aria-live={ariaLive} aria-atomic={ariaAtomic}
     aria-hidden={phase === 'closing' ? true : ariaHidden}

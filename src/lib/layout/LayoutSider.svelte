@@ -6,6 +6,7 @@
   import { layoutSiderWidth } from './layout.engine';
   import { connectSiderBreakpoint } from './layout.dom';
   import { getLayoutPrefixCss } from './layout-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { focusAfterNotice } from '../notice/notice.dom';
@@ -40,7 +41,9 @@
   }: LayoutSiderProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('layout-sider', prefixCls));
-  let prefixCss = $derived(getLayoutPrefixCss(componentPrefix, 'sider'));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-layout-sider');
+  let prefixCss = $derived(runtimeStyles && getLayoutPrefixCss(componentPrefix, 'sider'));
   const componentTheme = useComponentTheme('Layout');
   const layout = useLayout();
   const id = $props.id();
@@ -167,7 +170,7 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`layout-sider-prefix:${componentPrefix}`} />{/if}<aside {...rest} bind:this={nativeElement} dir={config.direction} data-ant-layout-sider=""
-  data-ant-layout-prefix={prefixCss ? 'sider' : undefined}
+  data-ant-layout-prefix={hasCustomPrefix ? 'sider' : undefined}
   data-ant-layout-compact={config.theme.compact ? '' : undefined}
   class={[
       componentPrefix, 'ant-layout-css-var',

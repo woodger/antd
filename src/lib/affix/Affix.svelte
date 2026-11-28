@@ -4,6 +4,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useConfig } from '../config-provider/config-context';
   import { getAffixPrefixCss } from './affix-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { AffixPosition, AffixProps, AffixUpdatePosition } from './affix.types';
   let {
@@ -22,7 +23,9 @@
   const componentTheme = useComponentTheme('Affix');
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('affix', prefixCls));
-  let prefixCss = $derived(getAffixPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-affix');
+  let prefixCss = $derived(runtimeStyles && getAffixPrefixCss(prefix));
   let wrapperStyle = $derived(config.affix?.style
     ? [config.affix.style, style].filter(Boolean).join(';') : style);
   let content = $state<HTMLDivElement>();
@@ -62,7 +65,7 @@
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`affix-prefix:${prefix}`} />{/if}<div {...rest} bind:this={nativeElement} class={[className, config.affix?.class]} style={wrapperStyle}>
   {#if position}<div aria-hidden="true" style={`width:${position.width}px;`
     + `height:${position.height}px`}></div>{/if}
-  <div bind:this={content} data-ant-affix-prefix={position && prefixCss ? prefix : undefined}
+  <div bind:this={content} data-ant-affix-prefix={position && hasCustomPrefix ? prefix : undefined}
     class={position
     ? [prefix, componentTheme.className, 'ant-affix-css-var', rootClassName] : undefined} style={position
       ? [componentTheme.style, `position:fixed;${position

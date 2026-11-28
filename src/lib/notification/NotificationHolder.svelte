@@ -2,6 +2,7 @@
   // One surface and one timer owner serve all placements. Changing the portal target recreates
   // lists while retaining the outer instance and its queue.
   import { untrack } from 'svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getNotificationPrefixCss } from './notification-prefix.engine';
   import NotificationList from './NotificationList.svelte';
@@ -29,7 +30,8 @@
   let options = $derived({ ...runtime.options, ...overrides });
   let componentPrefix = $derived(config.getPrefixCls('notification', options.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getNotificationPrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getNotificationPrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Notification');
   let anchor = $state<HTMLSpanElement>();
   let surface = $state<HTMLDivElement>();

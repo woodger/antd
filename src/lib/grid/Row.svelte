@@ -4,7 +4,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getGridRowPrefixCss } from './grid-row-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { createBreakpoint } from './grid-breakpoint.model.svelte.js';
   import { provideGridRow } from './grid-context';
   import {
@@ -26,7 +26,9 @@
   }: RowProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('row', prefixCls));
-  let prefixCss = $derived(getGridRowPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-row');
+  let prefixCss = $derived(runtimeStyles && getGridRowPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Grid');
   const designTokens = useDesignTokenContext();
   const breakpoint = createBreakpoint();
@@ -52,7 +54,7 @@
 </script>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`grid-row-prefix:${componentPrefix}`} />{/if}<div {...rest} bind:this={nativeElement} dir={config.direction}
-  data-ant-grid-row-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-grid-row-prefix={hasCustomPrefix ? componentPrefix : undefined}
   class={[
       `${componentPrefix} ant-grid-css-var`,
       componentTheme.className,

@@ -4,6 +4,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { getImagePrefixCss } from './image-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type {
     ImagePreviewGroupProps,
@@ -26,7 +27,8 @@
   const viewerIcons = $derived(preview === false && ownsIcons ? icons ?? {} : undefined);
   const context = useConfig();
   let componentPrefix = $derived(context.getPrefixCls('image', previewPrefixCls));
-  let prefixCss = $derived(getImagePrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getImagePrefixCss(componentPrefix));
   let config = $derived<ImagePreviewGroupConfig>(typeof preview === 'object' ? preview : {});
   let appearance = $derived(resolveImagePreviewAppearance(
     config, preview ? context.image?.preview : undefined

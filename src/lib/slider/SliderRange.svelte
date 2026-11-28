@@ -23,6 +23,7 @@
   import { useSliderInternal } from './slider-internal-context';
   import { sliderSemantics } from './slider-semantic.engine';
   import { getSliderPrefixCss } from './slider-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { SliderRangeProps } from './slider-range.types';
   import TooltipPopup from '../tooltip/TooltipPopup.svelte';
@@ -55,7 +56,8 @@
   let blurCallbacks: Pick<SliderRangeProps, 'onBlur' | 'onblur'> = {};
   let prefixCls = $derived(config.getPrefixCls('slider', props.prefixCls));
   let customPrefix = $derived(prefixCls !== 'ant-slider');
-  let prefixCss = $derived(getSliderPrefixCss(prefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getSliderPrefixCss(prefixCls));
   let orientation = $derived(props.orientation ?? 'horizontal');
   let direction = $derived(getSliderDirection(orientation, props.reverse ?? false,
     (internal?.direction ?? config.direction) === 'rtl'));

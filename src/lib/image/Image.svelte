@@ -10,6 +10,7 @@
   import { getImagePrefixCss } from './image-prefix.engine';
   import type { ImagePoint } from './image-preview.engine';
   import { resolveImagePreviewAppearance, resolveImageSemantics } from './image-semantic.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useImageGroup } from './image-group-context';
@@ -44,7 +45,8 @@
   }: ImageProps = $props();
   const context = useConfig();
   let componentPrefix = $derived(context.getPrefixCls('image', customizePrefixCls));
-  let prefixCss = $derived(getImagePrefixCss(componentPrefix, previewPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getImagePrefixCss(componentPrefix, previewPrefixCls));
   const componentTheme = useComponentTheme('Image');
   const group = useImageGroup();
   const id = $props.id();

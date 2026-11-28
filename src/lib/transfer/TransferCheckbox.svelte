@@ -1,5 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useConfig } from '../config-provider/config-context';
   import { getCheckboxPrefixCss } from '../checkbox/checkbox-prefix.engine';
@@ -20,7 +21,8 @@
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('checkbox'));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getCheckboxPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getCheckboxPrefixCss(prefix, rootPrefix));
 
   $effect(() => {
     if (input) input.indeterminate = indeterminate;

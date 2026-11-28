@@ -3,6 +3,7 @@
   // preserving the deadlines and handles of open messages.
   import { untrack } from 'svelte';
   import { on } from 'svelte/events';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getMessagePrefixCss } from './message-prefix.engine';
   import MessageNotice from './MessageNotice.svelte';
@@ -28,7 +29,8 @@
   let options = $derived({ ...runtime.options, ...overrides });
   let componentPrefix = $derived(config.getPrefixCls('message', options.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getMessagePrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getMessagePrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Message');
   let anchor = $state<HTMLSpanElement>();
   let surface = $state<HTMLDivElement>();

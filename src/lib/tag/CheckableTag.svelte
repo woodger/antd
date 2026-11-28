@@ -5,6 +5,7 @@
   import { connectTagStyle } from './tag-style.dom';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { getTagPrefixCss } from './tag-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { CheckableTagProps } from './tag.types';
 
@@ -32,7 +33,8 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Tag');
   let prefix = $derived(config.getPrefixCls('tag', prefixCls));
-  let prefixCss = $derived(getTagPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTagPrefixCss(prefix));
   let blocked = $derived(disabled ?? config.componentDisabled);
   let rootStyle = $derived([
     componentTheme.style,

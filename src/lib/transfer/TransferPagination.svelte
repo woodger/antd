@@ -2,6 +2,7 @@
   // Connects Transfer pagination controls to the draft page number. Typing and navigation do not
   // change row selection.
   import { untrack } from 'svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getPaginationPrefixCss } from '../pagination/pagination-prefix.engine';
   import { useConfig } from '../config-provider/config-context';
@@ -27,7 +28,8 @@
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('pagination'));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getPaginationPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getPaginationPrefixCss(prefix, rootPrefix));
   const componentTheme = useComponentTheme('Pagination');
   let strings = $derived({ ...ruRU.pagination, ...config.locale.pagination });
   let paginationState = $derived(getPaginationState(total, current, pageSize));

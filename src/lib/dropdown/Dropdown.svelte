@@ -19,7 +19,7 @@
   import { connectInlineStyle } from '../style/inline-style.dom';
   import { serializeInlineStyleLayers } from '../style/inline-style.engine';
   import { getInlineZIndex, provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getTooltipDelay, type TooltipPosition } from '../tooltip/tooltip.engine';
   import {
     dropdownSemantics, getDropdownMatch, getDropdownMotionName, isDropdownMenuKey
@@ -70,7 +70,10 @@
   let componentPrefix = $derived(config.getPrefixCls('dropdown', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   const menuPrefix = $derived(menu?.prefixCls || `${componentPrefix}-menu`);
-  let prefixCss = $derived(getDropdownPrefixCss(componentPrefix, rootPrefix, menuPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(
+    runtimeStyles && getDropdownPrefixCss(componentPrefix, rootPrefix, menuPrefix)
+  );
   const requestedPlacement = $derived(
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
   );
@@ -141,7 +144,7 @@
   const retain = $derived(Boolean(forceRender || visited && !destroyOnHidden));
   const renderRequested = $derived(visible || retain);
   const motionName = $derived(transitionName ?? getDropdownMotionName(rootPrefix, requestedPlacement));
-  const motionCss = $derived(getDropdownMotionCss(componentPrefix, rootPrefix));
+  const motionCss = $derived(runtimeStyles && getDropdownMotionCss(componentPrefix, rootPrefix));
   const popupMotion = useMenuMotion(() => host, () => popup, () => ({
     motion: {
       motionName,
@@ -917,12 +920,13 @@
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss}
-  scope={`dropdown-prefix:${componentPrefix}:${rootPrefix}${menu?.prefixCls ? `:${menuPrefix}` : ''}`} />{/if}{#if mounted}<ThemeScopeStyle css={motionCss}
+  scope={`dropdown-prefix:${componentPrefix}:${rootPrefix}${menu?.prefixCls ? `:${menuPrefix}` : ''}`} />{/if}{#if mounted && motionCss}<ThemeScopeStyle css={motionCss}
   scope={`dropdown-motion:${componentPrefix}:${rootPrefix}`} />{/if}<span data-ant-dropdown-trigger data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} bind:this={host} id={triggerId} role="presentation" class={[`${componentPrefix}-trigger`, className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} ontouchstart={handleTouchStart} onclick={handleClick} oncontextmenucapture={handleContextMenu} onkeydown={handleTriggerKeydown}>{@render children()}</span>
 <NoCompactStyle>{#if rendered}
 <div data-ant-dropdown-popup data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} data-ant-dropdown-source-theme={componentTheme.className ? true : undefined}
   data-ant-dropdown-source-align={builtinPlacements ? true : undefined}
-  data-ant-dropdown-motion data-ant-dropdown-placement={actualPlacement}
+  data-ant-dropdown-motion data-ant-dropdown-static-motion={!runtimeStyles || undefined}
+  data-ant-dropdown-placement={actualPlacement}
   bind:this={popup} id={popupId} popover="manual" role={customContent ? 'dialog' : 'presentation'}
   tabindex="-1" aria-label={customContent ? ariaLabel : undefined}
   aria-labelledby={customContent ? ariaLabelledby ?? (ariaLabel ? undefined : triggerId) : undefined}

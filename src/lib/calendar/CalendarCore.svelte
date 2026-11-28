@@ -6,6 +6,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getCalendarPrefixCss } from './calendar-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import {
     calendarDateDisabled,
@@ -57,7 +58,8 @@
   const componentTheme = useComponentTheme('Calendar');
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let calendarPrefix = $derived(`${prefix}-calendar`);
-  let prefixCss = $derived(getCalendarPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getCalendarPrefixCss(prefix));
   let innerValue = $state.raw<DateType | undefined>(
     untrack(() => defaultValue || generateConfig.getNow())
   );

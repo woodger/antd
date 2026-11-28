@@ -19,7 +19,7 @@
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { connectInlineStyle } from '../style/inline-style.dom';
   import { serializeInlineStyleLayers } from '../style/inline-style.engine';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { provideZIndex, useZIndex, type ZIndexLayer } from '../popup/z-index-context.svelte';
   import {
     connectTooltipDescription, connectTooltipOpenClass, defaultTooltipContainer
@@ -79,7 +79,8 @@
   const grouped = $derived(Boolean(group
     && (unique ?? semanticProps?.unique) !== false && !hasTooltipPopupAncestor(anchor)));
   let prefix = $derived(config.getPrefixCls('tooltip', prefixCls));
-  let prefixCss = $derived(getOverlayPrefixCss('tooltip', prefix, prefixTemplate));
+  const runtimeStyles = untrack(() => props.runtimeStyles) ?? useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getOverlayPrefixCss('tooltip', prefix, prefixTemplate));
   let resolvedOpenClassName = $derived(openClassName || semanticProps?.openClassName || `${prefix}-open`);
   const generatedId = $props.id();
   let resolvedId = $derived((providedId ?? semanticProps?.id) || `ant-tooltip-${generatedId}`);

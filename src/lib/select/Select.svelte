@@ -14,7 +14,7 @@
   import { resolveSelectPopupRootStyle, resolveSelectStyleFrame } from './select-style.engine';
   import { createSelectComponentInputStyle, type SelectComponentInputLifetime } from './select-component-input-style.dom';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
   import { createSelectOptionList } from './select-option-list.model.svelte';
@@ -175,7 +175,8 @@
   let prefix = $derived(config.getPrefixCls('select', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
-  let prefixCss = $derived(getSelectPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getSelectPrefixCss(prefix, rootPrefix));
   const variantContext = useVariant('select', () => ({ variant }));
   const componentTheme = useComponentTheme('Select');
   const layer = useZIndex('popup');

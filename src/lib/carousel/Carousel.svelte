@@ -3,6 +3,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getCarouselPrefixCss } from './carousel-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import {
     getCarouselItems,
@@ -35,7 +36,9 @@
   });
   let prefixCls = $derived(config.getPrefixCls('carousel', props.prefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getCarouselPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-carousel' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getCarouselPrefixCss(prefixCls, rootPrefixCls));
   let className = $derived([props.class, config.carousel?.class].filter(Boolean).join(' '));
   let style = $derived([config.carousel?.style, props.style].filter(Boolean).join(';'));
   let duration = $derived(typeof props.autoplay === 'object' && props.autoplay.dotDuration
@@ -93,8 +96,8 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`carousel-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}<div bind:this={nativeElement} id={props.id}
-  data-ant-carousel-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-carousel-global={prefixCss ? rootPrefixCls : undefined}
+  data-ant-carousel-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-carousel-global={hasCustomPrefix ? rootPrefixCls : undefined}
   class={[prefixCls, 'ant-carousel-css-var', componentTheme.className,
     resolved.rootRtl && `${prefixCls}-rtl`, resolved.rootVertical && `${prefixCls}-vertical`,
     props.rootClassName]} style={[componentTheme.style, duration].filter(Boolean).join(';')}>

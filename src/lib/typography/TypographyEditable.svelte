@@ -7,6 +7,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getTypographyPrefixCss } from './typography-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { typographyEditKey, typographyEditValue } from './typography.engine';
   import type { TypographyEditConfig, TypographySlots } from './typography.types';
@@ -51,7 +52,9 @@
   const field = useFormField();
   const config = useConfig();
   const componentTheme = useComponentTheme('Typography');
-  let prefixCss = $derived(getTypographyPrefixCss(prefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-typography');
+  let prefixCss = $derived(runtimeStyles && getTypographyPrefixCss(prefixCls));
   provideFormField(field ? {
     get status() { return field.status; },
     get invalid() { return field.invalid; },
@@ -148,7 +151,7 @@
   }
 </script>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`typography-prefix:${prefixCls}`} />{/if}<div data-ant-typography-prefix={prefixCss ? prefixCls : undefined}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`typography-prefix:${prefixCls}`} />{/if}<div data-ant-typography-prefix={hasCustomPrefix ? prefixCls : undefined}
   class={[prefixCls, componentTheme.className,
   `${prefixCls}-edit-content`, direction === 'rtl' && `${prefixCls}-rtl`,
   `${prefixCls}-${component}`, className, classNames.root, 'ant-typography-css-var',

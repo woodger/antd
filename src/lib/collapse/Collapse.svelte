@@ -2,6 +2,7 @@
   // Manages panel expansion and keyboard focus by key. Keyboard navigation skips unavailable
   // headers.
   import { onDestroy, onMount, untrack } from 'svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getCollapsePrefixCss } from './collapse-prefix.engine';
@@ -60,7 +61,9 @@
   let retainedFocus: HTMLElement | undefined;
   let active = true;
   let prefix = $derived(config.getPrefixCls('collapse', prefixCls));
-  let prefixCss = $derived(getCollapsePrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-collapse');
+  let prefixCss = $derived(runtimeStyles && getCollapsePrefixCss(prefix));
   let placement = $derived(expandIconPlacement ?? 'start');
   let rootDestroy = $derived(destroyOnHidden ?? false);
   let resolvedExpandIcon = $derived(expandIcon ?? config.collapse?.expandIcon);
@@ -284,7 +287,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`collapse-prefix:${prefix}`} />{/if}<div {...attributes} bind:this={root} id={rootId} role="group" aria-label={ariaLabel}
   aria-labelledby={ariaLabelledby} tabindex="-1" dir={config.direction} data-ant-collapse
-  data-ant-collapse-prefix={prefixCss ? prefix : undefined} data-size={resolvedSize}
+  data-ant-collapse-prefix={hasCustomPrefix ? prefix : undefined} data-size={resolvedSize}
   data-placement={placement} class={[
     prefix, 'ant-collapse-css-var', `${prefix}-icon-placement-${placement}`,
     resolvedSize !== 'medium' && `${prefix}-${resolvedSize}`,

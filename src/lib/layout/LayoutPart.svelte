@@ -3,6 +3,7 @@
   import { useLayout } from './layout-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getLayoutSectionPrefixCss } from './layout-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { LayoutSectionProps } from './layout.types';
   let {
@@ -23,13 +24,17 @@
   // Sections inherit Layout variables, including its style. A standalone section defines its own scope.
   const layout = useLayout();
   let componentPrefix = $derived(config.getPrefixCls(`layout-${part}`, prefixCls));
-  let prefixCss = $derived(getLayoutSectionPrefixCss(componentPrefix, part, !layout));
+  const runtimeStyles = useRuntimeStyles();
+  const needsSectionScope = $derived(componentPrefix !== `ant-layout-${part}` || !layout);
+  let prefixCss = $derived(
+    runtimeStyles && getLayoutSectionPrefixCss(componentPrefix, part, !layout)
+  );
   const componentTheme = useComponentTheme('Layout');
 </script>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`layout-${part}-prefix:${componentPrefix}`} />{/if}<svelte:element this={tag} {...rest} bind:this={nativeElement} dir={config.direction}
   data-ant-layout-part={part}
-  data-ant-layout-prefix={prefixCss ? part : undefined}
+  data-ant-layout-prefix={needsSectionScope ? part : undefined}
   data-ant-layout-standalone={!layout ? '' : undefined}
   class={['ant-layout-css-var', componentPrefix, componentTheme.className, className, rootClassName]}
   style={[!layout && componentTheme.style, style].filter(Boolean).join(';')}>

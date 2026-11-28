@@ -34,15 +34,36 @@ function widthVariable(prefix: string, breakpoint: GridBreakpoint) {
 }
 
 /** Intervals without a given width use fallback in media queries. */
-function responsiveVariables(map: Exclude<ModalWidth, string | number>, prefix: string) {
+function responsiveVariables(
+  map: Exclude<ModalWidth, string | number>, prefix: string, staticRules = false
+) {
   const variables: [string, string][] = [];
   for (const key of widthBreakpoints) {
     const value = map[key];
+    const variable = widthVariable(prefix, key);
     // initial includes fallback var() and separates the dimensions of the nested panel from the external.
-    variables.push([widthVariable(prefix, key), value == null ? 'initial' : cssLength(value)]);
+    variables.push([variable, value == null ? 'initial' : cssLength(value)]);
+    if (staticRules) {
+      variables.push([`--ant-svelte-modal-width-${key}`, `var(${variable})`]);
+    }
   }
 
   return variables;
+}
+
+/** The packaged rules keep the default media thresholds and read the instance's width map. */
+function getStaticModalLayout(
+  width: ModalWidth, height: string | undefined, centered: boolean | undefined, prefix: string
+): ModalLayout {
+  if (typeof width !== 'object' || width === null) {
+    return { width: width === null ? 'auto' : cssLength(width), height, scope: 'static' };
+  }
+
+  const variables = responsiveVariables(width, prefix, true);
+  const fallback = centered ? 'fit-content' : 'auto';
+  variables.push(['--ant-svelte-modal-width-fallback', fallback]);
+
+  return { width: 'var(--ant-svelte-modal-width)', height, variables, scope: 'static' };
 }
 
 /** Layout scope shares themes with different breakpoint even at one prefixCls. */
@@ -51,11 +72,15 @@ export function getModalLayout(
   height: number | string | undefined,
   centered: boolean | undefined,
   prefix: string,
-  token: LayoutTokens
+  token: LayoutTokens,
+  runtimeStyles = true
 ): ModalLayout {
   const cssHeight = height == null ? undefined : cssLength(height);
   if (typeof width === 'number' && centered === undefined) {
     return { width: cssLength(width), height: cssHeight };
+  }
+  if (!runtimeStyles) {
+    return getStaticModalLayout(width, cssHeight, centered, prefix);
   }
 
   const metrics = [token.margin, token.marginXS, token.screenSMMax,

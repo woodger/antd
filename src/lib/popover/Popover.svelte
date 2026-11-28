@@ -4,7 +4,7 @@
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import { getAllContexts, onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getOverlaySemantics } from '../popup/overlay-semantic.engine';
@@ -82,7 +82,8 @@
 
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('popover', prefixCls));
-  let prefixCss = $derived(getOverlayPrefixCss('popover', prefix, prefixTemplate));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getOverlayPrefixCss('popover', prefix, prefixTemplate));
   let resolvedOpenClassName = $derived(openClassName || `${prefix}-open`);
   const designTokens = useDesignTokenContext();
   const layer = useZIndex('container', () => zIndex);

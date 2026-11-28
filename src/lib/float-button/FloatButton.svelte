@@ -9,6 +9,7 @@
   import { useZIndex } from '../popup/z-index-context.svelte';
   import { useFloatButton } from './float-button-context';
   import { getFloatButtonPrefixCss } from './float-button-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import type { BadgeProps } from '../badge/badge.types';
@@ -40,7 +41,9 @@
   let prefixCls = $derived(customizePrefixCls === undefined && group?.prefixCls
     ? group.prefixCls : config.getPrefixCls('float-btn', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getFloatButtonPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-float-btn' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getFloatButtonPrefixCss(prefixCls, rootPrefixCls));
   let actualShape = $derived(group?.shape || shape);
   let individual = $derived(group?.individual ?? true);
   let actualIcon = $derived(!buttonHasContent(content) && !icon ? defaultIcon : icon);
@@ -139,8 +142,8 @@
 {#snippet node()}
   <Button {...rest} {type} shape={actualShape} size="large" icon={actualIcon} children={contentNode} _skipSemantic _skipContentWrapper
     data-ant-float-root
-    data-ant-float-prefix={prefixCss ? prefixCls : undefined}
-    data-ant-float-global={prefixCss ? rootPrefixCls : undefined}
+    data-ant-float-prefix={hasCustomPrefix ? prefixCls : undefined}
+    data-ant-float-global={hasCustomPrefix ? rootPrefixCls : undefined}
     _themeStyle={buttonThemeStyle}
     class={[
         `${prefixCls} ant-float-btn-css-var`,

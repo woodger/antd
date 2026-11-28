@@ -8,6 +8,7 @@
   import { getRadioOptions } from './radio.engine';
   import { spaceOrientation } from '../space/space.engine';
   import { getRadioPrefixCss } from './radio-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { RadioChangeEvent, RadioGroupProps, RadioValue } from './radio.types';
 
@@ -49,7 +50,9 @@
   const field = useFormField(() => nativeElement);
   let prefixCls = $derived(config.getPrefixCls('radio', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getRadioPrefixCss(prefixCls, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-radio' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getRadioPrefixCss(prefixCls, rootPrefix));
   const generatedId = $props.id();
   const initialDefault = untrack(() => defaultValue);
   const resets = new Set<ReturnType<typeof setTimeout>>();
@@ -218,8 +221,8 @@
   data-ant-radio-group
   data-ant-radio-block={block || undefined}
   data-ant-radio-vertical={resolvedOrientation === 'vertical' || undefined}
-  data-ant-radio-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-radio-global={prefixCss ? rootPrefix : undefined}
+  data-ant-radio-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-radio-global={hasCustomPrefix ? rootPrefix : undefined}
   disabled={resolvedDisabled}
   aria-label={attributes['aria-label']
       ?? (attributes['aria-labelledby']

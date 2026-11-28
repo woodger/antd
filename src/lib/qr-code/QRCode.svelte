@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getQRCodePrefixCss } from './qrcode-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import {
@@ -50,7 +50,9 @@
 
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('qrcode', prefixCls));
-  let prefixCss = $derived(getQRCodePrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-qrcode');
+  let prefixCss = $derived(runtimeStyles && getQRCodePrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('QRCode');
   const tokens = useDesignTokenContext();
   let canvas = $state<HTMLCanvasElement>();
@@ -182,7 +184,7 @@
     bind:this={nativeElement}
     {...splitAttributes.root}
     onclick={onclick ?? onClick}
-    data-ant-qrcode-prefix={prefixCss ? componentPrefix : undefined}
+    data-ant-qrcode-prefix={hasCustomPrefix ? componentPrefix : undefined}
     class={[
       componentPrefix, 'ant-qrcode-css-var',
       componentTheme.className,

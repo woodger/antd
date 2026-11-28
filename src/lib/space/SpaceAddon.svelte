@@ -2,6 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getSpaceAddonPrefixCss } from './space-addon-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
@@ -20,15 +21,17 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('space-addon', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getSpaceAddonPrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-space-addon' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getSpaceAddonPrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Addon');
   const compact = useCompact();
   let classes = $derived(compactClasses(componentPrefix, config.direction, compact));
 </script>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`space-addon-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<div {...rest} bind:this={nativeElement} dir={config.direction}
-  data-ant-space-addon-prefix={prefixCss ? componentPrefix : undefined}
-  data-ant-space-addon-vars={prefixCss ? rootPrefix.replace(/\./g, '') : undefined}
+  data-ant-space-addon-prefix={hasCustomPrefix ? componentPrefix : undefined}
+  data-ant-space-addon-vars={hasCustomPrefix ? rootPrefix.replace(/\./g, '') : undefined}
   class={[
     `${componentPrefix} ant-space-addon-css-var`,
     componentTheme.className,

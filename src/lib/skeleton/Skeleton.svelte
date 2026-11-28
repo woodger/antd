@@ -5,6 +5,7 @@
   import { resolveSkeletonLayout } from './skeleton.engine';
   import { createSkeletonFocus } from './skeleton.dom';
   import { getSkeletonPrefixCss } from './skeleton-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { ruRU } from '../types';
   import type { SkeletonProps, SkeletonSemanticInfo, SkeletonSemanticSlots } from './skeleton.types';
@@ -41,7 +42,9 @@
   let content = $state<HTMLDivElement>();
   let placeholder = $state<HTMLDivElement>();
   let prefix = $derived(config.getPrefixCls('skeleton', prefixCls));
-  let prefixCss = $derived(getSkeletonPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-skeleton');
+  let prefixCss = $derived(runtimeStyles && getSkeletonPrefixCss(prefix));
   let layout = $derived(resolveSkeletonLayout({ avatar, title, paragraph }));
   let strings = $derived({ ...ruRU.skeleton, ...config.locale.skeleton });
   let label = $derived(ariaLabel ?? (ariaLabelledby ? undefined : strings.loadingText));
@@ -163,7 +166,7 @@
     {#if loading}
       {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`skeleton-main-prefix:${prefix}`} />{/if}<div
         bind:this={placeholder} data-ant-skeleton-main data-ant-skeleton-active={active || undefined}
-        data-ant-skeleton-prefix={prefixCss ? prefix : undefined} class={[
+        data-ant-skeleton-prefix={hasCustomPrefix ? prefix : undefined} class={[
           prefix, 'ant-skeleton-css-var',
           componentTheme.className,
           layout.avatar && `${prefix}-with-avatar`,

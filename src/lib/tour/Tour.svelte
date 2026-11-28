@@ -6,6 +6,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { getTourPrefixCss } from './tour-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getTourClosable, getTourSemantics, type TourHighlight } from './tour.engine';
   import { connectTourEscape } from './tour-portal.dom';
@@ -29,7 +30,8 @@
   provideZIndex(() => layer.contextZIndex);
   let prefixCls = $derived(config.getPrefixCls('tour', props.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getTourPrefixCss(prefixCls, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTourPrefixCss(prefixCls, rootPrefix));
   let prefixAttributes = $derived({
     'data-ant-tour-prefix': prefixCls, 'data-ant-tour-global': rootPrefix
   });

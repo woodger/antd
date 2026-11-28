@@ -2,7 +2,7 @@
   import { tick, untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { getMasonryPrefixCss } from './masonry-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
@@ -38,7 +38,9 @@
 
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('masonry', prefixCls));
-  let prefixCss = $derived(getMasonryPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-masonry');
+  let prefixCss = $derived(runtimeStyles && getMasonryPrefixCss(componentPrefix));
   let widthVariable = $derived(
     `--${config.getPrefixCls().replace(/\./g, '')}-masonry-item-width`
   );
@@ -205,7 +207,7 @@
     'ant-masonry-css-var',
     config.direction === 'rtl' && `${componentPrefix}-rtl`
   ]}
-  data-ant-masonry-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-masonry-prefix={hasCustomPrefix ? componentPrefix : undefined}
   style={rootStyle}
 >
   {#each entries as entry (entry.key)}

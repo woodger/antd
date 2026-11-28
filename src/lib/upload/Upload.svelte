@@ -2,6 +2,7 @@
   // Connects file selection, drag, and paste to the Upload controller. The controller prepares
   // batches, invokes callbacks, and cancels transport.
   import { onDestroy, untrack } from 'svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getUploadPrefixCss } from './upload-prefix.engine';
   import type { UploadProps, UploadFile, UploadSemanticInfo } from './upload.types';
@@ -74,7 +75,8 @@
     ? { ...config.upload?.progress, ...progress } : undefined);
   let componentPrefix = $derived(config.getPrefixCls('upload', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getUploadPrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getUploadPrefixCss(componentPrefix, rootPrefix));
   // The browser retains upstream string attributes. SSR canonicalizes the boolean attribute.
   let directoryAttributes = $derived<Record<string, string>>(directory
     ? { directory: 'directory', webkitdirectory: 'webkitdirectory' } : {});

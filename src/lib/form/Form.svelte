@@ -2,7 +2,7 @@
   import { onDestroy, tick } from 'svelte';
   import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getFormPrefixCss, getFormPrefixScope } from './form-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { provideForm } from './form-context';
@@ -52,7 +52,8 @@
   let prefixScope = $derived(getFormPrefixScope(
     componentPrefix, config.getPrefixCls(), designTokens.state.token
   ));
-  let prefixCss = $derived(getFormPrefixCss(
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getFormPrefixCss(
     componentPrefix, config.getPrefixCls(), designTokens.state.token
   ));
   const componentTheme = useComponentTheme('Form');

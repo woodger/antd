@@ -11,6 +11,7 @@
   import { useWave } from '../wave/wave.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { getSwitchPrefixCss } from './switch-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import Icon from '../icon/Icon.svelte';
   import type { SwitchEvent, SwitchProps } from './switch.types';
@@ -33,7 +34,9 @@
   let alive = true;
   let control = $derived(nativeElement);
   let prefix = $derived(config.getPrefixCls('switch', props.prefixCls));
-  let prefixCss = $derived(getSwitchPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-switch');
+  let prefixCss = $derived(runtimeStyles && getSwitchPrefixCss(prefix));
   let resolvedChecked = $derived(checked ?? value ?? initialDefault);
   let resolvedDisabled = $derived(
     Boolean(props.loading || (props.disabled ?? field?.disabled ?? form?.disabled
@@ -196,7 +199,7 @@
   {...attributes}
   bind:this={nativeElement}
   data-ant-switch-root
-  data-ant-switch-prefix={prefixCss ? prefix : undefined}
+  data-ant-switch-prefix={hasCustomPrefix ? prefix : undefined}
   {@attach wave}
   type="button"
   role="switch"

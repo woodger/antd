@@ -5,6 +5,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { provideCard } from './card-context';
   import { getCardPrefixCss } from './card-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { cardHasContent, cardTabItems } from './card.engine';
   import { cardSemantics } from './card-semantic.engine';
@@ -47,7 +48,9 @@
   const componentTheme = useComponentTheme('Card');
   let prefixCls = $derived(config.getPrefixCls('card', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getCardPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-card' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getCardPrefixCss(prefixCls, rootPrefixCls));
   provideCard({ get prefixCls() { return prefixCls; } });
   const focus = createSkeletonFocus();
   let body = $state<HTMLDivElement>();
@@ -131,8 +134,8 @@
 {/snippet}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`card-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}<div {...rest} bind:this={nativeElement} dir={config.direction}
   data-ant-card-root data-ant-card-loading={loading || undefined}
-  data-ant-card-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-card-global={prefixCss ? rootPrefixCls : undefined}
+  data-ant-card-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-card-global={hasCustomPrefix ? rootPrefixCls : undefined}
   data-ant-contain-grid={containGrid === false ? 'false' : undefined}
   class={[
       prefixCls,

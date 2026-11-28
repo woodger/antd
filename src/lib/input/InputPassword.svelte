@@ -12,6 +12,7 @@
   import { useForm, useFormField } from '../form/form-context';
   import { inputPasswordIcons } from './input-password-icons';
   import { getInputPasswordPrefixCss } from './input-password-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { InputPasswordProps } from './input-password.types';
   import type { InputSemanticSlots } from './input.types';
@@ -38,7 +39,10 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('input-password', customizePrefixCls));
   let inputPrefix = $derived(config.getPrefixCls('input', customizeInputPrefixCls));
-  let prefixCss = $derived(getInputPasswordPrefixCss(inputPrefix, componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(
+    runtimeStyles && getInputPasswordPrefixCss(inputPrefix, componentPrefix)
+  );
   const variantContext = useVariant('inputPassword', () => ({ variant }), 'input');
   const form = useForm();
   const field = useFormField();

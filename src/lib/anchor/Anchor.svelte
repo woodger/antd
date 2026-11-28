@@ -10,6 +10,7 @@
   import { connectFeedbackFocus } from '../feedback.dom';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getAnchorPrefixCss } from './anchor-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { AnchorProps } from './anchor.types';
   let {
@@ -36,7 +37,9 @@
   }: AnchorProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('anchor', prefixCls));
-  let prefixCss = $derived(getAnchorPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-anchor');
+  let prefixCss = $derived(runtimeStyles && getAnchorPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Anchor');
   // Spread props can reset the exposed ref. The runtime keeps its own DOM host.
   let host = $state<HTMLDivElement>();
@@ -188,7 +191,7 @@
 {#snippet content()}
   <div {...rest} bind:this={host} dir={config.direction}
     data-ant-anchor-root
-    data-ant-anchor-prefix={prefixCss ? componentPrefix : undefined}
+    data-ant-anchor-prefix={hasCustomPrefix ? componentPrefix : undefined}
     class={[
         `${componentPrefix}-wrapper ant-anchor-css-var`,
         componentTheme.className,

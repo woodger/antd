@@ -8,6 +8,7 @@
   import { resolveSpinIndicator } from './spin-indicator';
   import { getSpinPrefixCss } from './spin-prefix.engine';
   import SpinProgress from './SpinProgress.svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { ruRU } from '../types';
   import type { SpinProps, SpinSemanticInfo, SpinSemanticSlots } from './spin.types';
@@ -51,7 +52,9 @@
   const focus = createSpinFocus();
   let visible = $derived(model.visible);
   let prefix = $derived(config.getPrefixCls('spin', prefixCls));
-  let prefixCss = $derived(getSpinPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-spin');
+  let prefixCss = $derived(runtimeStyles && getSpinPrefixCss(prefix));
   let resolvedSize = $derived(size ?? config.explicitComponentSize);
   let resolvedPercent = $derived(percent === 'auto' ? mockPercent : percent);
   let hasChildren = $derived(children !== undefined);
@@ -229,7 +232,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`spin-prefix:${prefix}`} />{/if}<!-- svelte-ignore a11y_no_noninteractive_tabindex (Negative tabindex temporarily holds focus outside inert children.) --><div
   bind:this={host} {id} data-ant-spin-root
-  data-ant-spin-prefix={prefixCss ? prefix : undefined}
+  data-ant-spin-prefix={hasCustomPrefix ? prefix : undefined}
   role={ariaHidden ? undefined : hasChildren ? 'group' : announce ? 'status' : undefined}
   aria-live={!hasChildren && announce ? 'polite' : undefined}
   aria-atomic={!hasChildren && announce || undefined}

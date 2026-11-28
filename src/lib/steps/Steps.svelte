@@ -4,6 +4,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { getStepsPrefixCss } from './steps-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import StepItem from './StepItem.svelte';
   import { connectStepsFocus } from './steps.dom';
@@ -47,7 +48,9 @@
   }: StepsProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('steps', prefixCls));
-  let prefixCss = $derived(getStepsPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-steps');
+  let prefixCss = $derived(runtimeStyles && getStepsPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Steps');
   const composition = useStepsComposition();
   const generatedId = $props.id();
@@ -183,7 +186,7 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`steps-prefix:${componentPrefix}`} />{/if}<ol {...rest} bind:this={nativeElement} data-ant-steps-root=""
-  data-ant-steps-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-steps-prefix={hasCustomPrefix ? componentPrefix : undefined}
   data-ant-steps-orientation={layout.vertical ? 'vertical' : 'horizontal'}
   id={composition?.timeline ? id : rootId} role="list" aria-label={ariaLabel
     ?? (ariaLabelledby || composition?.timeline

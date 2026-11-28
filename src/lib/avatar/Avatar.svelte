@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte.js';
   import { getGridMediaQueries, gridBreakpoints, gridResponsiveValue } from '../grid/grid.engine';
   import { resolveAvatarSize, normalizeAvatarGap } from './avatar.engine';
@@ -48,7 +48,8 @@
   const breakpoint = createBreakpoint();
   let host = $derived(nativeElement);
   let prefix = $derived(config.getPrefixCls('avatar', prefixCls));
-  let prefixCss = $derived(getAvatarPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getAvatarPrefixCss(prefix));
   let imageSnippet = $derived(typeof src === 'function' ? src : undefined);
   let sourceSrc = $derived(typeof src === 'string' ? src : undefined);
   let sourceSet = $derived(srcSet);

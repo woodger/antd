@@ -9,7 +9,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { isolateFormItemStyle } from '../form/form-item-status';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import { useWatermarkPanel } from '../watermark/watermark-context';
   import { createDrawerDialog, type DrawerTransitionOptions } from './drawer.dom';
@@ -68,7 +68,8 @@
   isolateFormItemStyle();
   const interaction = $derived(resolveDrawerInteraction(mask, focusable, autoFocus, config.drawer));
   let componentPrefix = $derived(config.getPrefixCls('drawer', customizePrefixCls));
-  let prefixCss = $derived(getDrawerPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getDrawerPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Drawer');
   const designTheme = useDesignTokenContext();
   const transitionOptions = $derived({

@@ -2,6 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getBreadcrumbPrefixCss } from './breadcrumb-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { breadcrumbEntries, breadcrumbHasContent } from './breadcrumb.engine';
   import { breadcrumbSemantics } from './breadcrumb-semantic.engine';
@@ -27,7 +28,9 @@
   > = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('breadcrumb', prefixCls));
-  let prefixCss = $derived(getBreadcrumbPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-breadcrumb');
+  let prefixCss = $derived(runtimeStyles && getBreadcrumbPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Breadcrumb');
   let mergedSeparator = $derived(separator ?? config.breadcrumb?.separator ?? '/');
   let mergedDropdownIcon = $derived(dropdownIcon ?? config.breadcrumb?.dropdownIcon);
@@ -74,7 +77,7 @@
     rootClassName,
     classes.root
   ]} data-ant-breadcrumb-root
-  data-ant-breadcrumb-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-breadcrumb-prefix={hasCustomPrefix ? componentPrefix : undefined}
   style={[componentTheme.style, slots.root].filter(Boolean).join(';')}>
   <ol>{#each entries as entry, index (entry.item.key ?? index)}
     {#if entry.item.type === 'separator'}

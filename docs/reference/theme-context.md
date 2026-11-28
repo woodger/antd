@@ -83,16 +83,24 @@ It resets inherited tokens, algorithms, component settings, `mode`,
 
 ### Component styles in zero-runtime mode
 
-Ant Design React 6.6.8 keeps global and component CSS variables with
-`theme.zeroRuntime: true`. Components in that scope use prebuilt styles for
-their class prefix. In the live capture, a prefix that registered its rules
-before the switch keeps them. A prefix first mounted with `zeroRuntime: true`
-stays unregistered when the flag is cleared. A newly mounted prefix then
-registers its rules with the current setting.
+Set `theme={{ zeroRuntime: true }}` to use prebuilt rules for newly mounted
+components. `ConfigProvider` loads the packaged styles for the default class
+prefix. Supply a prebuilt stylesheet for any custom component prefix. Global
+and component CSS variables continue to follow the theme. A nested provider
+inherits the flag through `inherit: false` and can override it explicitly.
 
-The Svelte provider inherits `zeroRuntime` and currently emits generated
-prefix styles in SSR and in the browser in both modes.
+Each component captures the flag when it mounts, as in Ant Design React 6.6.8.
+An instance that registered CSS keeps its rules when the flag changes and can
+register rules for a renamed prefix. An instance mounted in zero-runtime mode
+uses prebuilt rules for its lifetime. Svelte releases its generated rules when
+the owning instance unmounts or releases a prefix. Grid and responsive Modal
+use the breakpoints in the packaged CSS in zero-runtime mode.
 [React and Svelte measurements](../../tests/reference/ant-design-theme-zero-runtime-observation.json)
+
+The stylesheet choice applies to SSR and to browser mounts. Token declarations
+retain the provider's CSP nonce.
+[SSR tests](../../tests/package/theme/theme-zero-runtime.ssr.test.ts) ·
+[Browser tests](../../tests/browser/theme/theme-zero-runtime.spec.ts)
 
 ### Read tokens in a component
 

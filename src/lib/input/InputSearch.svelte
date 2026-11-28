@@ -13,6 +13,7 @@
   import { useForm, useFormField } from '../form/form-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getInputSearchPrefixCss } from './input-search-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { ButtonSlots } from '../button/button.types';
   import type { InputChangeEvent, InputContent, InputSemanticSlots } from './input.types';
@@ -48,7 +49,9 @@
   let componentPrefix = $derived(config.getPrefixCls('input-search', customizePrefixCls));
   let inputPrefix = $derived(config.getPrefixCls('input', customizeInputPrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getInputSearchPrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-input-search' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getInputSearchPrefixCss(componentPrefix, rootPrefix));
   const buttonContextVariant = useVariant('inputSearch', () => ({ variant }));
   const inputContextVariant = useVariant('inputSearch', () => ({ variant }), 'input');
   const compact = useCompact();
@@ -319,8 +322,8 @@
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`input-search-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<SpaceCompact
   {...rootData}
   data-ant-input-search-root
-  data-ant-input-search-prefix={prefixCss ? componentPrefix : undefined}
-  data-ant-input-search-global={prefixCss ? rootPrefix : undefined}
+  data-ant-input-search-prefix={hasCustomPrefix ? componentPrefix : undefined}
+  data-ant-input-search-global={hasCustomPrefix ? rootPrefix : undefined}
   {hidden}
   class={[
     `${componentPrefix} ant-input-search-css-var`,

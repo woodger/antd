@@ -20,7 +20,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useSider } from '../layout/layout-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import MenuList from './MenuList.svelte';
   import MenuSubMenu from './MenuSubMenu.svelte';
   import EllipsisIcon from '../tabs/TabsMoreIcon.svelte';
@@ -82,7 +82,12 @@
   let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls
     || (dropdown ? `${dropdown.prefixCls}-menu` : undefined)));
   let rootPrefix = $derived(config.getPrefixCls());
+  const runtimeStyles = useRuntimeStyles();
   const prefixCss = $derived.by(() => {
+    if (!runtimeStyles) {
+      return undefined;
+    }
+
     if (!dropdown) return getMenuPrefixCss(componentPrefix, rootPrefix);
     if (componentPrefix !== dropdown.menuPrefix) {
       return getDropdownPrefixCss(dropdown.prefixCls, rootPrefix, componentPrefix);
@@ -91,7 +96,7 @@
   const prefixScope = $derived(dropdown
     ? `dropdown-menu-prefix:${dropdown.prefixCls}:${rootPrefix}:${componentPrefix}`
     : `menu-prefix:${componentPrefix}:${rootPrefix}`);
-  let motionCss = $derived(getMenuMotionCss(rootPrefix));
+  let motionCss = $derived(runtimeStyles && getMenuMotionCss(rootPrefix));
   let popupContainer = $derived(Object.hasOwn(rest, 'getPopupContainer')
     ? rest.getPopupContainer : config.getPopupContainer);
   let attributes = $derived.by(() => {

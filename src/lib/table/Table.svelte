@@ -7,7 +7,7 @@
   import { getTablePrefixCss, getTableSpinTheme } from './table-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { createBreakpoint } from '../grid/grid-breakpoint.model.svelte';
   import { getGridMediaQueries } from '../grid/grid.engine';
   import { getPaginationState } from '../pagination/pagination.engine';
@@ -164,7 +164,8 @@
   let prefix = $derived(config.getPrefixCls('table', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let dropdownPrefix = $derived(config.getPrefixCls('dropdown', dropdownPrefixCls));
-  let prefixCss = $derived(getTablePrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTablePrefixCss(prefix, rootPrefix));
   const componentTheme = useComponentTheme('Table');
   const designTheme = useDesignTokenContext();
   const breakpoint = createBreakpoint();

@@ -23,6 +23,7 @@
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from '../config-provider/config-context';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
   import {
     getTooltipActions,
@@ -57,6 +58,7 @@
   } = $derived(props);
 
   const config = useConfig();
+  const runtimeStyles = useRuntimeStyles();
   const layer = useZIndex('container', () => props.zIndex);
   provideZIndex(() => layer.contextZIndex);
   const external = getContext<TooltipAnchor | undefined>(anchorKey);
@@ -376,6 +378,7 @@
   sourceAnchor={Boolean(external)}
   outsideEvents={actionOverrides ? 'mouse' : undefined}
   zIndexLayer={layer}
+  {runtimeStyles}
   semanticProps={{ ...props, open: providedOpen, trigger: resolvedTrigger,
     mouseEnterDelay: enterDelay, mouseLeaveDelay: leaveDelay }}
   onDismiss={dismiss} onHoverChange={handlePopupHover} /></NoCompactStyle>{/if}

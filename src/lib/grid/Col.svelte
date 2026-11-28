@@ -1,8 +1,7 @@
 <script lang="ts">
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
-  import { getGridMediaScope } from './grid-style.engine';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getGridColPrefixCss, getGridColPrefixScope } from './grid-col-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useGridRow } from './grid-context';
@@ -38,12 +37,11 @@
   let prefixScope = $derived(getGridColPrefixScope(
     componentPrefix, rootPrefix, designTokens.state.token
   ));
-  let prefixCss = $derived(getGridColPrefixCss(
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getGridColPrefixCss(
     componentPrefix, rootPrefix, designTokens.state.token
   ));
-  let mediaScope = $derived(designTokens.enabled
-    ? getGridMediaScope(designTokens.state.token) : undefined);
-  let styleScope = $derived(prefixScope ?? mediaScope);
+  let styleScope = $derived(prefixScope ?? config.gridMediaScope);
   const row = useGridRow();
   let responsive = $derived(
     gridColClasses(

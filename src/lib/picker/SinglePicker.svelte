@@ -19,6 +19,7 @@
   import { datePickerEnUS } from './date-picker.locale';
   import { useConfig } from '../config-provider/config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useVariant } from '../config-provider/variant.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
@@ -152,7 +153,8 @@
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getPickerPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getPickerPrefixCss(prefix, rootPrefix));
   const dateVariant = useVariant('datePicker', () => ({ variant }));
   const timeVariant = useVariant('timePicker', () => time ?? {});
   const componentTheme = useComponentTheme('DatePicker');

@@ -62,7 +62,7 @@ export interface ThemeConfig extends DesignTokenConfig {
   hashed?: boolean;
   /** Prefix by default ant; key is generated for each provider with local theme. */
   cssVar?: { prefix?: string; key?: string; };
-  /** Components use published CSS; the setting is inherited together with the source theme. */
+  /** New component instances use prebuilt rules. Token variables stay active. */
   zeroRuntime?: boolean;
 }
 

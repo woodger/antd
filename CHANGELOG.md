@@ -23,6 +23,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   accepts a preview source shared by all items.
 - `ConfigProvider.useConfig()` exposes the inherited size and disabled settings
   to Svelte components.
+- `ConfigProvider.theme.zeroRuntime` uses prebuilt component styles and keeps
+  scoped theme variables active.
 
 ### Fixed
 

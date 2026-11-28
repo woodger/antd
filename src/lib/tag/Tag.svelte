@@ -12,6 +12,7 @@
   import { connectWaveLink } from '../wave/wave.dom';
   import { connectFeedbackFocus } from '../feedback.dom';
   import Icon from '../icon/Icon.svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { TagProps, TagSemantic } from './tag.types';
 
@@ -46,7 +47,8 @@
   const generatedId = $props.id();
   let host = $derived(nativeElement);
   let prefix = $derived(config.getPrefixCls('tag', prefixCls));
-  let prefixCss = $derived(getTagPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTagPrefixCss(prefix));
   let waveLink = $state(false);
   let closed = $state(false);
   let active = true;

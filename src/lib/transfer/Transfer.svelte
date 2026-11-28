@@ -6,6 +6,7 @@
   // Manages selection, search, and transfer between two lists. Each list sees its own view of the
   // current keys.
   import { untrack } from 'svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getTransferPrefixCss } from './transfer-prefix.engine';
   import { useConfig } from '../config-provider/config-context';
@@ -57,7 +58,8 @@
   const previousKeys: Record<TransferDirection, TransferKey[]> = { left: [], right: [] };
   let prefix = $derived(config.getPrefixCls('transfer', props.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getTransferPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTransferPrefixCss(prefix, rootPrefix));
   let disabled = $derived(props.disabled ?? form?.disabled ?? config.componentDisabled);
   let status = $derived(props.status || ('status' in itemStatus ? itemStatus.status : field?.status));
   let data = $derived(transferData(props.dataSource ?? [], props.targetKeys ?? [], props.rowKey));

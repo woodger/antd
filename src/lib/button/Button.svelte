@@ -14,6 +14,7 @@
   import { connectButtonText } from './button.dom';
   import { getButtonPrefixCss } from './button-prefix.engine';
   import ButtonLoadingIcon from './ButtonLoadingIcon.svelte';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import Icon from '../icon/Icon.svelte';
   import type { ButtonColor, ButtonContent, ButtonElementProps } from './button.types';
@@ -63,7 +64,9 @@
   const form = useForm();
   let prefixCls = $derived(config.getPrefixCls('btn', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getButtonPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-btn' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getButtonPrefixCss(prefixCls, rootPrefixCls));
   let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
   let compactItemClasses = $derived(compactClasses(prefixCls, config.direction, compact));
   let appearance = $derived(buttonAppearance(type, danger, color, variant, ghost, config.button));
@@ -147,7 +150,7 @@
   let rootClasses = $derived(
     [
       prefixCls,
-      prefixCss && 'ant-btn-css-var',
+      hasCustomPrefix && 'ant-btn-css-var',
       componentTheme.className,
       `${prefixCls}-${type || 'default'}`,
       `${prefixCls}-color-${appearance.color === 'danger' ? 'dangerous' : appearance.color}`,
@@ -183,8 +186,8 @@
   // existing node and drops focus.
   let rootAttributes = $derived({
     'data-ant-button-root': true,
-    'data-ant-button-prefix': prefixCss ? prefixCls : undefined,
-    'data-ant-button-global': prefixCss ? rootPrefixCls : undefined,
+    'data-ant-button-prefix': hasCustomPrefix ? prefixCls : undefined,
+    'data-ant-button-global': hasCustomPrefix ? rootPrefixCls : undefined,
     target,
     rel,
     download,

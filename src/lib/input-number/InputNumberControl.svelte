@@ -6,6 +6,7 @@
   import { useVariant } from '../config-provider/variant.svelte';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getInputNumberPrefixCss } from './input-number-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
@@ -81,7 +82,9 @@
     ?? config.componentDisabled);
   let readonly = $derived(props.readonly ?? props.readOnly);
   let prefixCls = $derived(config.getPrefixCls('input-number', props.prefixCls));
-  let prefixCss = $derived(getInputNumberPrefixCss(prefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-input-number');
+  let prefixCss = $derived(runtimeStyles && getInputNumberPrefixCss(prefixCls));
   let variant = $derived(variantContext.variant);
   let mode = $derived(props.mode ?? 'input');
   let controls = $derived(props.controls !== false && !disabled && !readonly);
@@ -542,7 +545,7 @@
   compactClasses(prefixCls, config.direction, compact), config.inputNumber?.class,
   props.class, props.rootClassName, classes.root
 ]} style={styles.root} data-ant-number-theme={config.theme.mode}
-  data-ant-input-number-prefix={prefixCss ? prefixCls : undefined}
+  data-ant-input-number-prefix={hasCustomPrefix ? prefixCls : undefined}
   data-ant-input-number-size={size}
   onmousedown={event => {
     if (!alive) return;

@@ -10,7 +10,7 @@
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { tabsSemantics } from './tabs-semantic.engine';
   import { getTabsAnimation } from './tabs-motion.engine';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { getTabsClickEvent } from './tabs.dom';
   import { isTabsMobileDevice } from './tabs-overflow.engine';
   import type { TabsNavApi, TabsNavContext, TabsTabBarProps } from './tabs-nav.types';
@@ -71,7 +71,9 @@
   const componentTheme = useComponentTheme('Tabs');
   let prefixCls = $derived(config.getPrefixCls('tabs', customizePrefixCls));
   let rootPrefixCls = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getTabsPrefixCss(prefixCls, rootPrefixCls));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-tabs' || rootPrefixCls !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getTabsPrefixCss(prefixCls, rootPrefixCls));
   const designTokens = useToken();
   const generatedId = $props.id();
   const initialDefault = untrack(() => defaultActiveKey);
@@ -316,8 +318,8 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`tabs-prefix:${prefixCls}:${rootPrefixCls}`} />{/if}<div {...attributes} bind:this={nativeElement} id={rootId} dir={config.direction}
   data-ant-tabs-root
-  data-ant-tabs-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-tabs-global={prefixCss ? rootPrefixCls : undefined} class={[
+  data-ant-tabs-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-tabs-global={hasCustomPrefix ? rootPrefixCls : undefined} class={[
     prefixCls,
     'ant-tabs-css-var',
     componentTheme.className,

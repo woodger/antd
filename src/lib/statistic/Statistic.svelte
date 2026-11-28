@@ -2,7 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { componentThemeVariables } from '../theme/theme-component-style.engine';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { formatStatisticValue } from './statistic.engine';
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { getStatisticPrefixCss } from './statistic-prefix.engine';
@@ -34,7 +34,9 @@
   }: StatisticProps = $props();
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('statistic', prefixCls));
-  let prefixCss = $derived(getStatisticPrefixCss(componentPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-statistic');
+  let prefixCss = $derived(runtimeStyles && getStatisticPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Statistic');
   const designTokens = useDesignTokenContext();
   let skeletonPadding = $derived(componentThemeVariables('Skeleton', designTokens.state.token)
@@ -99,7 +101,7 @@
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`statistic-prefix:${componentPrefix}`} />{/if}<div {...rest} bind:this={nativeElement} dir={config.direction}
-  data-ant-statistic-prefix={prefixCss ? componentPrefix : undefined}
+  data-ant-statistic-prefix={hasCustomPrefix ? componentPrefix : undefined}
   class={[
       componentPrefix, 'ant-statistic-css-var',
       componentTheme.className,

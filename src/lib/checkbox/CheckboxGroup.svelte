@@ -6,6 +6,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getCheckboxPrefixCss } from './checkbox-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { provideCheckboxGroup } from './checkbox-context';
@@ -46,7 +47,9 @@
   const field = useFormField(() => nativeElement);
   let prefixCls = $derived(config.getPrefixCls('checkbox', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getCheckboxPrefixCss(prefixCls, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefixCls !== 'ant-checkbox' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getCheckboxPrefixCss(prefixCls, rootPrefix));
   const generatedId = $props.id();
   const initialDefault = untrack(() => [...(defaultValue ?? [])]);
   const resets = new Set<ReturnType<typeof setTimeout>>();
@@ -210,8 +213,8 @@
       rootClassName
     ]}
   data-ant-checkbox-group
-  data-ant-checkbox-prefix={prefixCss ? prefixCls : undefined}
-  data-ant-checkbox-global={prefixCss ? rootPrefix : undefined}
+  data-ant-checkbox-prefix={hasCustomPrefix ? prefixCls : undefined}
+  data-ant-checkbox-global={hasCustomPrefix ? rootPrefix : undefined}
   disabled={resolvedDisabled}
   aria-label={attributes['aria-label']
       ?? (attributes['aria-labelledby']

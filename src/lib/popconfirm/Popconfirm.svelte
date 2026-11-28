@@ -11,6 +11,7 @@
   import { getOverlaySemantics } from '../popup/overlay-semantic.engine';
   import { getOverlayPrefixCss } from '../popup/overlay-prefix.engine';
   import prefixTemplate from '../vendor/popconfirm-prefix.css.js';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { PopconfirmActionOptions, PopconfirmProps, PopconfirmSemanticProps } from './popconfirm.types';
   import type { PopoverRef } from '../popover/popover.types';
@@ -65,7 +66,10 @@
 
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('popconfirm', prefixCls));
-  let prefixCss = $derived(getOverlayPrefixCss('popconfirm', prefix, prefixTemplate));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(
+    runtimeStyles && getOverlayPrefixCss('popconfirm', prefix, prefixTemplate)
+  );
   let resolvedTrigger = $derived(trigger || config.popconfirm?.trigger || 'click');
   let enterDelay = $derived(mouseEnterDelay ?? config.popconfirm?.mouseEnterDelay ?? 0.1);
   let leaveDelay = $derived(mouseLeaveDelay ?? config.popconfirm?.mouseLeaveDelay ?? 0.1);

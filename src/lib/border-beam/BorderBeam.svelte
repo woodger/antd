@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { createBorderBeamRuntime } from './border-beam.dom';
   import { getBorderBeamPrefixCss } from './border-beam-prefix.engine';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
@@ -27,7 +27,9 @@
   const tokens = useDesignTokenContext();
   let rootPrefix = $derived(config.getPrefixCls());
   let prefix = $derived(config.getPrefixCls('border-beam', prefixCls));
-  let prefixCss = $derived(getBorderBeamPrefixCss(prefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-border-beam' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getBorderBeamPrefixCss(prefix, rootPrefix));
   let runtime = $state.raw<ReturnType<typeof createBorderBeamRuntime>>();
   let options = $derived({
     color: Array.isArray(color) ? color.map(item => ({ ...item })) : color,
@@ -44,7 +46,7 @@
       className,
       'ant-border-beam-css-var'
     ].filter(Boolean).join(' '),
-    prefix: prefixCss ? prefix : undefined,
+    prefix: hasCustomPrefix ? prefix : undefined,
     // The portal target can be outside the owner's DOM scope.
     themeStyle: tokens.enabled
       ? [tokens.element ? undefined : tokens.state.style, componentTheme.style].filter(Boolean)

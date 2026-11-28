@@ -9,7 +9,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { isolateFormItemStyle } from '../form/form-item-status';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { resolveModalClose } from './modal-close.engine';
   import { getModalLayout } from './modal-layout.engine';
   import { resolveModalPart, resolveModalSemantics, type ModalSemanticBody }
@@ -109,7 +109,10 @@
   let rootPrefix = $derived(config.getPrefixCls());
   const iconPrefix = $derived(config.iconPrefixCls);
   const customIconPrefix = $derived(iconPrefix === 'anticon' ? undefined : iconPrefix);
-  let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix, iconPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(
+    runtimeStyles && getModalPrefixCss(componentPrefix, rootPrefix, iconPrefix)
+  );
   const prefixScope = $derived(customIconPrefix
     ? `modal-prefix:${componentPrefix}:${rootPrefix}:${customIconPrefix}`
     : `modal-prefix:${componentPrefix}:${rootPrefix}`);
@@ -117,7 +120,7 @@
   const designTheme = useDesignTokenContext();
   const placement = $derived(centered ?? config.modal?.centered);
   const layout = $derived(getModalLayout(
-    width, height, placement, componentPrefix, designTheme.state.token
+    width, height, placement, componentPrefix, designTheme.state.token, runtimeStyles
   ));
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
@@ -581,6 +584,59 @@
     margin: auto;
   }
   .ant-svelte-dialog[data-ant-modal-layout] { max-width: var(--ant-svelte-modal-max-width); }
+  .ant-svelte-dialog[data-ant-modal-layout='static'] {
+    --ant-svelte-modal-max-width: calc(100vw - 2 * var(--ant-margin, 16px));
+    --ant-svelte-modal-top: 100px;
+    --ant-svelte-modal-active-sm: initial;
+    --ant-svelte-modal-active-md: initial;
+    --ant-svelte-modal-active-lg: initial;
+    --ant-svelte-modal-active-xl: initial;
+    --ant-svelte-modal-active-xxl: initial;
+    --ant-svelte-modal-active-xxxl: initial;
+    --ant-svelte-modal-width: var(--ant-svelte-modal-active-xxxl,
+      var(--ant-svelte-modal-active-xxl,
+      var(--ant-svelte-modal-active-xl,
+      var(--ant-svelte-modal-active-lg,
+      var(--ant-svelte-modal-active-md,
+      var(--ant-svelte-modal-active-sm,
+      var(--ant-svelte-modal-width-xs, var(--ant-svelte-modal-width-fallback))))))));
+  }
+  @media (max-width: 767px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-max-width: calc(100vw - 16px);
+      --ant-svelte-modal-top: calc(100px + var(--ant-margin-xs, 8px));
+    }
+  }
+  @media (min-width: 576px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-active-sm: var(--ant-svelte-modal-width-sm);
+    }
+  }
+  @media (min-width: 768px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-active-md: var(--ant-svelte-modal-width-md);
+    }
+  }
+  @media (min-width: 992px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-active-lg: var(--ant-svelte-modal-width-lg);
+    }
+  }
+  @media (min-width: 1200px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-active-xl: var(--ant-svelte-modal-width-xl);
+    }
+  }
+  @media (min-width: 1600px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-active-xxl: var(--ant-svelte-modal-width-xxl);
+    }
+  }
+  @media (min-width: 1920px) {
+    .ant-svelte-dialog[data-ant-modal-layout='static'] {
+      --ant-svelte-modal-active-xxxl: var(--ant-svelte-modal-width-xxxl);
+    }
+  }
   .ant-svelte-dialog[data-ant-modal-top] {
     --ant-svelte-modal-offset: min(var(--ant-svelte-modal-top, 100px), max(0px, 100dvh - 96px));
     inset-block-start: var(--ant-svelte-modal-offset);

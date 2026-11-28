@@ -37,7 +37,7 @@
   import { createVirtualList } from '../virtual-list/virtual-list.model.svelte';
   import { connectListyGestures } from '../listy/listy-gestures.dom';
   import VirtualScrollbar from '../listy/ListyScrollbar.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useForm } from '../form/form-context';
@@ -123,7 +123,8 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('tree', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getTreePrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getTreePrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Tree');
   const tokens = useDesignTokenContext();
   let themeStyle = $derived(_themeStyle ?? componentTheme.style);

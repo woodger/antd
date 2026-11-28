@@ -4,6 +4,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectFeedbackFocus } from '../feedback.dom';
   import { getEmptyPrefixCss } from './empty-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import BuiltinImage from './EmptyImage.svelte';
   import { ruRU } from '../types';
@@ -33,7 +34,9 @@
   const componentTheme = useComponentTheme('Empty');
   let host = $state<HTMLDivElement>();
   let prefix = $derived(config.getPrefixCls('empty', prefixCls));
-  let prefixCss = $derived(getEmptyPrefixCss(prefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(prefix !== 'ant-empty');
+  let prefixCss = $derived(runtimeStyles && getEmptyPrefixCss(prefix));
   let mergedImage = $derived(image ?? config.empty?.image ?? 'default');
   let strings = $derived({ ...ruRU.empty, ...config.locale.empty });
   let content = $derived(description === undefined ? strings.description : description);
@@ -116,7 +119,7 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`empty-prefix:${prefix}`} />{/if}<div
-  bind:this={host} {id} data-ant-empty data-ant-empty-prefix={prefixCss ? prefix : undefined}
+  bind:this={host} {id} data-ant-empty data-ant-empty-prefix={hasCustomPrefix ? prefix : undefined}
   role={ariaLabel || ariaLabelledby ? 'group' : undefined}
   aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby}
   dir={config.direction} class={[

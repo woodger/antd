@@ -6,7 +6,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { connectComponentTheme } from '../theme/theme-component.dom';
   import { provideZIndex, useZIndex } from '../popup/z-index-context.svelte';
-  import { useDesignTokenContext } from '../theme/theme-context.svelte';
+  import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { useForm, useFormField } from '../form/form-context';
   import { useCompact } from '../space/space-compact-context';
   import { compactClasses } from '../space/space-compact.engine';
@@ -73,8 +73,11 @@
   let prefixCls = $derived(config.getPrefixCls('color-picker', props.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let popoverPrefix = $derived(config.getPrefixCls('popover'));
-  let prefixCss = $derived(getColorPickerPrefixCss(prefixCls, rootPrefix));
-  let popoverCss = $derived(getOverlayPrefixCss('popover', popoverPrefix, popoverTemplate));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getColorPickerPrefixCss(prefixCls, rootPrefix));
+  let popoverCss = $derived(
+    runtimeStyles && getOverlayPrefixCss('popover', popoverPrefix, popoverTemplate)
+  );
   let size = $derived(props.size ?? compact?.size ?? config.componentSize);
   let arrow = $derived(props.arrow ?? config.colorPicker?.arrow ?? true);
   let locale = $derived({ ...colorPickerRuRU, ...config.locale.colorPicker });

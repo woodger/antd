@@ -10,6 +10,7 @@
   import { connectRadio, syncRadioPeers } from './radio.dom';
   import { createCheckableClickLock } from '../checkable.dom';
   import { getRadioPrefixCss } from './radio-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import type { RadioChangeEvent, RadioProps } from './radio.types';
 
@@ -38,7 +39,9 @@
   let radioPrefix = $derived(config.getPrefixCls('radio', props.prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefix = $derived(`${radioPrefix}${button ? '-button' : ''}`);
-  let prefixCss = $derived(getRadioPrefixCss(radioPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(radioPrefix !== 'ant-radio' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getRadioPrefixCss(radioPrefix, rootPrefix));
   let resolvedChecked = $derived(group ? group.value === value : checked ?? initialDefault);
   let resolvedDefault = $derived(group ? group.defaultValue === value : initialDefault);
   let resolvedDisabled = $derived(
@@ -231,8 +234,8 @@
   ]} style={rootStyle} title={props.title} {@attach wave}
   data-ant-radio-wrapper={!button || undefined}
   data-ant-radio-button-wrapper={button || undefined}
-  data-ant-radio-prefix={prefixCss ? radioPrefix : undefined}
-  data-ant-radio-global={prefixCss ? rootPrefix : undefined}
+  data-ant-radio-prefix={hasCustomPrefix ? radioPrefix : undefined}
+  data-ant-radio-global={hasCustomPrefix ? rootPrefix : undefined}
   onclick={clickLock.label}
   onmouseenter={event => props.onMouseEnter?.(event)}
   onmouseleave={event => props.onMouseLeave?.(event)}>

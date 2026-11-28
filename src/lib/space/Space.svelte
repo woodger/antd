@@ -2,6 +2,7 @@
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { getSpacePrefixCss } from './space-prefix.engine';
+  import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { spaceEntries, spaceGap, spaceHasContent, spaceOrientation } from './space.engine';
   import { connectFeedbackFocus } from '../feedback.dom';
@@ -28,7 +29,9 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('space', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getSpacePrefixCss(componentPrefix, rootPrefix));
+  const runtimeStyles = useRuntimeStyles();
+  const hasCustomPrefix = $derived(componentPrefix !== 'ant-space' || rootPrefix !== 'ant');
+  let prefixCss = $derived(runtimeStyles && getSpacePrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Space');
   let size = $derived(customizeSize === undefined ? config.space?.size ?? 'small' : customizeSize);
   let entries = $derived(spaceEntries(items, children));
@@ -144,8 +147,8 @@
       className,
       rootClassName,
       classes.root
-    ]} data-ant-space-prefix={prefixCss ? componentPrefix : undefined}
-    data-ant-space-global={prefixCss ? rootPrefix : undefined}
+    ]} data-ant-space-prefix={hasCustomPrefix ? componentPrefix : undefined}
+    data-ant-space-global={hasCustomPrefix ? rootPrefix : undefined}
     style={[componentTheme.style, wrap && 'flex-wrap:wrap', gap.style, slots.root].filter(
         Boolean
       ).join(

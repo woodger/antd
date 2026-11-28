@@ -27339,15 +27339,23 @@
         {
           "id": "zero-runtime-styles",
           "title": "Component stylesheet registration under theme.zeroRuntime",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/theme/theme-config.engine.ts",
+            "src/lib/theme/theme-context.svelte.ts",
             "src/lib/theme/ThemeScopeStyle.svelte",
+            "src/lib/config-provider/ConfigProvider.svelte",
+            "src/lib/button/Button.svelte",
+            "src/lib/grid/Col.svelte",
+            "src/lib/modal/modal-layout.engine.ts",
+            "src/lib/vendor/dropdown-motion.css",
             "tests/reference/ant-design-theme-zero-runtime-observation.json",
+            "tests/browser/theme/theme-zero-runtime.spec.ts",
+            "tests/package/theme/theme-zero-runtime.ssr.test.ts",
             "docs/reference/theme-context.md"
           ],
-          "note": "The reference compares antd.min.js alone and with antd.css, custom prefixes, nested inherit=false and an explicit false override, and three live registrations. The flag suppresses new component stylesheet registrations and retains token variables and existing registrations. Svelte already inherits the flag and still emits custom Button and Input rules in SSR and Chromium in both modes."
+          "note": "The mode is captured per mounted component, including for later prefix changes and Tooltip's lazy popup. Zero-runtime mode skips generated component and motion CSS while keeping classes, namespace markers, token variables, and nonce. Canonical Dropdown motion and responsive Grid and Modal use packaged styles. A nested provider can reenable generated CSS, including Grid media rules that its parent skipped. The React capture records tokens, prefix renames, nested settings, and responsive widths with and without the prebuilt stylesheet. Svelte removes generated sheets with their owners or when a prefix is released."
         },
         {
           "id": "compact-spacing",

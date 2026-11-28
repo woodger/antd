@@ -18,6 +18,8 @@ export interface TooltipPopupProps {
   forceRender?: boolean;
   zIndex?: number;
   zIndexLayer?: ZIndexLayer;
+  /** The trigger supplies its initial style setting when the popup mounts later. */
+  runtimeStyles?: boolean;
   anchor?: Element;
   describe?: Element | ((id: string) => () => void);
   trigger?: Element;

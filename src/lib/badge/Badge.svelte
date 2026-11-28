@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useToken } from '../theme/theme-context.svelte';
+  import { useToken, useRuntimeStyles } from '../theme/theme-context.svelte';
   import { presetColors } from '../theme/theme-token.types';
   import { createBadgeZoom, type BadgeZoomState } from './badge-zoom.dom';
   import { connectBadgeStyle } from './badge-style.dom';
@@ -53,7 +53,8 @@
   let zoom = $state.raw<BadgeZoomState>({ rendered: false });
   let prefix = $derived(config.getPrefixCls('badge', prefixCls));
   let numberPrefix = $derived(config.getPrefixCls('scroll-number', scrollNumberPrefixCls));
-  let prefixCss = $derived(getBadgePrefixCss(prefix, config.getPrefixCls()));
+  const runtimeStyles = useRuntimeStyles();
+  let prefixCss = $derived(runtimeStyles && getBadgePrefixCss(prefix, config.getPrefixCls()));
   let nativeIndicator = $derived(prefix === 'ant-badge' && numberPrefix === 'ant-scroll-number');
   let motionClass = $derived(zoom.className?.split('ant-badge-zoom').join(`${prefix}-zoom`));
   const generatedId = $props.id();
