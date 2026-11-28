@@ -89,5 +89,5 @@
 </script>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}`} />{/if}{#if children}{@render children()}{/if}<ImagePreview imagePrefix={componentPrefix} open={opened} image={{ url: data.src ?? undefined, alt: data.alt ?? undefined }} config={viewerConfig}
-  {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
+  inheritContainer={preview !== false} {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
   imageAttributes={data} onClose={() => requestOpen(false)} {current} count={entries.length} group onChange={change} countRender={config.countRender} />

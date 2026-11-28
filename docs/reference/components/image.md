@@ -76,6 +76,23 @@ defaults to true. ClassNames.popup.root on Image and ImagePreviewGroup and
 preview.zIndex apply to the viewer. AfterOpenChange follows native visibility
 changes. The rc-motion fade timing is still outside the port.
 
+`preview.getContainer` accepts a selector, an `Element`, a `DocumentFragment`
+such as a `ShadowRoot`, a getter, or `false`. `false` keeps the viewer inline.
+A local setting takes priority over `ConfigProvider.getPopupContainer`. The
+selected getter receives no arguments and runs in the browser, including while
+the preview is closed. The default is the nearest host dialog or `document.body`.
+A missing selector uses `document.body`. The viewer appears once it is connected
+to the document, including when the owner inserts a detached target or fragment.
+For a nested preview with `focusTrap: false`, use a target within its host dialog
+to keep the preview interactive.
+
+Changing the resolved container recreates the viewer panel while preserving the
+transform and opener. When the new panel opens, `afterOpenChange(true)` runs
+without an `onOpenChange` request. A different getter that returns the same
+target preserves the panel and focused control. A portaled preview inherits the
+owner's CSS variables, and `styles.popup.root` can override them. Load the
+stylesheet inside a `ShadowRoot` used as a destination. [React measurements](../../../tests/browser/fixtures/ant-design-image-container-reference.json)
+
 The default transform is x=y=rotate=0, scale=1, and flipX=flipY=false.
 MinScale defaults to 1, maxScale to 50, and scaleStep to 0.5. Toolbar zoom
 uses 1+step as a multiplier. Wheel zoom accounts for deltaY and clamps the
@@ -142,12 +159,13 @@ The pinned React example with a provider icon renders that icon for a local
 `null`. React also flattens nested progress classes in the test case. Svelte
 applies the progress classes from both layers.
 
-An Image semantic resolver receives the effective `preview`, with `mask` as a
-boolean and `preview` set to `null` when disabled. A group resolver receives its
+An Image semantic resolver receives the effective `preview`, including its
+container and a boolean `mask`. The resolver receives `preview: null` when
+preview is disabled. A group resolver receives its
 items and other group props except `preview` and `previewPrefixCls`. The provider's
 resolver can receive either shape. Use the top-level semantic fields for settings
 that affect the viewer. In the pinned React capture, the semantic fields under
 `ConfigProvider.image.preview` have no effect. [React measurements](../../../tests/browser/fixtures/ant-design-image-semantics-reference.json)
 
-Remaining work covers `getContainer`, preview icons and React `info.icons`
+Remaining work covers preview icons and React `info.icons`
 wrappers, and upstream fade, appear, leave, and mouse-position motion.

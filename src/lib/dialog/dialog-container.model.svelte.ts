@@ -5,7 +5,7 @@ import type { GetContainer, GetPopupContainer } from '../types';
 import { connectPopupPortal } from '../popup/popup-portal.dom';
 
 interface DialogContainerOptions {
-  component: 'modal' | 'drawer';
+  component: 'modal' | 'drawer' | 'image';
   open: boolean;
   getContainer?: GetContainer;
   getPopupContainer?: GetPopupContainer;
@@ -59,7 +59,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       next = (typeof choice === 'function' ? choice() : choice) ?? document.body;
     }
 
-    if (initialized && next !== target) revision = ++currentRevision;
+    if (initialized && next !== untrack(() => target)) revision = ++currentRevision;
     initialized = true;
     target = next;
   });
@@ -73,6 +73,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
   function attach(node: HTMLDialogElement) {
     const container = target;
     return untrack(() => {
+      const component = getOptions().component;
       const nodeRevision = currentRevision;
       activeNode = node;
       const document = node.ownerDocument;
@@ -96,6 +97,7 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
           marker,
           autoLock: false,
           prepareOrigin: staticHost ? connectStaticOrigin : undefined,
+          preservePointerEvents: component === 'image',
           // Cleanup of the old keyed panel leaves the DOM being removed out of the original branch.
           get restoreOnDestroy() { return node.isConnected && nodeRevision === currentRevision; },
           get preserveVariables() {
@@ -117,6 +119,11 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
 
       if (container) {
         explicitPortal = attachPortal(container);
+      }
+      else if (container === undefined && component === 'image') {
+        // Move the preview before showModal and keep nested viewers in their host dialog.
+        const destination = origin.closest('dialog') ?? document.body;
+        explicitPortal = attachPortal(destination);
       }
       else if (container === undefined) {
         $effect(() => {

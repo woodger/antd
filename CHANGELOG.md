@@ -13,6 +13,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   and progress semantic styles.
 - `ConfigProvider.image` supplies Image defaults. Image and ImagePreviewGroup
   support semantic classes and styles on the viewer and callback resolvers.
+- Image and ImagePreviewGroup support `preview.getContainer` and inherit
+  `ConfigProvider.getPopupContainer`.
 
 ## [0.1.1]
 

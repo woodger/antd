@@ -1,0 +1,178 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "browser": "158.0.8127.36"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "cases": [
+    {
+      "name": "default",
+      "target": "body",
+      "width": 1280,
+      "height": 800,
+      "getter": [],
+      "getterCallsAtMount": 0
+    },
+    {
+      "name": "provider",
+      "provider": true,
+      "target": "provided",
+      "width": 1280,
+      "height": 800,
+      "getter": [
+        [
+          "provider",
+          0
+        ]
+      ],
+      "getterCallsAtMount": 4
+    },
+    {
+      "name": "group-provider",
+      "provider": true,
+      "group": true,
+      "target": "provided",
+      "width": 1280,
+      "height": 800,
+      "getter": [
+        [
+          "provider",
+          0
+        ]
+      ],
+      "getterCallsAtMount": 4
+    },
+    {
+      "name": "closed-provider",
+      "provider": true,
+      "open": false,
+      "target": "provided",
+      "width": 1280,
+      "height": 800,
+      "getter": [
+        [
+          "provider",
+          0
+        ]
+      ],
+      "getterCallsAtMount": 2
+    },
+    {
+      "name": "closed-local-callback",
+      "provider": true,
+      "choice": "callback",
+      "open": false,
+      "target": "selected",
+      "width": 1280,
+      "height": 800,
+      "getter": [
+        [
+          "local",
+          0
+        ]
+      ],
+      "getterCallsAtMount": 2
+    },
+    {
+      "name": "local-selector",
+      "provider": true,
+      "choice": "#selected",
+      "target": "selected",
+      "width": 1280,
+      "height": 800,
+      "getter": [],
+      "getterCallsAtMount": 0
+    },
+    {
+      "name": "local-element",
+      "provider": true,
+      "choice": "element",
+      "target": "selected",
+      "width": 1280,
+      "height": 800,
+      "getter": [],
+      "getterCallsAtMount": 0
+    },
+    {
+      "name": "local-callback",
+      "provider": true,
+      "choice": "callback",
+      "target": "selected",
+      "width": 1280,
+      "height": 800,
+      "getter": [
+        [
+          "local",
+          0
+        ]
+      ],
+      "getterCallsAtMount": 4
+    },
+    {
+      "name": "inline",
+      "provider": true,
+      "choice": false,
+      "target": "source-owner",
+      "width": 1280,
+      "height": 800,
+      "getter": [],
+      "getterCallsAtMount": 0
+    },
+    {
+      "name": "missing-selector",
+      "provider": true,
+      "choice": "#missing",
+      "target": "body",
+      "width": 1280,
+      "height": 800,
+      "getter": [],
+      "getterCallsAtMount": 0
+    },
+    {
+      "name": "late-selector",
+      "provider": true,
+      "choice": "#late",
+      "open": false,
+      "target": "late",
+      "width": 1280,
+      "height": 800,
+      "getter": [],
+      "getterCallsAtMount": 0
+    },
+    {
+      "name": "group-disabled",
+      "provider": true,
+      "group": true,
+      "groupDisabled": true,
+      "open": false,
+      "target": "body",
+      "width": 1264,
+      "height": 155,
+      "getter": [],
+      "getterCallsAtMount": 0
+    }
+  ],
+  "relocation": {
+    "target": "selected",
+    "sameViewer": false,
+    "transform": "matrix(1.5, 0, 0, 1.5, 0, 0)",
+    "requested": [],
+    "afterOpen": [
+      true
+    ]
+  },
+  "close": {
+    "markedViewers": 0,
+    "previews": 0,
+    "afterOpen": [
+      true,
+      false
+    ]
+  }
+}

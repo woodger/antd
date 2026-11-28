@@ -34,7 +34,7 @@ export type PopupOverflow = 'viewport' | 'scroll';
 /** Scroll targeted Affix/Anchor; getter is only invoked in the browser. */
 export type GetTargetContainer = () => HTMLElement | Window;
 
-/** Container Modal/Drawer: false leaves DOM in place; the function is called only in the browser. */
+/** Container for Modal, Drawer, or Image preview. False keeps it inline. Getters run in the browser. */
 export type GetContainer = string | Element | DocumentFragment
   | (() => Element | DocumentFragment) | false;
 

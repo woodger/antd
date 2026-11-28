@@ -18154,7 +18154,9 @@
         "tests/package/image/image-prefix.ssr.test.ts",
         "tests/browser/fixtures/ant-design-image-independent-preview-reference.json",
         "tests/browser/image/image-independent-preview.spec.ts",
-        "tests/package/image/image-independent-preview.ssr.test.ts"
+        "tests/package/image/image-independent-preview.ssr.test.ts",
+        "tests/browser/image/image-container.spec.ts",
+        "tests/package/image/image-container.ssr.test.ts"
       ],
       "features": [
         {
@@ -18270,12 +18272,31 @@
           "note": "Pinned 6.6.8 UMD covers thumbnail and all six popup slots, callback props, style precedence, provider replacement, fallback, mask, and close icon. The port preserves closeIcon=null as an explicit opt-out and accumulates the progress classes that the upstream placeholder schema flattens. The upstream semantic fields inside image.preview are inert. The active top-level fields control the viewer."
         },
         {
+          "id": "preview-container",
+          "title": "Image and PreviewGroup getContainer and provider inheritance",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/image.types.ts",
+            "src/lib/image/Image.svelte",
+            "src/lib/image/ImagePreview.svelte",
+            "src/lib/image/ImagePreviewGroup.svelte",
+            "src/lib/dialog/dialog-container.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-image-container-reference.json",
+            "tests/browser/image/image-container.spec.ts",
+            "tests/package/image/image-container.ssr.test.ts",
+            "docs/reference/components/image.md",
+            "docs/reference/components/image-preview-group.md"
+          ],
+          "note": "Twelve Ant Design 6.6.8 measurements cover the body default, provider and local precedence, zero-argument getters while closed, selector/element/callback/false, missing and same-update targets, and group preview=false. A new destination recreates the panel and reports afterOpenChange(true) while keeping transforms, current, and the original opener. The same destination keeps the panel and focus. SSR defers getters and panel rendering. Svelte retains the closed native panel and uses its nearest host dialog by default when nested. Group preview=false skips the provider and keeps the existing fullscreen panel. Detached targets and ShadowRoot use the shared connection, theme and scroll-lock lifecycle."
+        },
+        {
           "id": "extended-api",
-          "title": "Preview container, icon API, and preview motion",
+          "title": "Preview icon API and preview motion",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Remaining work includes getContainer, icons and React info.icons wrappers, plus preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases and uses Svelte snippets for imageRender and actionsRender."
+          "note": "Remaining work includes icons and React info.icons wrappers, plus preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases and uses Svelte snippets for imageRender and actionsRender."
         },
         {
           "id": "component-prefix",
@@ -27636,9 +27657,11 @@
             "tests/browser/fixtures/ant-design-dialog-container-reference.json",
             "tests/browser/dialog/dialog-container.spec.ts",
             "tests/browser/dialog/dialog-container-interaction.spec.ts",
-            "tests/package/dialog/dialog-container.ssr.test.ts"
+            "tests/package/dialog/dialog-container.ssr.test.ts",
+            "tests/browser/image/image-container.spec.ts",
+            "tests/package/image/image-container.ssr.test.ts"
           ],
-          "note": "Добавлен исходный getPopupContainer с необязательным trigger и результатом HTMLElement | ShadowRoot. Отсутствующий/undefined prop наследует родителя через исходный truthy merge; theme.inherit=false не сбрасывает container context. Подключены Tabs и ColorPicker с разными source priorities и own-undefined правилами, общие Tooltip/Popover/Popconfirm, Dropdown, Slider и Tooltip Typography; Tour и Mentions намеренно не читают глобальный getter, как Ant Design. 30 UMD-эталонов задают nesting, local/More overrides, trigger payload, shadow containers и сохранение содержимого при замене функции с тем же контейнером. Native SSR shell и modal fallback сохраняются, browser getter не выполняется на сервере; ShadowRoot styles принадлежат потребителю. 52 дополнительных UMD-эталона подтверждают overlay priorities и visible handle payload Slider, включая особый global-before-legacy порядок; default native inline DOM и retained SSR shells сохранены. Ещё 32 UMD-эталона Select/AutoComplete подтверждают local → global fallback, native root payload, closed timing, search/selection/focus и замену функции с тем же контейнером; custom textarea и multiple сохраняют FormData, theme updates и cleanup. 40 новых UMD-эталонов покрывают TreeSelect и Cascader: исходный local → global fallback, div.ant-select либо custom children trigger, gap=4px, nested/undefined/theme reset, ShadowRoot и сохранение editor/state при замене callback. CascaderPanel игнорирует container context; native refs/lazy/keyboard/theme lifecycle сохраняются. Ещё 54 UMD-эталона покрывают четыре Date/Time single/range exports: source root trigger/defaultOpen arity, local → global fallback, ShadowRoot, gap/min-width/RTL placement и сохранение state/focus. Native conditional panel lifetime сохранён. Ещё 32 UMD-эталона Menu подтверждают own-undefined отключение global getter, native title trigger, force render/inline copies, ShadowRoot, remount при смене target и сохранение state/focus при замене функции. Ещё 36 UMD-эталонов Modal/Drawer подтверждают local getContainer → global fallback, вызов без аргументов у Modal и body trigger у Drawer, false/selectors/DOM/ShadowRoot, timing, retention и remount. Native modal/SSR contracts сохранены; source inline-геометрия Drawer, остальной Menu popup API и прочие исходные consumers ещё требуют переноса; полный provider API не заявлен."
+          "note": "Добавлен исходный getPopupContainer с необязательным trigger и результатом HTMLElement | ShadowRoot. Отсутствующий/undefined prop наследует родителя через исходный truthy merge; theme.inherit=false не сбрасывает container context. Подключены Tabs и ColorPicker с разными source priorities и own-undefined правилами, общие Tooltip/Popover/Popconfirm, Dropdown, Slider и Tooltip Typography; Tour и Mentions намеренно не читают глобальный getter, как Ant Design. 30 UMD-эталонов задают nesting, local/More overrides, trigger payload, shadow containers и сохранение содержимого при замене функции с тем же контейнером. Native SSR shell и modal fallback сохраняются, browser getter не выполняется на сервере; ShadowRoot styles принадлежат потребителю. 52 дополнительных UMD-эталона подтверждают overlay priorities и visible handle payload Slider, включая особый global-before-legacy порядок; default native inline DOM и retained SSR shells сохранены. Ещё 32 UMD-эталона Select/AutoComplete подтверждают local → global fallback, native root payload, closed timing, search/selection/focus и замену функции с тем же контейнером; custom textarea и multiple сохраняют FormData, theme updates и cleanup. 40 новых UMD-эталонов покрывают TreeSelect и Cascader: исходный local → global fallback, div.ant-select либо custom children trigger, gap=4px, nested/undefined/theme reset, ShadowRoot и сохранение editor/state при замене callback. CascaderPanel игнорирует container context; native refs/lazy/keyboard/theme lifecycle сохраняются. Ещё 54 UMD-эталона покрывают четыре Date/Time single/range exports: source root trigger/defaultOpen arity, local → global fallback, ShadowRoot, gap/min-width/RTL placement и сохранение state/focus. Native conditional panel lifetime сохранён. Ещё 32 UMD-эталона Menu подтверждают own-undefined отключение global getter, native title trigger, force render/inline copies, ShadowRoot, remount при смене target и сохранение state/focus при замене функции. Ещё 36 UMD-эталонов Modal/Drawer подтверждают local getContainer → global fallback, вызов без аргументов у Modal и body trigger у Drawer, false/selectors/DOM/ShadowRoot, timing, retention и remount. Native modal/SSR contracts сохранены; source inline-геометрия Drawer, остальной Menu popup API и прочие исходные consumers ещё требуют переноса; полный provider API не заявлен. Image and ImagePreviewGroup use the provider fallback with zero arguments. The local preview container takes priority, and group preview=false clears the inherited container."
         },
         {
           "id": "badge-config",

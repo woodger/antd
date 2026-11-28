@@ -20,7 +20,10 @@
   } from './image-preview.dom';
   import { checkImageSource } from './image-status.dom';
   import { useConfig } from '../config-provider/config-context';
+  import { createDialogContainer } from '../dialog/dialog-container.model.svelte.js';
+  import { getDialogActiveElement } from '../dialog/dialog-focus.dom';
   import { useComponentTheme } from '../theme/theme-component.svelte';
+  import { getPopupActiveElement } from '../popup/popup.dom';
   import { useZIndex } from '../popup/z-index-context.svelte';
   import NoCompactStyle from '../space/NoCompactStyle.svelte';
   import ImagePreviewIcon from './ImagePreviewIcon.svelte';
@@ -31,6 +34,7 @@
     previewPrefix: customizePreviewPrefix,
     image,
     config: preview = {},
+    inheritContainer = true,
     appearance,
     fallback,
     imageAttributes = {},
@@ -48,6 +52,7 @@
     previewPrefix?: string;
     image: ImageInfo;
     config?: ImagePreviewConfig;
+    inheritContainer?: boolean;
     appearance: ResolvedImagePreviewAppearance;
     classNames?: ImagePopupSlots;
     styles?: ImagePopupSlots;
@@ -64,6 +69,15 @@
   let previewPrefix = $derived(customizePreviewPrefix ?? `${imagePrefix}-preview`);
   const componentTheme = useComponentTheme('Image');
   const layer = useZIndex('preview', () => preview.zIndex);
+  const dialogStyle = $derived([componentTheme.style, styles?.root, layer.style]
+    .filter(Boolean).join(';'));
+  const container = createDialogContainer(() => ({
+    component: 'image',
+    open,
+    getContainer: preview.getContainer ?? undefined,
+    getPopupContainer: inheritContainer ? context.getPopupContainer : undefined,
+    style: dialogStyle
+  }));
   let dialog = $state<HTMLDialogElement>();
   let element = $state<HTMLImageElement>();
   let mounted = $state(false);
@@ -82,7 +96,8 @@
   let queue: ImageTransform[] = [];
   let alive = true;
   let opener: HTMLElement | undefined;
-  let previousOpen = false;
+  let activeDialog: HTMLDialogElement | undefined;
+  let presentedDialog: HTMLDialogElement | undefined;
   let releaseLayer: (() => void) | undefined;
   $effect(() => {
     if (open)
@@ -101,50 +116,9 @@
   $effect(() => {
     const next = open;
     const root = dialog;
+    const connected = container.connected;
     const trap = focusTrap;
-    if (!root) {
-      return;
-    }
-    untrack(() => {
-      if (next && !root.open) {
-        const focused = root.ownerDocument.activeElement;
-        opener = focused instanceof HTMLElement ? focused : undefined;
-        if (trap) {
-          root.showModal();
-        }
-        else {
-          root.show();
-        }
-        root.focus({ preventScroll: true });
-        releaseLayer = registerImagePreview(root);
-        previousOpen = true;
-        preview.afterOpenChange?.(true);
-      }
-      else if (next && root.open && root.matches(':modal') !== trap) {
-        root.close();
-        if (trap) {
-          root.showModal();
-        }
-        else {
-          root.show();
-        }
-        root.focus({ preventScroll: true });
-      }
-      else if (!next && root.open) {
-        root.close();
-        releaseLayer?.();
-        releaseLayer = undefined;
-        cancelFrame();
-        stopSwitch();
-        reset('close');
-        moving = false;
-        if (opener?.isConnected)
-          opener.focus({ preventScroll: true });
-        opener = undefined;
-        previousOpen = false;
-        preview.afterOpenChange?.(false);
-      }
-    });
+    untrack(() => syncPresentation(next, connected ? root : undefined, trap));
   });
   $effect(() => {
     if (!open || !element) {
@@ -170,7 +144,7 @@
       if (event.defaultPrevented || !dialog?.open || !isTopImagePreview(dialog)) {
         return;
       }
-      const active = dialog.ownerDocument.activeElement;
+      const active = getPopupActiveElement(dialog);
       if (focusTrap && active && !dialog.contains(active)) {
         return;
       }
@@ -190,12 +164,79 @@
     alive = false;
     cancelFrame();
     stopSwitch();
-    releaseLayer?.();
-    if (dialog?.open)
-      dialog.close();
-    if (previousOpen && opener?.isConnected)
-      opener.focus({ preventScroll: true });
+    releasePresentation();
+    restoreOpener();
   });
+
+  function showDialog(root: HTMLDialogElement, trap: boolean) {
+    if (trap) {
+      root.showModal();
+    }
+    else {
+      root.show();
+    }
+    root.focus({ preventScroll: true });
+  }
+
+  /** Releases the native layer while leaving the logical preview session intact. */
+  function releasePresentation() {
+    if (activeDialog?.open) activeDialog.close();
+    activeDialog = undefined;
+    releaseLayer?.();
+    releaseLayer = undefined;
+  }
+
+  function restoreOpener() {
+    if (opener?.isConnected) opener.focus({ preventScroll: true });
+    opener = undefined;
+  }
+
+  /** A new container presents a new dialog within the same open preview session. */
+  function syncPresentation(next: boolean, root: HTMLDialogElement | undefined, trap: boolean) {
+    if (!next) {
+      if (!presentedDialog) {
+        return;
+      }
+
+      releasePresentation();
+      cancelFrame();
+      stopSwitch();
+      reset('close');
+      moving = false;
+      restoreOpener();
+      presentedDialog = undefined;
+      preview.afterOpenChange?.(false);
+      return;
+    }
+
+    if (activeDialog && (activeDialog !== root || !activeDialog.isConnected)) {
+      releasePresentation();
+    }
+
+    if (!root?.isConnected) {
+      return;
+    }
+
+    if (!root.open) {
+      if (!presentedDialog) {
+        const focused = getDialogActiveElement(root.ownerDocument);
+        opener = focused instanceof HTMLElement ? focused : undefined;
+      }
+      showDialog(root, trap);
+      activeDialog = root;
+      releaseLayer?.();
+      releaseLayer = registerImagePreview(root);
+
+      if (presentedDialog !== root) {
+        presentedDialog = root;
+        preview.afterOpenChange?.(true);
+      }
+    }
+    else if (root.matches(':modal') !== trap) {
+      root.close();
+      showDialog(root, trap);
+    }
+  }
 
   function cancelFrame() {
     if (frame)
@@ -386,7 +427,7 @@
     {/each}
   </div>
 {/snippet}
-{#if mounted}
+{#if mounted}{#key container.key}
   <NoCompactStyle>
     <dialog data-ant-image-prefix={imagePrefix} data-ant-image-preview-prefix={previewPrefix} bind:this={dialog} tabindex="-1" class={[
         `image-preview-dialog ${previewPrefix} ant-image-css-var`,
@@ -396,7 +437,7 @@
         moving && `${previewPrefix}-moving`
       ]}
       dir={context.direction} aria-label={image.alt || context.locale.image?.preview || 'Image preview'} aria-modal={focusTrap ? 'true' : undefined}
-      style={[componentTheme.style, styles?.root, layer.style].filter(Boolean).join(';')} oncancel={event => {
+      style={dialogStyle} {@attach container.attach} oncancel={event => {
               event.preventDefault();
               onClose();
             }}>
@@ -442,4 +483,4 @@
       </div>
     </dialog>
   </NoCompactStyle>
-{/if}
+{/key}{/if}

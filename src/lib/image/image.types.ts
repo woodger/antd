@@ -1,5 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLImgAttributes } from 'svelte/elements';
+import type { GetContainer } from '../types';
 import type { ImagePreviewGroupSemanticProps } from './image-preview-group.types';
 
 export interface ImageTransform {
@@ -56,6 +57,8 @@ export interface ImagePreviewConfig {
   src?: string;
   /** Managed visibility; onOpenChange requests its change from the owner. */
   open?: boolean;
+  /** Overrides the provider's popup container. Browser getters receive no arguments. */
+  getContainer?: GetContainer;
   onOpenChange?: (open: boolean) => void;
   afterOpenChange?: (open: boolean) => void;
   /** Reports transform and action through queue requestAnimationFrame. */

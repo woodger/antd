@@ -13,9 +13,10 @@ takes priority over the provider's function. In `Tabs`, an explicit
 `getPopupContainer={undefined}` disables the provider setting. In `Tour` and
 `Mentions`, set the container on the component itself.
 
-Tooltips, dropdown menus, color and date pickers, `Modal`, and `Drawer` also use
-the shared container. If a new function returns the same DOM element, an open panel
-keeps its state and focus.
+Tooltips, dropdown menus, color and date pickers, `Modal`, `Drawer`, and Image
+previews also use the shared container. Image and ImagePreviewGroup invoke it
+without a trigger argument. If a new function returns the same DOM element, an
+open panel keeps its state and focus. [Image preview settings](components/image.md)
 
 ## List placement
 

@@ -58,8 +58,12 @@ focus to the thumbnail that opened the group.
 Removing images or items updates the list and leaves the owner responsible for a
 valid current index. The viewer can be closed even with an empty list. In another
 preserved rc-image 1.10.0 case, preview=false on the group clears its configuration
-while child Image can still open the viewer. Set Image.preview=false to disable
-a particular thumbnail.
+and skips the provider's container. A child Image can still open the fullscreen
+viewer. Set Image.preview=false to disable a particular thumbnail.
+
+`preview.getContainer` uses the same types and local-before-provider resolution as
+the single viewer. Changing the destination while open recreates the panel and
+preserves the current index and transform. [Image preview containers](image.md)
 
 The fixture is `?fixture=image-preview-group`. SSR renders children and leaves
 DOM registration and the viewer inactive. Group viewers share Image's

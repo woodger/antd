@@ -956,6 +956,11 @@
     "root": "image-semantics-fixture"
   },
   {
+    "id": "image-container",
+    "module": "./ImageContainerFixtures.svelte",
+    "root": "image-container-fixture"
+  },
+  {
     "id": "image-preview-group",
     "module": "./ImageGroupFixtures.svelte",
     "root": "image-group-fixture"

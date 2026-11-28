@@ -19,7 +19,7 @@ const tabbableSelector = [
 ].join(',');
 
 /** Finds the current focus even inside a ShadowRoot that hosts a portaled panel. */
-function activeElement(document: Document): Element | null {
+export function getDialogActiveElement(document: Document): Element | null {
   let element = document.activeElement;
   while (element?.shadowRoot?.activeElement) {
     element = element.shadowRoot.activeElement;
@@ -82,7 +82,7 @@ export function connectDialogFocus(
 
   /** Restores focus after the dialog actually exits, including programmatic focus(). */
   function keepFocus() {
-    const target = activeElement(document);
+    const target = getDialogActiveElement(document);
     if (!getInteraction().trap || !canManage(target)) {
       return;
     }
@@ -115,7 +115,7 @@ export function connectDialogFocus(
   function handleKeydown(event: KeyboardEvent) {
     if (event.defaultPrevented || event.isComposing) return;
 
-    const focused = activeElement(document);
+    const focused = getDialogActiveElement(document);
     if (!canManage(focused)) return;
 
     if (event.key === 'Escape') {
@@ -150,7 +150,7 @@ export function connectDialogFocus(
 
   /** Remembers the external opener only on first show, before moving focus. */
   function open() {
-    const current = activeElement(document);
+    const current = getDialogActiveElement(document);
     opener = current instanceof view.HTMLElement ? current : undefined;
     stack.push(dialog);
     const interaction = getInteraction();
@@ -187,7 +187,7 @@ export function connectDialogFocus(
     const interaction = getInteraction();
     const matchesMode = dialog.matches(':modal') === interaction.native;
     if (native !== interaction.native || !matchesMode) {
-      const previous = activeElement(document);
+      const previous = getDialogActiveElement(document);
       const preserve = previous instanceof view.HTMLElement
         && (isPopupFocusWithin(dialog, previous) || !interaction.native);
       stopListening();

@@ -71,6 +71,7 @@
     tabindex,
     preview: preview ? {
       ...config,
+      getContainer: config.getContainer ?? context.getPopupContainer,
       cover: config.cover ?? true,
       mask: appearance.mask.enabled,
       closeIcon: appearance.closeIcon
