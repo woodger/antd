@@ -5,7 +5,7 @@
   import { useRuntimeStyles } from '../theme/theme-context.svelte';
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { getUploadPrefixCss } from './upload-prefix.engine';
-  import type { UploadProps, UploadFile, UploadSemanticInfo } from './upload.types';
+  import type { UploadFile, UploadProps, UploadRef, UploadSemanticInfo } from './upload.types';
   import { createUploadController } from './upload-controller.engine';
   import { filterUploadFile } from './upload.engine';
   import { uploadRequest } from './upload-request.dom';
@@ -13,7 +13,7 @@
   import { getInlineStyleDeclarations } from '../style/inline-style.engine';
   import { useConfig } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { useForm } from '../form/form-context';
+  import { provideFormField, useForm, useFormField } from '../form/form-context';
   import UploadList from './UploadList.svelte';
   import UploadSelectTrigger from './UploadSelectTrigger.svelte';
   let {
@@ -190,6 +190,27 @@
   const uploader = { abort };
   let uploaderRef = $derived(nativeElement ? uploader : null);
   export { files as fileList, uploaderRef as upload, nativeElement, inputElement };
+
+  const fieldRef: UploadRef<T> = {
+    onBatchStart, onProgress, onSuccess, onError, abort,
+    get fileList() { return files; },
+    get upload() { return uploaderRef; },
+    get nativeElement() { return nativeElement; },
+    get inputElement() { return inputElement; }
+  };
+  const field = useFormField(() => nativeElement ? fieldRef : undefined);
+  // Trigger and list snippets can contain editors that do not own this file field.
+  provideFormField(undefined);
+  const describedBy = $derived.by(() => {
+    const local = attributes['aria-describedby'];
+    const fieldDescription = field?.describedBy;
+    if (local && fieldDescription) {
+      return `${local} ${fieldDescription}`;
+    }
+
+    return fieldDescription ?? local;
+  });
+
   function openDialog(event: MouseEvent | KeyboardEvent) {
     if (blocked || !openFileDialogOnClick || !children || event.defaultPrevented) {
       return;
@@ -272,7 +293,24 @@
         if (type === 'select')
           drag(event);
       }} ondragover={event => event.preventDefault()}>
-    <input {...attributes} {...directoryAttributes} bind:this={inputElement} id={children && !blocked ? id : undefined} type="file" {name} accept={typeof accept === 'string' ? accept : accept.format} {multiple} {capture} disabled={blocked} style="display:none" onchange={changed} onclick={event => event.stopPropagation()} />
+    <input
+      {...attributes}
+      {...directoryAttributes}
+      bind:this={inputElement}
+      id={children && !blocked ? id ?? field?.id : undefined}
+      type="file"
+      {name}
+      accept={typeof accept === 'string' ? accept : accept.format}
+      {multiple}
+      {capture}
+      disabled={blocked}
+      aria-required={field?.required || attributes['aria-required']}
+      aria-invalid={field?.invalid || attributes['aria-invalid']}
+      aria-describedby={describedBy}
+      style="display:none"
+      onchange={changed}
+      onclick={event => event.stopPropagation()}
+    />
     {#if children}{#if type === 'drag'}<div class={`${componentPrefix}-drag-container`}>{@render children()}</div>{:else}{@render children()}{/if}{/if}
   </span>
 {/snippet}

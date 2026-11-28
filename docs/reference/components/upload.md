@@ -65,6 +65,12 @@ and `onError` ref methods. The package test checks the emitted
 declarations with `skipLibCheck: false`.
 [Ref declaration test](../../../tests/package/upload/upload-ref-declarations.test.ts)
 
+Inside a named FormItem, Form can scroll to the Upload or UploadDragger wrapper
+and read its live UploadRef. The enabled file input gets the FormItem label
+association when a trigger is present. Use the Upload name for the multipart
+field. Editors rendered in trigger and list snippets use their own field
+association. [Form methods](../forms.md#focus-and-scrolling)
+
 If the first `onChange` synchronously unmounts the component,
 the rest of the batch stops before additional callbacks, status
 changes, and requests. In Ant Design 6.6.8, `onBatchStart`

@@ -8439,6 +8439,25 @@
           "note": "Автоматические refs Input/TextArea, InputNumber, checkables/groups, Switch, Select, Slider, OTP, pickers, Rate, Mentions, AutoComplete, TreeSelect, Cascader и Transfer. Где опубликован bind:ref, возвращается он; остальные refs — стабильные Svelte handles либо опубликованный native element. Явный controlRef пользовательского поля имеет приоритет и сохраняет identity/receiver, native id служит fallback. Смонтированные bindings выбираются точным typed NamePath; reset, замена модели, удаление и keyed FormList очищают/обновляют ссылки. SSR не обращается к DOM. Прокрутка использует существующий compute-scroll-into-view 3.0.2, if-needed/nearest по умолчанию, alignment, boundary element/predicate, hidden overflow, native/custom behavior и optional focus. Сверено с неизменённым UMD; source коллизии underscore refs и number/string paths не повторяются. Form один раз применяет вычисленный CSS scroll-margin к рамке контрола после transform, сохраняя знак размеров при перекрещивании границ. Отступ участвует в if-needed, вариантах выравнивания и расчёте действий custom behavior. Сравнение 20 состояний UMD 6.6.8 и нативной прокрутки Chromium фиксирует случаи обрезания и дрейфа при повторной прокрутке: bundled compute 3.1.1 и wrapper 3.1.0 оба применяют margin. Браузерные тесты сравнивают результат с нативной прокруткой в текущем браузере, включая разные знаки отступов, transform, scrollToFirstError и smooth."
         },
         {
+          "id": "upload-field-registration",
+          "title": "Upload and UploadDragger form refs and input associations",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "docs/reference/components/upload.md",
+            "src/lib/upload/Upload.svelte",
+            "src/lib/upload/UploadDragger.svelte",
+            "src/lib/form/form-context.ts",
+            "tests/browser/fixtures/FormUploadFieldsFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-upload-fields-observation.json",
+            "tests/browser/form/form-upload-fields.spec.ts",
+            "tests/browser/form/form-upload-fields-hydration.spec.ts",
+            "tests/package/form/form-upload-fields.ssr.test.ts"
+          ],
+          "note": "Named Upload and UploadDragger fields expose live UploadRef handles. scrollToField and scrollToFirstError use the wrapper element. The file input has an associated ID when a trigger is present and enabled, alongside required, invalid, and description attributes. Svelte combines local and Form descriptions. Upload controls the multipart field name, and an editor in the trigger or list uses its own field binding. Independent Ant Design 6.6.8 captures cover ordinary, noStyle, display-only, and disabled controls, submission order and scroll actions, reset, removal, and a trigger with a nested input. Svelte coverage also checks file chooser activation, model replacement, retained handle values, SSR, and strict hydration."
+        },
+        {
           "id": "validate-first",
           "title": "ValidateFirst: все правила, последовательная и параллельная остановка",
           "state": "supported",

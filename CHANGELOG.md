@@ -58,6 +58,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 - TypeScript resolves stylesheet imports with strict side-effect import checking.
 - Form includes CSS scroll margins when scrolling to a field or to the first error.
 - FormItem passes native attributes, events, and Grid settings to the inner row.
+- Form scrolls to Upload and UploadDragger fields and connects their file inputs
+  to field labels and validation messages.
 
 ## [0.1.1]
 

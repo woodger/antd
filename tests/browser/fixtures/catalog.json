@@ -209,6 +209,11 @@
     "root": "form-item-row-fixture"
   },
   {
+    "id": "form-upload-fields",
+    "module": "./FormUploadFieldsFixtures.svelte",
+    "root": "form-upload-fields-fixture"
+  },
+  {
     "id": "form-initial-values",
     "module": "./FormInitialValuesFixtures.svelte",
     "root": "form-initial-values-fixture"

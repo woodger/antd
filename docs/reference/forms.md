@@ -1342,6 +1342,11 @@ input and selection controls register automatically. If a component exposes
 bind:ref, getFieldInstance returns it. Otherwise, it returns an object with
 nativeElement and supported methods, or the HTML element itself.
 
+Upload and UploadDragger register an UploadRef with live nativeElement,
+inputElement, fileList, and transport methods. Both scroll methods use the
+Upload wrapper. A named FormItem also supplies the file input's label
+association, required and invalid states, and descriptions.
+
 Form.scrollToFirstError scrolls to the first error after onFinishFailed.
 The form setting replaces ConfigProvider.form.scrollToFirstError in full.
 Undefined inherits the provider setting. False disables scrolling and focus.

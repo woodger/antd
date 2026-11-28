@@ -1,0 +1,163 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "chromium": "158.0.8127.36",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "version": "6.6.8",
+  "initial": {
+    "select": {
+      "rootTag": "SPAN",
+      "sameAsComponentRef": true,
+      "fileName": "attachments",
+      "hasId": true,
+      "required": "true",
+      "disabled": false,
+      "describedBy": [],
+      "labelMatches": false,
+      "actions": [
+        {
+          "boundary": "upload-limit",
+          "top": 125.5,
+          "left": 0
+        }
+      ]
+    },
+    "dragger": {
+      "rootTag": "SPAN",
+      "sameAsComponentRef": true,
+      "fileName": "drops",
+      "hasId": true,
+      "required": null,
+      "disabled": false,
+      "describedBy": [],
+      "labelMatches": false,
+      "actions": [
+        {
+          "boundary": "upload-limit",
+          "top": 220,
+          "left": 0
+        }
+      ]
+    },
+    "display": {
+      "rootTag": "SPAN",
+      "sameAsComponentRef": true,
+      "fileName": "display-file",
+      "hasId": false,
+      "required": null,
+      "disabled": false,
+      "describedBy": [],
+      "labelMatches": false,
+      "actions": [
+        {
+          "boundary": "upload-limit",
+          "top": 266,
+          "left": 0
+        }
+      ]
+    },
+    "aria": {
+      "rootTag": "SPAN",
+      "sameAsComponentRef": true,
+      "fileName": "labelled-file",
+      "hasId": true,
+      "required": "true",
+      "disabled": false,
+      "describedBy": [
+        "File instructions",
+        "Maximum size"
+      ],
+      "labelMatches": true,
+      "actions": [
+        {
+          "boundary": "upload-limit",
+          "top": 361.5,
+          "left": 0
+        }
+      ]
+    }
+  },
+  "disabled": {
+    "rootTag": "SPAN",
+    "sameAsComponentRef": true,
+    "fileName": "labelled-file",
+    "hasId": false,
+    "required": "true",
+    "disabled": true,
+    "describedBy": [
+      "File instructions",
+      "Maximum size"
+    ],
+    "labelMatches": false,
+    "actions": [
+      {
+        "boundary": "upload-limit",
+        "top": 361.5,
+        "left": 0
+      }
+    ]
+  },
+  "validation": {
+    "submitted": [
+      {
+        "field": [
+          "files"
+        ],
+        "active": ""
+      },
+      [
+        {
+          "boundary": "upload-limit",
+          "top": 125.5,
+          "left": 0
+        }
+      ]
+    ],
+    "ariaInvalid": "true",
+    "text": "File required"
+  },
+  "reset": {
+    "rootReplaced": true,
+    "published": {
+      "rootTag": "SPAN",
+      "sameAsComponentRef": true,
+      "fileName": "attachments",
+      "hasId": true,
+      "required": "true",
+      "disabled": false,
+      "describedBy": [],
+      "labelMatches": false,
+      "actions": [
+        {
+          "boundary": "upload-limit",
+          "top": 125.5,
+          "left": 0
+        }
+      ]
+    }
+  },
+  "removed": {
+    "rootTag": null,
+    "sameAsComponentRef": false,
+    "fileName": null,
+    "hasId": false,
+    "required": null,
+    "disabled": null,
+    "describedBy": [],
+    "labelMatches": false,
+    "actions": []
+  },
+  "nestedTrigger": {
+    "id": "",
+    "name": "",
+    "fileBoundToLabel": true,
+    "matches": 1
+  }
+}
