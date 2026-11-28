@@ -47,6 +47,7 @@ function getDurationMs(value: string, fallback: number): number {
 function createModalStockMotion(
   dialog: HTMLDialogElement,
   view: Window & typeof globalThis,
+  reducedMotion: MediaQueryList,
   callbacks: ModalMotionCallbacks,
   getMask: () => HTMLElement | undefined
 ) {
@@ -56,7 +57,6 @@ function createModalStockMotion(
   }
 
   const surface = panel;
-  const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   let requested: boolean | undefined;
   let panelAnimation: Animation | undefined;
   let maskAnimation: Animation | undefined;
@@ -195,6 +195,7 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
     throw new Error('Modal requires an active document');
   }
   const view = documentView;
+  const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   type Driver = { named: true; connection: ReturnType<typeof createModalNamedMotion> }
     | { named: false; connection: ReturnType<typeof createModalStockMotion> };
   let driver: Driver | undefined;
@@ -206,13 +207,31 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
     return dialog.querySelector<HTMLElement>(selector) ?? undefined;
   }
 
+  /** Identifies closes that can leave the panel animating under its current attachment. */
+  function canAnimateClose(options: ModalMotionSettings) {
+    if (!options.token.motion || reducedMotion.matches) {
+      return false;
+    }
+    if (options.named) {
+      return options.transitionName !== '';
+    }
+    return getDurationMs(options.token.motionDurationMid, 200) > 0;
+  }
+
   /** A new set of names in open Modal applies to the next change of visibility. */
   function sync(open: boolean, options: ModalMotionSettings) {
     if (!driver || (requested !== open && driver.named !== options.named)) {
       driver?.connection.destroy();
-      driver = options.named
-        ? { named: true, connection: createModalNamedMotion(dialog, view, requested, callbacks, getMask) }
-        : { named: false, connection: createModalStockMotion(dialog, view, callbacks, getMask) };
+      if (options.named) {
+        const connection = createModalNamedMotion(
+          dialog, view, reducedMotion, requested, callbacks, getMask
+        );
+        driver = { named: true, connection };
+      }
+      else {
+        const connection = createModalStockMotion(dialog, view, reducedMotion, callbacks, getMask);
+        driver = { named: false, connection };
+      }
     }
     requested = open;
     driver.connection.sync(open, options);
@@ -238,6 +257,7 @@ export function createModalMotion(dialog: HTMLDialogElement, callbacks: ModalMot
     sync,
     closed,
     reset,
+    canAnimateClose,
     /** Events CSS only processes the current named transition. */
     end(part: ModalMotionPart, event: CssMotionEvent) {
       if (driver?.named) driver.connection.end(part, event);

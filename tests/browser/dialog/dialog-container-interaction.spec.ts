@@ -93,6 +93,35 @@ test('Modal cancels an old exit when its connected target changes', async ({ pag
   await expect(events).toHaveText(expected);
 });
 
+for (const reduced of [false, true]) {
+  test(`Modal completes a close with ${reduced ? 'reduced motion' : 'motion disabled'} before retargeting`, async ({ page }) => {
+    if (reduced) {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await check(page, 'Animate container panel', true);
+    }
+    await open(page, 'modal-local');
+    const events = page.getByLabel('Modal lifecycle events', { exact: true });
+    const sequence = commitReference.modalClose.instantExitMove.events;
+    const closer = await page.getByRole('button', { name: 'Close container panel', exact: true })
+      .elementHandle();
+    await expect(events).toHaveText(JSON.stringify(sequence.slice(0, 1)));
+
+    await page.getByLabel('Alternate panel container', { exact: true }).evaluate((node, button) => {
+      if (node instanceof HTMLInputElement && button instanceof HTMLButtonElement) {
+        node.checked = true;
+        node.dispatchEvent(new Event('change', { bubbles: true }));
+        button.click();
+      }
+    }, closer);
+
+    const destination = page.locator('[data-panel-container="child"] > dialog');
+    await expect(destination).toHaveCount(1);
+    await expect(destination).toBeHidden();
+    await expect(opener(page)).toBeFocused();
+    await expect(events).toHaveText(JSON.stringify(sequence));
+  });
+}
+
 for (const name of ['modal-local', 'modal-local-shadow', 'drawer-local', 'drawer-local-shadow']) {
   test(`dialog containers retain native modality and opener focus for ${name}`, async ({ page }) => {
     await open(page, name);

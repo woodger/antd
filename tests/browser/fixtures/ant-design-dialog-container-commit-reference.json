@@ -232,6 +232,30 @@
           "button"
         ]
       ]
+    },
+    "instantExitMove": {
+      "firstTarget": "other",
+      "focus": "opener",
+      "events": [
+        [
+          "afterOpenChange",
+          true,
+          "button"
+        ],
+        [
+          "closable.afterClose",
+          "opener"
+        ],
+        [
+          "afterClose",
+          "opener"
+        ],
+        [
+          "afterOpenChange",
+          false,
+          "opener"
+        ]
+      ]
     }
   }
 }

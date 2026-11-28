@@ -211,6 +211,7 @@
     sync(open: boolean, settings: ModalMotionSettings, movingMask: boolean): void;
     closed(): void;
     closeDetached(): void;
+    canAnimateClose(options: ModalMotionSettings): boolean;
     end(part: ModalMotionPart, event: CssMotionEvent): void;
   }>();
   const container = createDialogContainer(() => ({
@@ -218,9 +219,10 @@
     open,
     getContainer,
     getPopupContainer: config.getPopupContainer,
-    // A removed host leaves the current attachment responsible for completing close.
+    // A detached panel or an immediate close settles on the current attachment.
     resolveWhenClosed: renderDialog && (
-      open || !presented || untrack(() => dialog?.isConnected === true)
+      open || !presented || untrack(() =>
+        dialog?.isConnected === true && runtime?.canAnimateClose(motionSettings) !== false)
     ),
     portalByDefault: !interaction.native && (open || presented || maskLeaving),
     style: dialogStyle,
@@ -403,7 +405,9 @@
       closed();
     }
 
-    const current = { sync, closed, closeDetached, end: motion.end };
+    const current = {
+      sync, closed, closeDetached, canAnimateClose: motion.canAnimateClose, end: motion.end
+    };
     panelMotion = {};
     maskMotion = {};
     visited = true;

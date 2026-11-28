@@ -55,11 +55,11 @@ function createModalCssSurface(
 export function createModalNamedMotion(
   dialog: HTMLDialogElement,
   view: Window,
+  reducedMotion: MediaQueryList,
   initial: boolean | undefined,
   callbacks: ModalMotionCallbacks,
   getMask: () => HTMLElement | undefined
 ) {
-  const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   const panel = createModalCssSurface(view, getPanel, (state, commit) =>
     callbacks.paint('panel', state, commit));
   const mask = createModalCssSurface(view, getMask, (state, commit) =>

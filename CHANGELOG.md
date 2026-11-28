@@ -20,6 +20,7 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 
 - Modal restores focus and completes close callbacks when its container is
   removed during closing. Moving an open Modal preserves its original opener.
+- Modal completes an unanimated close when its container changes in the same update.
 
 ## [0.1.1]
 

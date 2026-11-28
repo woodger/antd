@@ -107,6 +107,9 @@ close callbacks in their usual order. Changing a connected target during an
 animated close discards the old panel and its animation. A move while open
 keeps the original opener as the focus restore target. In the captured React
 move, focus ended on the document body.
+
+When motion is disabled, the close settles before moving the retained panel to
+its new container.
 [Container close measurements](../../../tests/browser/fixtures/ant-design-dialog-container-commit-reference.json)
 
 The reference uses `@rc-component/dialog` 1.10.0 and portal 2.1.3.
