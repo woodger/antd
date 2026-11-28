@@ -8037,6 +8037,24 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): field, root and selector watches, explicit or nearest model, registered projection and preserve, SSR selector fallback, registration, writes, reset, list moves and disposal. Svelte uses reactive getters for the selection and context model. In the source capture, preserveToggle stays stale until another write, modelChanged and oldModelWrite show that a watcher remains connected to the previous form, and nonSerializableEquality shows distinct opaque values and null versus undefined conflated by JSON comparison. Svelte follows current options, shares the registered projection and preserves opaque identity."
         },
         {
+          "id": "controlled-fields",
+          "title": "Form fields with external state and validator feedback",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/form.types.ts",
+            "src/lib/form/form.model.svelte.ts",
+            "tests/browser/fixtures/FormControlledFieldsFixtures.svelte",
+            "tests/browser/fixtures/FormControlledFieldsEcho.svelte",
+            "tests/browser/fixtures/ant-design-form-controlled-fields-observation.json",
+            "tests/browser/form/form-controlled-fields.spec.ts",
+            "tests/package/form/form-controlled-fields.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): fields applies ordered silent updates after mount, skips arrays that reuse records, reapplies new records, and preserves a pending validator when onFieldsChange feeds allFields back. SSR uses model defaults. Svelte also tracks reactive record edits and applies current entries to a replacement model while retaining the existing control DOM. In echoStaleCompletion, the pinned React build publishes an error from a previous value through onFieldsChange, where feeding allFields back overrides the current external message. Svelte retains the replacement and discards the obsolete result."
+        },
+        {
           "id": "dayjs-values",
           "title": "Immutable Dayjs|null и диапазоны без преобразования в строку",
           "state": "supported",

@@ -10,6 +10,7 @@ handles arrays of fields.
 - [Watching values](#watching-values)
 - [Validation](#validation)
 - [Change events and FormProvider](#change-events-and-formprovider)
+- [External field state](#external-field-state)
 - [Submission](#submission)
 - [Reset](#reset)
 - [Field arrays with FormList](#formlist)
@@ -412,6 +413,44 @@ validator's rejection for a newer field value, and it drops a live registry
 entry when an independently mounted form with the same name unmounts. The
 Svelte model discards the stale result and releases only the departing
 registration. [React observations](../../tests/browser/fixtures/ant-design-form-events-observation.json)
+
+## External field state
+
+Pass `fields` when an external store owns the form's values or field metadata.
+Each record is a `FormFieldData` patch. Form applies the patches in order
+after the client registers its fields. SSR and initial hydration use the
+model's defaults. An empty array or an omitted prop supplies zero patches.
+
+```svelte
+<script lang="ts">
+  import { createForm, Form, FormItem, Input, type FormFieldData } from '@woodger/antd';
+
+  const form = createForm({ initialValues: { username: 'Anna' } });
+  let fields = $state<readonly FormFieldData[]>([{ name: 'username', value: 'Anna' }]);
+</script>
+
+<Form {form} {fields} onFieldsChange={(_, allFields) => { fields = allFields; }}>
+  <FormItem name="username" label="Username" rules={[{ required: true }]}>
+    <Input
+      value={form.getFieldValue('username')}
+      onValueChange={(value) => form.changeFieldValue('username', value)}
+    />
+  </FormItem>
+</Form>
+```
+
+External patches are silent and use the same omitted-property and unregistered
+path semantics as [setFields](#updating-fields-in-a-batch). Reusing unchanged
+records in a new array leaves local edits in place. Replacing a record or
+editing a reactive record reapplies the batch. When the `form` model changes,
+the current batch is applied to that model.
+
+Passing `allFields` back directly preserves the validator that produced the
+snapshot. To take control of `validating`, supply a new record with that flag.
+The pinned React build can publish an error for the earlier value after a
+replacement, and feeding that snapshot back replaces the external error. Form
+keeps the newer external message when the obsolete validation settles.
+[React observations](../../tests/browser/fixtures/ant-design-form-controlled-fields-observation.json)
 
 ## Submission
 

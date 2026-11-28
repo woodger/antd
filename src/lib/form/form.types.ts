@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLFormAttributes } from 'svelte/elements';
 import type { FormValidationError } from './FormValidationError';
-import type { FormFieldSnapshot, FormInstance } from './form.model.svelte.js';
+import type { FormFieldData, FormFieldSnapshot, FormInstance } from './form.model.svelte.js';
 import type { FormValueProjection } from './form-store.engine';
 import type { ColProps } from '../grid/grid.types';
 import type { FormValues } from './validation.engine';
@@ -106,6 +106,8 @@ export interface FormProps<Values extends FormValues> extends Omit<
 > {
   /** An insulated model created by createForm. */
   form: FormInstance<Values>;
+  /** Applies external field values and metadata after mounting, without change callbacks. */
+  fields?: readonly FormFieldData[];
   /** CSS prefix root Form; empty/undefined inherit ConfigProvider regardless of FormItem. */
   prefixCls?: string;
   children: Snippet;

@@ -34,6 +34,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   model and restore its initial values on reattachment.
 - Form exposes reactive field and selector watches and access to the nearest
   form model.
+- Form accepts external field records through `fields` and preserves pending
+  validation when `onFieldsChange` feeds the field snapshots back.
 
 ### Fixed
 

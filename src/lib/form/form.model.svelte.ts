@@ -88,6 +88,9 @@ export interface FormFieldSnapshot extends FormFieldMeta {
   value: unknown;
 }
 
+// A snapshot fed back through Form.fields does not replace the running validator.
+const fieldSnapshotOrigin = Symbol('ant-design-form-field-snapshot');
+
 /** Reactive values, validation and submit one form; the instance is not shared globally. */
 export interface FormInstance<Values extends FormValues> {
   readonly values: Readonly<Values>;
@@ -570,6 +573,7 @@ export function createForm<Values extends FormValues>({
       for (const { path, field } of fieldBindings()) {
         const value = getFormValue(values, path);
         const snapshot = { ...fieldMeta(field, path), value: copyFormValue(value) };
+        Object.defineProperty(snapshot, fieldSnapshotOrigin, { value: true });
         allFields.push(snapshot);
 
         if (names.some((name) => sameFormPath(name, path))) {
@@ -948,6 +952,57 @@ export function createForm<Values extends FormValues>({
     }
   }
 
+  // A field batch applies values and metadata in the caller's order without validating.
+  function applyFieldUpdates(updates: readonly FormFieldData[], controlled: boolean) {
+    for (const update of updates) {
+      const { name, ...data } = update;
+
+      if ('value' in data) {
+        const next = setFormValue(values, name, data.value) as Values;
+        const changed = !sameFormValue(values, next);
+        // Equal controlled echoes can read their data from the store itself.
+        if (!controlled || changed) {
+          updateValues(next);
+        }
+
+        if (changed) {
+          valuesRevision++;
+          submissionError = undefined;
+
+          for (const field of fields) {
+            if (containsFormPath(name, fieldPath(field))) {
+              cancelValidationDelay(field);
+              field.run = ++validationSequence;
+              const wasValidating = field.validating;
+              field.validating = false;
+              if (wasValidating) notifyFieldMeta(field);
+            }
+          }
+        }
+      }
+
+      const keepValidator = controlled && Object.hasOwn(update, fieldSnapshotOrigin);
+      for (const field of fields) {
+        if (!sameFormPath(name, fieldPath(field))
+          || (!field.registration && !fieldRules(field).length)) {
+          continue;
+        }
+
+        if ('touched' in update) field.touched = !!update.touched;
+        if ('validating' in update && !keepValidator) {
+          cancelValidationDelay(field);
+          field.run = ++validationSequence;
+          field.validating = !!update.validating;
+          field.validated = !field.validating;
+        }
+        if ('errors' in update) field.errors = [...(update.errors ?? [])];
+        if ('warnings' in update) field.warnings = [...(update.warnings ?? [])];
+        field.dirty = true;
+        notifyFieldMeta(field);
+      }
+    }
+  }
+
   // Purifies the result of the field and deprives the previous verification of the right to publish.
   function clearField(field: StoredField) {
     cancelValidationDelay(field);
@@ -1189,49 +1244,7 @@ export function createForm<Values extends FormValues>({
       revalidateTouched();
     },
     setFields(updates) {
-      for (const update of updates) {
-        const { name, ...data } = update;
-
-        if ('value' in data) {
-          const next = setFormValue(values, name, data.value) as Values;
-          const changed = !sameFormValue(values, next);
-          updateValues(next);
-
-          if (changed) {
-            valuesRevision++;
-            submissionError = undefined;
-
-            for (const field of fields) {
-              if (containsFormPath(name, fieldPath(field))) {
-                cancelValidationDelay(field);
-                field.run = ++validationSequence;
-                const wasValidating = field.validating;
-                field.validating = false;
-                if (wasValidating) notifyFieldMeta(field);
-              }
-            }
-          }
-        }
-
-        for (const field of fields) {
-          if (!sameFormPath(name, fieldPath(field))
-            || (!field.registration && !fieldRules(field).length)) {
-            continue;
-          }
-
-          if ('touched' in update) field.touched = !!update.touched;
-          if ('validating' in update) {
-            cancelValidationDelay(field);
-            field.run = ++validationSequence;
-            field.validating = !!update.validating;
-            field.validated = !field.validating;
-          }
-          if ('errors' in update) field.errors = [...(update.errors ?? [])];
-          if ('warnings' in update) field.warnings = [...(update.warnings ?? [])];
-          field.dirty = true;
-          notifyFieldMeta(field);
-        }
-      }
+      applyFieldUpdates(updates, false);
     },
     touchField(name) {
       const field = ensureField(name);
@@ -1382,6 +1395,7 @@ export function createForm<Values extends FormValues>({
       callbackProviders.add(getCallbacks);
       return () => { callbackProviders.delete(getCallbacks); };
     },
+    setControlledFields: (updates) => applyFieldUpdates(updates, true),
     getWatchValues: () => watchValues,
     getFieldMeta(name) {
       const field = findField(name);

@@ -1,5 +1,5 @@
 <script lang="ts" generics="Values extends FormValues">
-  import { onDestroy, tick } from 'svelte';
+  import { onDestroy, tick, untrack } from 'svelte';
   import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
@@ -12,7 +12,8 @@
   import { provideFormItemStatus, useFormItemStatusContext } from './form-item-status';
   import { provideFormFeedback, useFormFeedback } from './form-feedback-context';
   import type { FormProps, FormSemanticSlots } from './form.types';
-  import type { FormFieldSnapshot } from './form.model.svelte';
+  import { copyFormValue, sameFormValue } from './form-store.engine';
+  import type { FormFieldData, FormFieldSnapshot, FormInstance } from './form.model.svelte';
   import { resolveValidationRules, type FormValues } from './validation.engine';
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { mergeValidationMessages } from './validation-message.engine';
@@ -20,6 +21,7 @@
   let props: FormProps<Values> = $props();
   let {
     form,
+    fields,
     prefixCls: customizePrefixCls,
     children,
     layout = 'vertical',
@@ -55,6 +57,43 @@
 
   // Restore a cleared model before child registrations read their initial values.
   $effect.pre(() => getFormHooks(form)?.attachForm(() => clearOnDestroy));
+
+  let appliedFields: {
+    model: FormInstance<Values>;
+    entries: readonly FormFieldData[];
+    snapshot: readonly FormFieldData[];
+  } | undefined;
+
+  // Apply external data after the UI bindings have registered, including on the first client pass.
+  $effect(() => {
+    if (!fields?.length) {
+      appliedFields = undefined;
+      return;
+    }
+
+    const model = form;
+    const entries = fields.slice();
+    const snapshot = copyFormValue(entries);
+    const previous = appliedFields;
+    if (previous?.model === model && previous.entries.length === entries.length
+      && entries.every((entry, index) => entry === previous.entries[index])
+      && sameFormValue(previous.snapshot, snapshot)) {
+      return;
+    }
+
+    appliedFields = { model, entries, snapshot };
+    // Empty slots affect the comparison but carry no field update.
+    const patches = entries.filter(() => true);
+    untrack(() => {
+      const hooks = getFormHooks(model);
+      if (hooks) {
+        hooks.setControlledFields(patches);
+      }
+      else {
+        model.setFields(patches);
+      }
+    });
+  });
 
   const config = useConfig();
   const designTokens = useDesignTokenContext();
