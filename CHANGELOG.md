@@ -50,6 +50,7 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 - Modal completes an unanimated close when its container changes in the same update.
 - The ordinary Modal footer resets the inherited disabled setting.
 - The public `UploadDragger` declarations pass strict TypeScript checking.
+- TypeScript resolves stylesheet imports with strict side-effect import checking.
 
 ## [0.1.1]
 
