@@ -384,6 +384,177 @@
       "left": 217
     }
   ],
+  "scrollMarginMatrix": {
+    "chromium": "158.0.8127.36",
+    "fixture": "FormDomScrollFixtures geometry",
+    "coordinates": "[scrollTop, scrollLeft]. Both scroll axes use position.",
+    "rows": [
+      {
+        "margin": "0px",
+        "position": "nearest",
+        "native": [184,220],
+        "source": [184,220],
+        "repeated": [184,220],
+        "steps": [[184,220]]
+      },
+      {
+        "margin": "0px",
+        "position": "start",
+        "native": [320,400],
+        "source": [320,400],
+        "repeated": [320,400],
+        "steps": [[320,400]]
+      },
+      {
+        "margin": "0px",
+        "position": "center",
+        "native": [252,310],
+        "source": [252,310],
+        "repeated": [252,310],
+        "steps": [[252,310]]
+      },
+      {
+        "margin": "0px",
+        "position": "end",
+        "native": [184,220],
+        "source": [184,220],
+        "repeated": [184,220],
+        "steps": [[184,220]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "position": "nearest",
+        "native": [188,227],
+        "source": [164,221],
+        "repeated": [164,225],
+        "steps": [[172,217]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "position": "start",
+        "native": [308,397],
+        "source": [300,401],
+        "repeated": [300,401],
+        "steps": [[308,397]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "position": "center",
+        "native": [248,312],
+        "source": [236,318],
+        "repeated": [236,318],
+        "steps": [[244,314]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "position": "end",
+        "native": [188,227],
+        "source": [180,231],
+        "repeated": [180,231],
+        "steps": [[188,227]]
+      },
+      {
+        "margin": "-8px 2px 10px -4px",
+        "position": "nearest",
+        "native": [194,222],
+        "source": [210,230],
+        "repeated": [210,230],
+        "steps": [[192,224]]
+      },
+      {
+        "margin": "-8px 2px 10px -4px",
+        "position": "start",
+        "native": [328,404],
+        "source": [346,410],
+        "repeated": [346,410],
+        "steps": [[328,404]]
+      },
+      {
+        "margin": "-8px 2px 10px -4px",
+        "position": "center",
+        "native": [261,313],
+        "source": [288,322],
+        "repeated": [288,322],
+        "steps": [[270,316]]
+      },
+      {
+        "margin": "-8px 2px 10px -4px",
+        "position": "end",
+        "native": [194,222],
+        "source": [212,228],
+        "repeated": [212,228],
+        "steps": [[194,222]]
+      },
+      {
+        "margin": "-100px",
+        "position": "nearest",
+        "native": [84,120],
+        "source": [284,320],
+        "repeated": [284,320],
+        "steps": [[284,320]]
+      },
+      {
+        "margin": "-100px",
+        "position": "start",
+        "native": [420,500],
+        "source": [420,500],
+        "repeated": [420,500],
+        "steps": [[420,500]]
+      },
+      {
+        "margin": "-100px",
+        "position": "center",
+        "native": [252,310],
+        "source": [252,310],
+        "repeated": [252,310],
+        "steps": [[252,310]]
+      },
+      {
+        "margin": "-100px",
+        "position": "end",
+        "native": [84,120],
+        "source": [84,120],
+        "repeated": [84,120],
+        "steps": [[84,120]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "transform": "scale(1.25)",
+        "position": "nearest",
+        "native": [191,240],
+        "source": [167,234],
+        "repeated": [167,238],
+        "steps": [[175,229.5]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "transform": "scale(1.25)",
+        "position": "start",
+        "native": [305,385],
+        "source": [297,389],
+        "repeated": [297,389],
+        "steps": [[305,384.5]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "transform": "scale(1.25)",
+        "position": "center",
+        "native": [248,312],
+        "source": [236,318],
+        "repeated": [236,318],
+        "steps": [[244,314]]
+      },
+      {
+        "margin": "12px 7px 4px 3px",
+        "transform": "scale(1.25)",
+        "position": "end",
+        "native": [191,240],
+        "source": [183,244],
+        "repeated": [183,244],
+        "steps": [[191,239.5]]
+      }
+    ]
+  },
   "observations": [
     {
       "case": "scrollMarginCases",

@@ -20,6 +20,14 @@ describe('Form DOM public package', () => {
       .toEqual({ id: 'nearest', top: 184, left: 220, focused: false });
     expect(reference.scrollCases.find(({ id }) => id === 'visible'))
       .toEqual({ id: 'visible', top: 184, left: 220, focused: false });
+    expect(reference.scrollMarginMatrix.rows).toHaveLength(20);
+    const positiveMargins = reference.scrollMarginMatrix.rows.find((row) =>
+      row.margin === '12px 7px 4px 3px' && row.position === 'nearest' && !('transform' in row)
+    );
+
+    expect(positiveMargins).toMatchObject({
+      native: [188, 227], source: [164, 221], repeated: [164, 225], steps: [[172, 217]]
+    });
     expect(reference.observations).toHaveLength(3);
   });
 

@@ -278,8 +278,14 @@ let getParentElement = (element: Node): Element | null => {
   return parent
 }
 
+type TargetBounds = Pick<DOMRectReadOnly, 'height' | 'width' | 'top' | 'right' | 'bottom' | 'left'>
+
 /** @public */
-export let compute = (target: Element, options: Options): ScrollAction[] => {
+export let compute = (
+  target: Element,
+  options: Options,
+  getTargetBounds?: (target: Element) => TargetBounds
+): ScrollAction[] => {
   if (typeof document === 'undefined') {
     // If there's no DOM we assume it's not in a browser environment
     return []
@@ -338,6 +344,7 @@ export let compute = (target: Element, options: Options): ScrollAction[] => {
   let viewportHeight = window.visualViewport?.height ?? innerHeight
   let { scrollX, scrollY } = window
 
+  // Read caller-supplied bounds after the boundary predicate can affect layout.
   let {
     height: targetHeight,
     width: targetWidth,
@@ -345,7 +352,7 @@ export let compute = (target: Element, options: Options): ScrollAction[] => {
     right: targetRight,
     bottom: targetBottom,
     left: targetLeft,
-  } = target.getBoundingClientRect()
+  } = getTargetBounds?.(target) ?? target.getBoundingClientRect()
 
   // These values mutate as we loop through and generate scroll coordinates
   let targetBlock: number =

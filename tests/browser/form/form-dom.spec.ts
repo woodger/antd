@@ -1,11 +1,29 @@
 import { test, expect } from '../test';
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import reference from '../fixtures/ant-design-form-dom-observation.json' with { type: 'json' };
 
 async function act(page: Page, name: string) {
   await page.getByRole('button', { name, exact: true }).evaluate(
     (button: HTMLButtonElement) => { button.click(); }
   );
+}
+
+async function readScrollPosition(box: Locator) {
+  return box.evaluate((element) => [element.scrollTop, element.scrollLeft]);
+}
+
+async function scrollNatively(input: Locator, alignment: ScrollLogicalPosition) {
+  return input.evaluate((element, block) => {
+    // Keep the native comparison inside the same boundary as the Form action.
+    const options = { block, inline: block, behavior: 'instant', container: 'nearest' } as const;
+    element.scrollIntoView(options);
+    const box = element.closest('[data-testid="scroll-box"]');
+    if (!box) {
+      throw new Error('Missing scroll box');
+    }
+
+    return [box.scrollTop, box.scrollLeft];
+  }, alignment);
 }
 
 const controls = [
@@ -210,28 +228,82 @@ test('Form scopes scroll boundaries and can skip hidden overflow in nested conta
   expect(await box.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
 });
 
-test('Form completes smooth scrolling and keeps a visible control stable when scroll margins are set', async ({ page }) => {
+test('Form completes smooth scrolling with the field scroll margins', async ({ page }) => {
   await page.goto('/?fixture=form-dom-scroll');
-  await act(page, 'Smooth scroll');
   const box = page.getByTestId('scroll-box');
-
-  await expect.poll(() => box.evaluate((element) => [element.scrollTop, element.scrollLeft]))
-    .toEqual([184, 220]);
+  const input = page.getByRole('textbox', { name: 'Scroll target', exact: true });
+  await act(page, 'Smooth scroll');
+  await expect.poll(() => readScrollPosition(box)).toEqual([184, 220]);
   await act(page, 'Reset scroll');
   await page.getByLabel('Scroll margin', { exact: true }).check();
-  await act(page, 'Scroll nearest');
-  const position = await box.evaluate((element) => [element.scrollTop, element.scrollLeft]);
-  await act(page, 'Scroll visible');
+  const expected = await scrollNatively(input, 'nearest');
 
-  expect(await box.evaluate((element) => [element.scrollTop, element.scrollLeft])).toEqual(position);
-  expect(await page.getByRole('textbox', { name: 'Scroll target', exact: true }).evaluate(
-    (input) => {
-      const bounds = input.getBoundingClientRect();
-      const frame = input.parentElement!.getBoundingClientRect();
-      return bounds.top >= frame.top && bounds.bottom <= frame.bottom
-        && bounds.left >= frame.left && bounds.right <= frame.right;
+  await act(page, 'Reset scroll');
+  await act(page, 'Smooth scroll');
+
+  await expect.poll(() => readScrollPosition(box)).toEqual(expected);
+});
+
+const marginCases = [
+  { name: 'asymmetric margins', margin: '12px 7px 4px 3px', transform: '' },
+  { name: 'mixed margins', margin: '-8px 2px 10px -4px', transform: '' },
+  { name: 'reversed edges', margin: '-100px', transform: '' },
+  { name: 'transformed field', margin: '12px 7px 4px 3px', transform: 'scale(1.25)' }
+];
+const alignmentActions = {
+  nearest: 'Scroll nearest', start: 'Scroll start', center: 'Scroll center', end: 'Align end'
+};
+
+for (const sample of marginCases) {
+  test(`Form aligns ${sample.name} like the browser and keeps repeated scroll stable`, async ({ page }) => {
+    await page.goto('/?fixture=form-dom-scroll');
+    const box = page.getByTestId('scroll-box');
+    const input = page.getByRole('textbox', { name: 'Scroll target', exact: true });
+    await input.evaluate((element: HTMLInputElement, { margin, transform }) => {
+      element.style.scrollMargin = margin;
+      element.style.transform = transform;
+    }, sample);
+
+    for (const alignment of ['nearest', 'start', 'center', 'end'] as const) {
+      await act(page, 'Reset scroll');
+      const expected = await scrollNatively(input, alignment);
+      await act(page, 'Reset scroll');
+      const action = alignmentActions[alignment];
+      await act(page, action);
+
+      expect(await readScrollPosition(box), alignment).toEqual(expected);
+
+      await act(page, action);
+
+      expect(await readScrollPosition(box), alignment).toEqual(expected);
     }
-  )).toBe(true);
+  });
+}
+
+test('Form sends the current margins to custom scroll behavior for a visible field', async ({ page }) => {
+  await page.goto('/?fixture=form-dom-scroll');
+  const box = page.getByTestId('scroll-box');
+  const input = page.getByRole('textbox', { name: 'Scroll target', exact: true });
+  const margin = page.getByLabel('Scroll margin', { exact: true });
+  const actions = page.getByRole('status', { name: 'Scroll actions', exact: true });
+  await act(page, 'Scroll nearest');
+  const withoutMargin = await readScrollPosition(box);
+  await margin.check();
+
+  await act(page, 'Custom scroll');
+
+  expect(await readScrollPosition(box)).toEqual(withoutMargin);
+  const [top, left] = await scrollNatively(input, 'nearest');
+  expect([top, left]).not.toEqual(withoutMargin);
+  await expect(actions).toHaveText(JSON.stringify([{ box: true, top, left }]));
+  await expect(margin).toBeFocused();
+
+  await box.evaluate((element, [top, left]) => element.scroll({ top, left }), withoutMargin);
+  await act(page, 'Scroll nearest');
+  await act(page, 'Custom scroll');
+
+  expect(await readScrollPosition(box)).toEqual([top, left]);
+  await expect(actions).toHaveText('[]');
 });
 
 test('Form targets its own control when adjacent forms share an explicit native id', async ({ page }) => {

@@ -105,6 +105,9 @@
       inline: block as ScrollLogicalPosition, boundary: box, focus: block === 'end'
     })}>Scroll {block}</button>
   {/each}
+  <button type="button" onclick={() => scroll('align-end', {
+    scrollMode: 'always', block: 'end', inline: 'end', boundary: box
+  })}>Align end</button>
   <button type="button" onclick={reset}>Reset scroll</button>
   <button type="button" onclick={() => customBehavior()}>Custom scroll</button>
   <button type="button" onclick={() => customBehavior(true)}>Custom scroll focus</button>

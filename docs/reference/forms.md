@@ -1373,4 +1373,9 @@ By default, it scrolls to the nearest edge if needed. It supports block,
 inline, scrollMode, behavior, boundary, skipOverflowHiddenElements, and focus.
 A custom callback can handle scrolling. A promise it returns is left unawaited.
 An unknown path leaves the page alone. The methods are safe during SSR
-without DOM controls. CSS scroll-margin remains outside the scroll calculation.
+without DOM controls.
+
+`scrollToField` applies the target's computed CSS `scroll-margin` once to its
+transformed border box before checking visibility and calculating alignment.
+The result drives default scrolling, custom `behavior` actions, and
+`scrollToFirstError`. [CSS Scroll Snap](https://drafts.csswg.org/css-scroll-snap-1/#scroll-margin)

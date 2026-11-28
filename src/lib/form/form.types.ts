@@ -32,8 +32,8 @@ export interface FormTooltipProps extends Omit<TooltipProps, 'children'> {
 export type FormItemTooltip = FormTooltipProps | RenderEmptyContent;
 
 /**
- * Scroll Form: by default if-needed/nearest, without changing the focus. CSS scroll-margin does not
- * yet participate in the calculation.
+ * Scrolls to the field and its computed CSS scroll margins. Defaults to if-needed/nearest
+ * with focus left in place.
  */
 export interface FormScrollOptions extends Options {
   /** Native scrolling behavior or callback with calculated actions. */

@@ -7957,7 +7957,7 @@
             "tests/browser/fixtures/ant-design-form-validation-concurrency-observation.json",
             "tests/package/form/form-validation-options.ssr.test.ts"
           ],
-          "note": "NamePath, list operations, validation, field lifecycle and adapters, and Form root APIs are tracked in the individual features below. The full audit remains open, including the scroll margin behavior and feedback renderer coverage."
+          "note": "NamePath, list operations, validation, field lifecycle and adapters, and Form root APIs are tracked in the individual features below. The full audit remains open, including feedback renderer coverage."
         },
         {
           "id": "change-events-and-provider",
@@ -8382,13 +8382,14 @@
         {
           "id": "dom-methods",
           "title": "GetFieldInstance, focusField, and scrollToField",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/form/form.model.svelte.ts",
             "src/lib/form/FormItem.svelte",
             "src/lib/index.ts",
             "src/lib/form/form-field.dom.ts",
+            "src/lib/vendor/compute-scroll-into-view.ts",
             "src/lib/form/form-context.ts",
             "src/lib/form/form-internal.ts",
             "src/lib/form/form.types.ts",
@@ -8399,7 +8400,7 @@
             "tests/browser/fixtures/FormDomScrollFixtures.svelte",
             "tests/browser/fixtures/ant-design-form-dom-observation.json"
           ],
-          "note": "Автоматические refs Input/TextArea, InputNumber, checkables/groups, Switch, Select, Slider, OTP, pickers, Rate, Mentions, AutoComplete, TreeSelect, Cascader и Transfer. Где опубликован bind:ref, возвращается он; остальные refs — стабильные Svelte handles либо опубликованный native element. Явный controlRef пользовательского поля имеет приоритет и сохраняет identity/receiver, native id служит fallback. Смонтированные bindings выбираются точным typed NamePath; reset, замена модели, удаление и keyed FormList очищают/обновляют ссылки. SSR не обращается к DOM. Прокрутка использует существующий compute-scroll-into-view 3.0.2, if-needed/nearest по умолчанию, alignment, boundary element/predicate, hidden overflow, native/custom behavior и optional focus. Сверено с неизменённым UMD; source коллизии underscore refs и number/string paths не повторяются. CSS scroll-margin пока не участвует в расчёте: bundled compute 3.1.1 и wrapper 3.1.0 дважды применяют margins, обрезают control и вызывают drift при повторной прокрутке; raw наблюдение сохранено отдельно. Это ограничение оставляет feature partial; полный Form API не заявлен."
+          "note": "Автоматические refs Input/TextArea, InputNumber, checkables/groups, Switch, Select, Slider, OTP, pickers, Rate, Mentions, AutoComplete, TreeSelect, Cascader и Transfer. Где опубликован bind:ref, возвращается он; остальные refs — стабильные Svelte handles либо опубликованный native element. Явный controlRef пользовательского поля имеет приоритет и сохраняет identity/receiver, native id служит fallback. Смонтированные bindings выбираются точным typed NamePath; reset, замена модели, удаление и keyed FormList очищают/обновляют ссылки. SSR не обращается к DOM. Прокрутка использует существующий compute-scroll-into-view 3.0.2, if-needed/nearest по умолчанию, alignment, boundary element/predicate, hidden overflow, native/custom behavior и optional focus. Сверено с неизменённым UMD; source коллизии underscore refs и number/string paths не повторяются. Form один раз применяет вычисленный CSS scroll-margin к рамке контрола после transform, сохраняя знак размеров при перекрещивании границ. Отступ участвует в if-needed, вариантах выравнивания и расчёте действий custom behavior. Сравнение 20 состояний UMD 6.6.8 и нативной прокрутки Chromium фиксирует случаи обрезания и дрейфа при повторной прокрутке: bundled compute 3.1.1 и wrapper 3.1.0 оба применяют margin. Браузерные тесты сравнивают результат с нативной прокруткой в текущем браузере, включая разные знаки отступов, transform, scrollToFirstError и smooth."
         },
         {
           "id": "validate-first",
@@ -8671,7 +8672,7 @@
             "tests/browser/fixtures/ant-design-form-scroll-first-reference.json",
             "tests/package/form/form-scroll-first.ssr.test.ts"
           ],
-          "note": "Form.scrollToFirstError принимает boolean/FormScrollOptions; local prop целиком заменяет ConfigProvider.form.scrollToFirstError. True вызывает публичный scrollToField первого errorFields.name с block nearest; options заменяют defaults, включая focus/behavior. False отключает и прокрутку, и фокус. OnFinishFailed вызывается перед действием; после tick проверяются active/model owner, outOfDate не вызывает DOM работу. В отсутствие обоих settings сохранён прежний native автофокус первой ошибки, включая config record reset {}; source 6.6.8 без настройки не фокусирует. Это явное сохранение существующего Svelte контракта, raw source reset-state приложен. 15 неизменённых UMD-сценариев подтверждают argument/options identity, callback order, фактические scrollTop/target bounds и focus, nested NamePath, второе ошибочное поле после valid first, уже видимый control, config inherit/replace/reset и local priority. Native browser сверяет source requests/order во всех случаях, source focus/geometry при явном setting; config-reset отдельно проверяет native default focus. Reactive props сохраняют control/value/focus/selection; reset, replace/unmount во время validation и непосредственно в onFinishFailed не вызывают поздний scroll. SSR/types не требуют DOM, prop не уходит в form attrs. Используются существующие scroll/focus/ref механизмы; согласованное исключение source scroll-margin bug сохранено."
+          "note": "Form.scrollToFirstError принимает boolean/FormScrollOptions; local prop целиком заменяет ConfigProvider.form.scrollToFirstError. True вызывает публичный scrollToField первого errorFields.name с block nearest; options заменяют defaults, включая focus/behavior. False отключает и прокрутку, и фокус. OnFinishFailed вызывается перед действием; после tick проверяются active/model owner, outOfDate не вызывает DOM работу. В отсутствие обоих settings сохранён прежний native автофокус первой ошибки, включая config record reset {}; source 6.6.8 без настройки не фокусирует. Это явное сохранение существующего Svelte контракта, raw source reset-state приложен. 15 неизменённых UMD-сценариев подтверждают argument/options identity, callback order, фактические scrollTop/target bounds и focus, nested NamePath, второе ошибочное поле после valid first, уже видимый control, config inherit/replace/reset и local priority. Native browser сверяет source requests/order во всех случаях, source focus/geometry при явном setting; config-reset отдельно проверяет native default focus. Reactive props сохраняют control/value/focus/selection; reset, replace/unmount во время validation и непосредственно в onFinishFailed не вызывают поздний scroll. SSR/types не требуют DOM, prop не уходит в form attrs. Прокрутка использует вычисленный scroll-margin первого контрола. В браузере scroll-margin-block-end сверяется с нативной прокруткой при сохранении порядка вызовов и фокуса."
         },
         {
           "id": "label-tooltips",

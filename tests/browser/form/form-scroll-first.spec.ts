@@ -35,6 +35,35 @@ test('Form resets the config record and preserves its native default focus witho
   await expect(page.getByLabel('First', { exact: true })).toBeFocused();
 });
 
+test('Form scrolls to the first error with its CSS margin and leaves focus on submit', async ({ page }) => {
+  await page.goto('/?fixture=form-scroll-first');
+  const input = page.getByLabel('First', { exact: true });
+  await input.evaluate((element: HTMLInputElement) => {
+    element.style.scrollMarginBlockEnd = '32px';
+  });
+
+  await act(page, 'Submit scroll form');
+
+  await expect.poll(async () => (await page.evaluate(formScrollFirstMetrics)).order)
+    .toEqual(['failed', 'scroll']);
+  const actual = await page.evaluate(formScrollFirstMetrics);
+  const expected = await input.evaluate((element) => {
+    const viewport = element.closest('[data-scroll-viewport]');
+    if (!viewport) {
+      throw new Error('Missing scroll viewport');
+    }
+
+    viewport.scrollTop = 0;
+    const options = { block: 'nearest', behavior: 'instant', container: 'nearest' } as const;
+    element.scrollIntoView(options);
+    return viewport.scrollTop;
+  });
+
+  expect(actual.scrollTop).toBe(expected);
+  expect(actual.calls).toEqual([{ name: ['first'], options: { block: 'nearest' } }]);
+  await expect(page.getByRole('button', { name: 'Submit scroll form', exact: true })).toBeFocused();
+});
+
 test('Form uses current scroll props without replacing its focused input or value', async ({ page }) => {
   await page.goto('/?fixture=form-scroll-first');
   const input = page.getByLabel('First', { exact: true });
