@@ -110,14 +110,44 @@ fixture `?fixture=image-progress` checks animation, progress updates, and the
 return to the interactive thumbnail.
 
 The viewer adds 1 to the owner layer. An explicit `preview.zIndex` sets the layer,
-including 0. A root viewer without an explicit value uses `zIndexPopup`. The
-browser orders native dialogs in the top layer. With `preview.zIndex=0`, React
+including 0. A root viewer uses `styles.popup.root` for its custom layer and
+defaults to `zIndexPopup`. The browser orders native dialogs in the top layer.
+With `preview.zIndex=0`, React
 6.6.8 uses the Image CSS token, and Svelte applies 0. [Owner layer](../theme-context.md#layering-nested-panels)
 
-The port supports styles.root and progress semantic slots on Image and
-classNames.popup.root on Image and ImagePreviewGroup. Remaining work covers
-the other semantic slots, ConfigProvider.image, getContainer, icons and React
-info.icons wrappers, and upstream fade, appear, leave, and mousePosition motion.
-Deprecated aliases are excluded. The pinned UMD measurements confirm styles.root
-and classNames.popup.root. Upstream omits nested preview.classNames from its
-current preview type and ignores it. [Supported styling measurements](../../../tests/reference/ant-design-image-current-styling-observation.json)
+## Semantics and provider defaults
+
+`classNames` and `styles` accept a slot record or a resolver `({ props }) => slots`.
+The slots `root`, `image`, and `cover` address the thumbnail wrapper, its native
+`img`, and the preview cover. Both Image and ImagePreviewGroup expose `popup.root`,
+`popup.mask`, `popup.body`, `popup.footer`, `popup.actions`, and `popup.close`.
+The actions slot applies to the original toolbar when a snippet renders it.
+
+`ConfigProvider.image` supplies `class`, `style`, `fallback`, `classNames`,
+`styles`, and `preview.mask` and `preview.closeIcon` defaults. An omitted `image`
+inherits the parent record. An explicit record replaces it, including an empty
+object. The fallback applies to Image and its standalone viewer. A group viewer
+uses the group's own `fallback`.
+
+Classes accumulate from the provider and the component. Thumbnail CSS declarations
+apply in provider-to-local order. Within the `image` slot, each layer's `style`
+comes after its semantic CSS. While progress is active, `style` applies to its root.
+A local `styles.popup` replaces each supplied slot, and a local
+`styles.placeholder.progress` replaces that progress style record. The preview layer
+applies its resolved `z-index` after `styles.popup.root`.
+
+Preview mask fields inherit individually. An undefined close icon inherits from
+the provider. In the Svelte API, `closeIcon: null` hides the close button.
+The pinned React example with a provider icon renders that icon for a local
+`null`. React also flattens nested progress classes in the test case. Svelte
+applies the progress classes from both layers.
+
+An Image semantic resolver receives the effective `preview`, with `mask` as a
+boolean and `preview` set to `null` when disabled. A group resolver receives its
+items and other group props except `preview` and `previewPrefixCls`. The provider's
+resolver can receive either shape. Use the top-level semantic fields for settings
+that affect the viewer. In the pinned React capture, the semantic fields under
+`ConfigProvider.image.preview` have no effect. [React measurements](../../../tests/browser/fixtures/ant-design-image-semantics-reference.json)
+
+Remaining work covers `getContainer`, preview icons and React `info.icons`
+wrappers, and upstream fade, appear, leave, and mouse-position motion.

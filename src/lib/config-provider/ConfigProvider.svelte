@@ -24,6 +24,7 @@
   import type { BadgeConfig } from '../badge/badge.types';
   import type { TagConfig } from '../tag/tag.types';
   import type { AvatarConfig } from '../avatar/avatar.types';
+  import type { ImageConfig } from '../image/image.types';
   import type { TooltipConfig } from '../tooltip/tooltip.types';
   import type { PopoverConfig } from '../popover/popover.types';
   import type { PopconfirmConfig } from '../popconfirm/popconfirm.types';
@@ -130,6 +131,7 @@
     badge?: BadgeConfig;
     tag?: TagConfig;
     avatar?: AvatarConfig;
+    image?: ImageConfig;
     tooltip?: TooltipConfig;
     popover?: PopoverConfig;
     popconfirm?: PopconfirmConfig;
@@ -246,6 +248,7 @@
     badge,
     tag,
     avatar,
+    image,
     tooltip,
     popover,
     popconfirm,
@@ -419,6 +422,9 @@
     },
     get avatar() {
       return avatar ?? parent.avatar;
+    },
+    get image() {
+      return image ?? parent.image;
     },
     get tooltip() {
       return tooltip ?? parent.tooltip;

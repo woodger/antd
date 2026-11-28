@@ -5,11 +5,13 @@
   import type {
     ImageElementData,
     ImageInfo,
+    ImagePopupSlots,
     ImagePreviewConfig,
     ImagePreviewRenderInfo,
     ImageTransform,
     ImageTransformAction
   } from './image.types';
+  import type { ResolvedImagePreviewAppearance } from './image-semantic.engine';
   import { initialImageTransform, zoomImage, type ImagePoint } from './image-preview.engine';
   import {
     connectImagePreview,
@@ -29,6 +31,7 @@
     previewPrefix: customizePreviewPrefix,
     image,
     config: preview = {},
+    appearance,
     fallback,
     imageAttributes = {},
     onClose,
@@ -37,14 +40,17 @@
     group = false,
     onChange,
     countRender,
-    className
+    classNames,
+    styles
   }: {
     open: boolean;
     imagePrefix?: string;
     previewPrefix?: string;
     image: ImageInfo;
     config?: ImagePreviewConfig;
-    className?: string;
+    appearance: ResolvedImagePreviewAppearance;
+    classNames?: ImagePopupSlots;
+    styles?: ImagePopupSlots;
     fallback?: string;
     imageAttributes?: ImageElementData;
     onClose: () => void;
@@ -67,12 +73,6 @@
   let originalSource = $derived(image.url);
   let source = $derived(failed && fallback ? fallback : originalSource);
   let focusTrap = $derived(preview.focusTrap !== false);
-  let mask = $derived(
-    typeof preview.mask === 'object' ? preview.mask.enabled !== false : preview.mask !== false
-  );
-  let maskClosable = $derived(
-    typeof preview.mask === 'object' ? preview.mask.closable !== false : true
-  );
   let min = $derived(preview.minScale ?? 1);
   let max = $derived(preview.maxScale ?? 50);
   let switchFrame = 0;
@@ -340,7 +340,7 @@
       }} />{/key}
 {/snippet}
 {#snippet defaultActions()}
-  <div class={`${previewPrefix}-actions`}>
+  <div class={[`${previewPrefix}-actions`, classNames?.actions]} style={styles?.actions}>
     {#each [
         'flipY',
         'flipX',
@@ -391,33 +391,41 @@
     <dialog data-ant-image-prefix={imagePrefix} data-ant-image-preview-prefix={previewPrefix} bind:this={dialog} tabindex="-1" class={[
         `image-preview-dialog ${previewPrefix} ant-image-css-var`,
         componentTheme.className,
-        className,
+        classNames?.root,
         preview.movable !== false && `${previewPrefix}-movable`,
         moving && `${previewPrefix}-moving`
       ]}
       dir={context.direction} aria-label={image.alt || context.locale.image?.preview || 'Image preview'} aria-modal={focusTrap ? 'true' : undefined}
-      style={[componentTheme.style, layer.style].filter(Boolean).join(';')} oncancel={event => {
+      style={[componentTheme.style, styles?.root, layer.style].filter(Boolean).join(';')} oncancel={event => {
               event.preventDefault();
               onClose();
             }}>
       <div class={[
           `${previewPrefix}-mask`,
-          !mask && `${previewPrefix}-mask-hidden`,
-          typeof preview.mask === 'object' && preview.mask.blur && `${previewPrefix}-mask-blur`
+          !appearance.mask.enabled && `${previewPrefix}-mask-hidden`,
+          appearance.mask.blur && `${previewPrefix}-mask-blur`,
+          classNames?.mask
         ]}
-        role="presentation" onclick={() => {
-            if (maskClosable)
+        style={styles?.mask} role="presentation" onclick={() => {
+            if (appearance.mask.closable)
               onClose();
           }}></div>
-      <div class={`${previewPrefix}-body`}>
+      <div class={[`${previewPrefix}-body`, classNames?.body]} style={styles?.body}>
         {#if preview.imageRender}{@render preview.imageRender(
             defaultImage,
             { transform, image, ...(group ? { current } : {}) }
           )}{:else}{@render defaultImage()}{/if}
       </div>
-      {#if preview.closeIcon !== false && preview.closeIcon !== null}<button type="button" class={`${previewPrefix}-close`} aria-label={context.locale.closeText} onclick={onClose}>
-        {#if typeof preview.closeIcon === 'function'}{@render preview.closeIcon()}{:else}<ImagePreviewIcon name="close" />{/if}
-      </button>{/if}
+      {#if appearance.closeIcon !== false && appearance.closeIcon !== null}
+        <button type="button" class={[`${previewPrefix}-close`, classNames?.close]}
+          style={styles?.close} aria-label={context.locale.closeText} onclick={onClose}>
+          {#if typeof appearance.closeIcon === 'function'}
+            {@render appearance.closeIcon()}
+          {:else}
+            <ImagePreviewIcon name="close" />
+          {/if}
+        </button>
+      {/if}
       {#if group && count > 1}
         <button type="button" class={[
             `${previewPrefix}-switch ${previewPrefix}-switch-prev`,
@@ -428,7 +436,7 @@
             current === count - 1 && `${previewPrefix}-switch-disabled`
           ]} aria-label="next" disabled={current === count - 1} onclick={() => activate(1)}><ImagePreviewIcon name={context.direction === 'rtl' ? 'prev' : 'next'} /></button>
       {/if}
-      <div class={`${previewPrefix}-footer`}>
+      <div class={[`${previewPrefix}-footer`, classNames?.footer]} style={styles?.footer}>
         {#if group && count >= 1}<div class={`${previewPrefix}-progress`}>{#if countRender}{@render countRender(current + 1, count)}{:else}<bdi>{current + 1} / {count}</bdi>{/if}</div>{/if}
         {#if preview.actionsRender}{@render preview.actionsRender(defaultActions, info)}{:else}{@render defaultActions()}{/if}
       </div>

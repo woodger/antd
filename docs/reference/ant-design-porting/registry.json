@@ -18253,12 +18253,29 @@
           "note": "Pinned Ant Design 6.6.8 replaces the thumbnail while progress is active. Finite values are rounded and clamped and receive progressbar semantics. Indeterminate progress exposes a polite Loading status. The Svelte render snippet receives the default rail and percentage, and semantic slots take CSS strings. The official CSS supplies the ink and rail keyframes for the canonical and local prefixes. Existing boolean and snippet placeholders retain their Svelte behavior."
         },
         {
+          "id": "semantics-and-provider",
+          "title": "Image and group semantic slots and ConfigProvider image defaults",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/image-semantic.engine.ts",
+            "src/lib/image/Image.svelte",
+            "src/lib/image/ImagePreview.svelte",
+            "src/lib/image/ImagePreviewGroup.svelte",
+            "tests/browser/image/image-semantics.spec.ts",
+            "tests/browser/fixtures/ant-design-image-semantics-reference.json",
+            "tests/package/image/image.ssr.test.ts",
+            "docs/reference/components/image.md"
+          ],
+          "note": "Pinned 6.6.8 UMD covers thumbnail and all six popup slots, callback props, style precedence, provider replacement, fallback, mask, and close icon. The port preserves closeIcon=null as an explicit opt-out and accumulates the progress classes that the upstream placeholder schema flattens. The upstream semantic fields inside image.preview are inert. The active top-level fields control the viewer."
+        },
+        {
           "id": "extended-api",
-          "title": "Remaining semantic, configuration, and icon API, container, and preview motion",
+          "title": "Preview container, icon API, and preview motion",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Remaining work includes the other classNames/styles slots, ConfigProvider.image, getContainer, icons and React info.icons wrappers, plus preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases and uses Svelte snippets for imageRender and actionsRender."
+          "note": "Remaining work includes getContainer, icons and React info.icons wrappers, plus preview fade/appear/leave and mousePosition transform origin. The port excludes deprecated aliases and uses Svelte snippets for imageRender and actionsRender."
         },
         {
           "id": "component-prefix",
@@ -27106,6 +27123,21 @@
             "tests/package/modal/modal-static.ssr.test.ts"
           ],
           "note": "prefixCls, iconPrefixCls и theme применяются при отложенном рендере. Holder snippet захватывается в момент вызова, а его локальный провайдер управляет настройками собственных детей. Проверены общий префикс кнопок, пространство имён иконки, RTL, частичные локали с удалением провайдера и изоляция обычного App. На сервере глобальная конфигурация не меняется."
+        },
+        {
+          "id": "image-component-config",
+          "title": "ConfigProvider image defaults for thumbnails and viewers",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/config-provider/ConfigProvider.svelte",
+            "src/lib/config-provider/config-context.ts",
+            "src/lib/image/image-semantic.engine.ts",
+            "tests/browser/image/image-semantics.spec.ts",
+            "tests/browser/fixtures/ant-design-image-semantics-reference.json",
+            "docs/reference/components/image.md"
+          ],
+          "note": "Image settings inherit as a record. A supplied child record replaces it. The Image semantics-and-provider feature covers class and style defaults, fallback, mask field inheritance, close icon, and the preserved Svelte preview contracts."
         },
         {
           "id": "core-v1",

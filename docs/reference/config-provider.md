@@ -19,6 +19,10 @@ the button itself, it gets the class `save-button`.
 
 ## Components and inheritance
 
+`image` supplies classes, CSS, and fallback for Image. Image and ImagePreviewGroup
+use its viewer slots, mask, and close icon defaults. A nested provider with an
+explicit `image` object replaces the inherited record. [Image configuration](components/image.md#semantics-and-provider-defaults)
+
 The shared prefix applies to App, Layout, LayoutSider, LayoutHeader, LayoutContent,
 LayoutFooter, Statistic and its Timer, QRCode, Timeline, Steps, Divider, Flex,
 Segmented, Avatar, AvatarGroup, Badge, BadgeRibbon, Tag, CheckableTag,

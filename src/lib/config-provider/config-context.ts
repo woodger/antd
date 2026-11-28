@@ -23,6 +23,7 @@ import type { BadgeRibbonConfig } from '../badge/badge-ribbon.types';
 import type { BadgeConfig } from '../badge/badge.types';
 import type { TagConfig } from '../tag/tag.types';
 import type { AvatarConfig } from '../avatar/avatar.types';
+import type { ImageConfig } from '../image/image.types';
 import type { TooltipConfig } from '../tooltip/tooltip.types';
 import type { PopoverConfig } from '../popover/popover.types';
 import type { PopconfirmConfig } from '../popconfirm/popconfirm.types';
@@ -105,6 +106,7 @@ export interface ConfigContext {
   readonly badge?: BadgeConfig;
   readonly tag?: TagConfig;
   readonly avatar?: AvatarConfig;
+  readonly image?: ImageConfig;
   readonly tooltip?: TooltipConfig;
   readonly popover?: PopoverConfig;
   readonly popconfirm?: PopconfirmConfig;

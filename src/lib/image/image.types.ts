@@ -1,5 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { HTMLImgAttributes } from 'svelte/elements';
+import type { ImagePreviewGroupSemanticProps } from './image-preview-group.types';
 
 export interface ImageTransform {
   x: number;
@@ -85,8 +86,46 @@ export interface ImageProgressConfig {
 }
 
 type ImageProgressSlot = 'root' | 'content' | 'rail' | 'indicator';
-export type ImageProgressClassNames = Partial<Record<ImageProgressSlot, string>>;
-export type ImageProgressStyles = Partial<Record<ImageProgressSlot, string>>;
+type ImageProgressSlots = Partial<Record<ImageProgressSlot, string>>;
+export type ImageProgressClassNames = ImageProgressSlots;
+export type ImageProgressStyles = ImageProgressSlots;
+
+/** Class names or inline CSS for the nodes owned by the preview. */
+export interface ImagePopupSlots {
+  root?: string;
+  mask?: string;
+  body?: string;
+  footer?: string;
+  actions?: string;
+  close?: string;
+}
+
+/** Semantic fields for the thumbnail, its loading surface, and the preview. */
+export interface ImageSlots {
+  root?: string;
+  image?: string;
+  cover?: string;
+  placeholder?: { progress?: ImageProgressSlots; };
+  popup?: ImagePopupSlots;
+}
+
+/** Image resolvers receive the effective preview, with mask visibility resolved to a boolean. */
+export type ImageSemanticProps = Omit<ImageProps, 'preview' | 'nativeElement' | 'imageElement'> & {
+  preview: (Omit<ImagePreviewConfig, 'mask'> & { mask: boolean; }) | null;
+};
+
+export type ImageSemantic<Props = ImageSemanticProps> = ImageSlots
+  | ((info: { props: Props; }) => ImageSlots | undefined);
+
+/** ConfigProvider.image. An explicit record replaces the inherited settings. */
+export interface ImageConfig {
+  class?: string;
+  style?: string;
+  fallback?: string;
+  classNames?: ImageSemantic<ImageSemanticProps | ImagePreviewGroupSemanticProps>;
+  styles?: ImageSemantic<ImageSemanticProps | ImagePreviewGroupSemanticProps>;
+  preview?: Pick<ImagePreviewConfig, 'mask' | 'closeIcon'>;
+}
 
 /** Native image with fallback/placeholder and interactive preview. */
 export interface ImageProps extends Omit<
@@ -114,15 +153,9 @@ export interface ImageProps extends Omit<
   /** Active progress occupies the Image root until the owner disables it. */
   placeholder?: boolean | Snippet | { progress?: boolean | ImageProgressConfig; };
   rootClassName?: string;
-  classNames?: {
-    popup?: { root?: string; };
-    placeholder?: { progress?: ImageProgressClassNames; };
-  };
-  /** Root and progress CSS. The ordinary thumbnail takes `style` on its img. */
-  styles?: {
-    root?: string;
-    placeholder?: { progress?: ImageProgressStyles; };
-  };
+  classNames?: ImageSemantic;
+  /** Semantic CSS. The ordinary thumbnail applies the separate `style` prop to its img. */
+  styles?: ImageSemantic;
   class?: string;
   style?: string;
   onError?: (event: Event) => void;

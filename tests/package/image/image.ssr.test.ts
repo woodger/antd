@@ -2,6 +2,7 @@ import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
 import { Image } from '@woodger/antd';
 import ImageFixtures from '../../browser/fixtures/ImageFixtures.svelte';
+import ImageSemanticFixtures from '../../browser/fixtures/ImageSemanticFixtures.svelte';
 
 describe('Image SSR', () => {
   it(
@@ -96,5 +97,16 @@ describe('Image SSR', () => {
     expect(body).toContain('<img');
     expect(body).toContain('src="photo.svg"');
     expect(body).not.toContain('ant-image-progress-wrapper');
+  });
+
+  it('applies Image provider and local semantics before the viewer mounts', () => {
+    const { body } = render(ImageSemanticFixtures);
+
+    expect(body).toMatch(/class="[^"]*provider-root single-root[^"]*"/);
+    expect(body).toContain('--rank:provider-root;--provider-slot:yes;--rank:single-root');
+    expect(body).toContain('single-base provider-base provider-image single-image');
+    expect(body).toContain('provider-cover single-cover');
+    expect(body).toContain('provider-progress single-progress');
+    expect(body).not.toContain('<dialog');
   });
 });

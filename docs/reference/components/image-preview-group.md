@@ -62,5 +62,6 @@ while child Image can still open the viewer. Set Image.preview=false to disable
 a particular thumbnail.
 
 The fixture is `?fixture=image-preview-group`. SSR renders children and leaves
-DOM registration and the viewer inactive. The semantic, configuration, container,
-icon, and upstream motion limitations are shared with Image and listed above.
+DOM registration and the viewer inactive. Group viewers share Image's
+`classNames.popup` and `styles.popup` slots and the provider's mask and close icon
+defaults. [Image appearance and provider defaults](image.md#semantics-and-provider-defaults)

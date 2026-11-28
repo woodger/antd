@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { ImageElementData, ImagePreviewConfig } from './image.types';
+import type { ImageElementData, ImagePreviewConfig, ImageSemantic } from './image.types';
 export type ImagePreviewGroupItem = string | ImageElementData;
 /** Setting the total viewer ImagePreviewGroup and the managed image index. */
 export interface ImagePreviewGroupConfig extends Omit<
@@ -21,8 +21,11 @@ export interface ImagePreviewGroupProps {
   items?: readonly ImagePreviewGroupItem[];
   /** @defaultValue true */
   preview?: boolean | ImagePreviewGroupConfig;
-  /** General preview root class; other semantic slots have not yet been moved. */
-  classNames?: { popup?: { root?: string; }; };
+  classNames?: ImageSemantic<ImagePreviewGroupSemanticProps>;
+  styles?: ImageSemantic<ImagePreviewGroupSemanticProps>;
   fallback?: string;
   children?: Snippet;
 }
+
+/** As in PreviewGroup, the viewer configuration is outside the semantic resolver input. */
+export type ImagePreviewGroupSemanticProps = Omit<ImagePreviewGroupProps, 'preview' | 'previewPrefixCls'>;

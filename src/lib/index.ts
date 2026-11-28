@@ -29,7 +29,8 @@ export { getPaginationState } from './pagination/pagination.engine';
 export type {
   ImagePreviewGroupProps,
   ImagePreviewGroupConfig,
-  ImagePreviewGroupItem
+  ImagePreviewGroupItem,
+  ImagePreviewGroupSemanticProps
 } from './image/image-preview-group.types';
 export { default as Image } from './image/Image.svelte';
 export type {
@@ -37,6 +38,11 @@ export type {
   ImageProgressConfig,
   ImageProgressClassNames,
   ImageProgressStyles,
+  ImageConfig,
+  ImagePopupSlots,
+  ImageSemantic,
+  ImageSemanticProps,
+  ImageSlots,
   ImagePreviewConfig,
   ImageTransform,
   ImageTransformAction,

@@ -951,6 +951,11 @@
     "root": "image-progress-fixture"
   },
   {
+    "id": "image-semantics",
+    "module": "./ImageSemanticFixtures.svelte",
+    "root": "image-semantics-fixture"
+  },
+  {
     "id": "image-preview-group",
     "module": "./ImageGroupFixtures.svelte",
     "root": "image-group-fixture"

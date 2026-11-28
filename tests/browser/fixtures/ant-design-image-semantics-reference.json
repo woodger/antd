@@ -1,0 +1,204 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "browser": "158.0.8127.36"
+  },
+  "cases": {
+    "single": {
+      "root": {
+        "classes": [
+          "provider-root",
+          "single-root"
+        ],
+        "rank": "single-root",
+        "rawProviderStyle": "",
+        "providerSlotStyle": "yes"
+      },
+      "image": {
+        "classes": [
+          "provider-base",
+          "provider-image",
+          "single-base",
+          "single-image"
+        ],
+        "rank": "single-base",
+        "rawProviderStyle": "yes",
+        "providerSlotStyle": ""
+      },
+      "cover": {
+        "classes": [
+          "provider-cover",
+          "single-cover"
+        ],
+        "rank": "single-cover",
+        "rawProviderStyle": "",
+        "providerSlotStyle": ""
+      },
+      "popup": {
+        "root": {
+          "classes": [
+            "provider-popup-root",
+            "provider-single-input",
+            "single-effective-mask",
+            "single-popup-root"
+          ],
+          "rank": "single-popup-root",
+          "rawProviderStyle": "",
+          "providerSlotStyle": ""
+        },
+        "mask": {
+          "classes": [
+            "provider-popup-mask",
+            "single-popup-mask"
+          ],
+          "rank": "single-popup-mask",
+          "rawProviderStyle": "",
+          "providerSlotStyle": ""
+        },
+        "body": {
+          "classes": [
+            "provider-popup-body",
+            "single-popup-body"
+          ],
+          "rank": "single-popup-body",
+          "rawProviderStyle": "",
+          "providerSlotStyle": ""
+        },
+        "footer": {
+          "classes": [
+            "provider-popup-footer",
+            "single-popup-footer"
+          ],
+          "rank": "single-popup-footer",
+          "rawProviderStyle": "",
+          "providerSlotStyle": ""
+        },
+        "actions": {
+          "classes": [
+            "provider-popup-actions",
+            "single-popup-actions"
+          ],
+          "rank": "single-popup-actions",
+          "rawProviderStyle": "",
+          "providerSlotStyle": ""
+        },
+        "close": {
+          "classes": [
+            "provider-popup-close",
+            "single-popup-close"
+          ],
+          "rank": "single-popup-close",
+          "rawProviderStyle": "",
+          "providerSlotStyle": ""
+        },
+        "zIndex": "1450",
+        "blur": "blur(0px)",
+        "closeText": "Provider close",
+        "ignoredPreviewClass": false,
+        "ignoredPreviewStyle": ""
+      }
+    },
+    "group": {
+      "root": {
+        "classes": [
+          "group-no-preview-input",
+          "group-popup-root",
+          "provider-group-input",
+          "provider-popup-root"
+        ],
+        "rank": "group-popup-root",
+        "rawProviderStyle": "",
+        "providerSlotStyle": ""
+      },
+      "mask": {
+        "classes": [
+          "group-popup-mask",
+          "provider-popup-mask"
+        ],
+        "rank": "provider-popup-mask",
+        "rawProviderStyle": "",
+        "providerSlotStyle": "yes"
+      },
+      "body": {
+        "classes": [
+          "group-popup-body",
+          "provider-popup-body"
+        ],
+        "rank": "group-popup-body",
+        "rawProviderStyle": "",
+        "providerSlotStyle": ""
+      },
+      "footer": {
+        "classes": [
+          "group-popup-footer",
+          "provider-popup-footer"
+        ],
+        "rank": "provider-popup-footer",
+        "rawProviderStyle": "",
+        "providerSlotStyle": "yes"
+      },
+      "actions": {
+        "classes": [
+          "group-popup-actions",
+          "provider-popup-actions"
+        ],
+        "rank": "provider-popup-actions",
+        "rawProviderStyle": "",
+        "providerSlotStyle": "yes"
+      },
+      "close": {
+        "classes": [
+          "group-popup-close",
+          "provider-popup-close"
+        ],
+        "rank": "provider-popup-close",
+        "rawProviderStyle": "",
+        "providerSlotStyle": "yes"
+      },
+      "zIndex": "1778",
+      "blur": "blur(4px)",
+      "closeText": "Provider close",
+      "ignoredPreviewClass": false,
+      "ignoredPreviewStyle": ""
+    },
+    "progress": {
+      "classes": [
+        "provider-base"
+      ],
+      "rank": "single-progress",
+      "rawProviderStyle": "yes",
+      "providerSlotStyle": "yes"
+    },
+    "providerProgressStyle": "",
+    "inherited": {
+      "classes": [
+        "provider-base",
+        "provider-image"
+      ],
+      "rank": "provider-base",
+      "rawProviderStyle": "yes",
+      "providerSlotStyle": ""
+    },
+    "reset": {
+      "classes": [],
+      "rank": "",
+      "rawProviderStyle": "",
+      "providerSlotStyle": ""
+    },
+    "replaced": {
+      "classes": [
+        "nested-base"
+      ],
+      "rank": "",
+      "rawProviderStyle": "",
+      "providerSlotStyle": ""
+    },
+    "fallback": true,
+    "localFallback": true,
+    "maskCloseRequests": [],
+    "nullLocalClose": "Provider close"
+  }
+}
