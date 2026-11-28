@@ -1,6 +1,7 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import { createForm } from './form.model.svelte.js';
 import { FormValidationError } from './FormValidationError';
+import { getFormHooks } from './form-internal';
 
 function deferred<Value>() {
   let resolve!: (value: Value) => void;
@@ -12,6 +13,28 @@ function deferred<Value>() {
 }
 
 describe('createForm', () => {
+  it('validates the current editor after its predecessor releases the same path', async () => {
+    const form = createForm({ initialValues: { name: '' } });
+    const hooks = getFormHooks(form);
+    if (!hooks) {
+      throw new Error('The model has no field registration hooks');
+    }
+
+    const rules = [{ required: true, message: 'Name required' }];
+    const removePrevious = hooks.registerField({ name: 'name', rules });
+    const removeCurrent = hooks.registerField({ name: 'name', rules });
+    removePrevious();
+
+    await expect(form.validateFields(['name'])).rejects.toBeInstanceOf(FormValidationError);
+    expect(form.getFieldError('name')).toEqual(['Name required']);
+    expect(form.isFieldRequired('name')).toBe(true);
+
+    removeCurrent();
+
+    expect(form.values.name).toBe('');
+    expect(form.isFieldRequired('name')).toBe(false);
+  });
+
   it('keeps values and errors isolated between form instances', async () => {
     const first = createForm(
       { initialValues: { email: '' }, rules: { email: [{ required: true }] } }

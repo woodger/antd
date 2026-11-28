@@ -300,9 +300,20 @@ export function createForm<Values extends FormValues>({
     return formNamePath(field.registration?.name ?? field.path);
   }
 
-  // Compares the full path, keeping the difference of the string key and the index.
+  // A new editor can register before its predecessor releases a persistent field record.
   function findField(name: NamePath): StoredField | undefined {
-    return fields.find((field) => sameFormPath(fieldPath(field), name));
+    let unmounted: StoredField | undefined;
+    for (const field of fields) {
+      if (!sameFormPath(fieldPath(field), name)) {
+        continue;
+      }
+      if (field.registration) {
+        return field;
+      }
+      unmounted ??= field;
+    }
+
+    return unmounted;
   }
 
   // A name can refer to multiple editors. The mount key identifies the emitting registration.
@@ -1634,11 +1645,10 @@ export function createForm<Values extends FormValues>({
         initializeFieldValue(registration.name, registration.initialValue);
         const registeredLifetime = storeLifetime;
 
-        let field = findField(registration.name);
-
-        if (!field || field.registration) field = addField(registration.name);
-
-        const registered = field;
+        const available = fields.find(field =>
+          !field.registration && sameFormPath(fieldPath(field), registration.name)
+        );
+        const registered = available ?? addField(registration.name);
         registered.registration = registration;
         registered.registrationOrder = ++registrationOrder;
         registered.initialValueOrder = ++initialValueOrder;
