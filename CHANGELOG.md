@@ -19,6 +19,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   `actionsRender` and support the upstream artwork selection rules.
 - Image and ImagePreviewGroup support named preview motion, thumbnail-based
   transform origins, and visibility callbacks after the animation.
+- Image and ImagePreviewGroup support `preview.alt`. ImagePreviewGroup also
+  accepts a preview source shared by all items.
 
 ### Fixed
 

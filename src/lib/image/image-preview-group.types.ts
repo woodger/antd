@@ -6,7 +6,7 @@ export type ImagePreviewGroupItem = string | ImageElementData;
 /** Setting the total viewer ImagePreviewGroup and the managed image index. */
 export interface ImagePreviewGroupConfig extends Omit<
   ImagePreviewConfig,
-  'onOpenChange' | 'src' | 'cover'
+  'onOpenChange' | 'cover'
 > {
   /** Managed zero-based index; default for local state — 0. */
   current?: number;

@@ -1,0 +1,679 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "rcImage": "1.10.0"
+  },
+  "viewport": {
+    "width": 1000,
+    "height": 650
+  },
+  "cases": [
+    {
+      "id": "single-default",
+      "observed": {
+        "thumbnail": {
+          "src": "thumbnail",
+          "alt": "Thumbnail label"
+        },
+        "viewer": {
+          "src": "thumbnail",
+          "alt": "Thumbnail label",
+          "label": "Thumbnail label",
+          "decoding": null
+        },
+        "imageRender": {
+          "url": "thumbnail",
+          "alt": "Thumbnail label",
+          "width": 120,
+          "height": 80,
+          "current": null
+        },
+        "actionsRender": {
+          "url": "thumbnail",
+          "alt": "Thumbnail label",
+          "width": 120,
+          "height": 80,
+          "current": 0,
+          "total": 1,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "single-override",
+      "alt": "Viewer label",
+      "src": "override",
+      "observed": {
+        "thumbnail": {
+          "src": "thumbnail",
+          "alt": "Thumbnail label"
+        },
+        "viewer": {
+          "src": "override",
+          "alt": "Viewer label",
+          "label": "Viewer label",
+          "decoding": null
+        },
+        "imageRender": {
+          "url": "override",
+          "alt": "Viewer label",
+          "width": 120,
+          "height": 80,
+          "current": null
+        },
+        "actionsRender": {
+          "url": "override",
+          "alt": "Viewer label",
+          "width": 120,
+          "height": 80,
+          "current": 0,
+          "total": 1,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "single-blank-alt",
+      "alt": "",
+      "observed": {
+        "thumbnail": {
+          "src": "thumbnail",
+          "alt": "Thumbnail label"
+        },
+        "viewer": {
+          "src": "thumbnail",
+          "alt": "",
+          "label": "",
+          "decoding": null
+        },
+        "imageRender": {
+          "url": "thumbnail",
+          "alt": "",
+          "width": 120,
+          "height": 80,
+          "current": null
+        },
+        "actionsRender": {
+          "url": "thumbnail",
+          "alt": "",
+          "width": 120,
+          "height": 80,
+          "current": 0,
+          "total": 1,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "single-undefined-alt",
+      "alt": null,
+      "observed": {
+        "thumbnail": {
+          "src": "thumbnail",
+          "alt": "Thumbnail label"
+        },
+        "viewer": {
+          "src": "thumbnail",
+          "alt": null,
+          "label": null,
+          "decoding": null
+        },
+        "imageRender": {
+          "url": "thumbnail",
+          "alt": null,
+          "width": 120,
+          "height": 80,
+          "current": null
+        },
+        "actionsRender": {
+          "url": "thumbnail",
+          "alt": null,
+          "width": 120,
+          "height": 80,
+          "current": 0,
+          "total": 1,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-default",
+      "group": true,
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-first",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-alt",
+      "group": true,
+      "alt": "Group viewer label",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-first",
+          "alt": "Group viewer label",
+          "label": "Group viewer label",
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "item-first",
+          "alt": "Group viewer label",
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "item-first",
+          "alt": "Group viewer label",
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-blank-alt",
+      "group": true,
+      "alt": "",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-first",
+          "alt": "",
+          "label": "",
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "item-first",
+          "alt": "",
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "item-first",
+          "alt": "",
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-undefined-alt",
+      "group": true,
+      "alt": null,
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-first",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-source",
+      "group": true,
+      "src": "override",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "override",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "override",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "override",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-undefined-source",
+      "group": true,
+      "src": null,
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": null,
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": null,
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": null,
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-blank-source",
+      "group": true,
+      "src": "",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-source-fallback",
+      "group": true,
+      "src": "invalid",
+      "alt": "Broken image",
+      "fallback": true,
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "fallback",
+          "alt": "Broken image",
+          "label": "Broken image",
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "invalid",
+          "alt": "Broken image",
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "invalid",
+          "alt": "Broken image",
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-missing-source-fallback",
+      "group": true,
+      "src": null,
+      "fallback": true,
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "fallback",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": null,
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": null,
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-blank-source-fallback",
+      "group": true,
+      "src": "",
+      "fallback": true,
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "fallback",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-child-metadata",
+      "group": true,
+      "child": true,
+      "observed": {
+        "thumbnail": {
+          "src": "thumbnail",
+          "alt": "Thumbnail label"
+        },
+        "viewer": {
+          "src": "child-preview",
+          "alt": null,
+          "label": null,
+          "decoding": null
+        },
+        "imageRender": {
+          "url": "child-preview",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "child-preview",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 1,
+          "scale": 1
+        },
+        "changes": []
+      }
+    },
+    {
+      "id": "group-empty-items",
+      "group": true,
+      "empty": true,
+      "src": "override",
+      "alt": "Group cover",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "override",
+          "alt": "Group cover",
+          "label": "Group cover",
+          "decoding": null
+        },
+        "imageRender": {
+          "url": "override",
+          "alt": "Group cover",
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "override",
+          "alt": "Group cover",
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 0,
+          "scale": 1
+        },
+        "changes": []
+      }
+    }
+  ],
+  "dynamic": [
+    {
+      "action": "zoom",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-first",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1.5
+        },
+        "changes": []
+      }
+    },
+    {
+      "action": "override",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "override",
+          "alt": "Shared viewer label",
+          "label": "Shared viewer label",
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "override",
+          "alt": "Shared viewer label",
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "override",
+          "alt": "Shared viewer label",
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1.5
+        },
+        "changes": []
+      }
+    },
+    {
+      "action": "current",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "override",
+          "alt": "Shared viewer label",
+          "label": "Shared viewer label",
+          "decoding": "sync"
+        },
+        "imageRender": {
+          "url": "override",
+          "alt": "Shared viewer label",
+          "width": null,
+          "height": null,
+          "current": 1
+        },
+        "actionsRender": {
+          "url": "override",
+          "alt": "Shared viewer label",
+          "width": null,
+          "height": null,
+          "current": 1,
+          "total": 2,
+          "scale": 1.5
+        },
+        "changes": []
+      }
+    },
+    {
+      "action": "clear",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-second",
+          "alt": null,
+          "label": null,
+          "decoding": "sync"
+        },
+        "imageRender": {
+          "url": "item-second",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 1
+        },
+        "actionsRender": {
+          "url": "item-second",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 1,
+          "total": 2,
+          "scale": 1.5
+        },
+        "changes": []
+      }
+    },
+    {
+      "action": "navigate",
+      "observed": {
+        "thumbnail": null,
+        "viewer": {
+          "src": "item-first",
+          "alt": null,
+          "label": null,
+          "decoding": "async"
+        },
+        "imageRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0
+        },
+        "actionsRender": {
+          "url": "item-first",
+          "alt": null,
+          "width": null,
+          "height": null,
+          "current": 0,
+          "total": 2,
+          "scale": 1
+        },
+        "changes": [
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  ]
+}

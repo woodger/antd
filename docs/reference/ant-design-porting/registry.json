@@ -18311,6 +18311,39 @@
           "note": "Twelve Ant Design 6.6.8 UMD cases establish the actionsRender info.icons buttons, render order, zoom bounds, group navigation and RTL glyphs. Svelte exposes the same controls as snippets, with previous and next available for groups of at least two images. The effective preview supplies built-in artwork. Top-level group icons replace that artwork in child-opened preview=false mode, with omitted, explicit undefined and partial records handled as in the source. Built-in navigation uses prev/next without deprecated left/right aliases."
         },
         {
+          "id": "preview-metadata",
+          "title": "Preview source and alternative text",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/Image.svelte",
+            "src/lib/image/ImagePreviewGroup.svelte",
+            "src/lib/image/image.types.ts",
+            "src/lib/image/image-preview-group.types.ts",
+            "tests/browser/fixtures/ant-design-image-preview-metadata-reference.json",
+            "tests/browser/image/image-preview-metadata.spec.ts",
+            "tests/package/image/image-preview-metadata.ssr.test.ts",
+            "docs/reference/components/image.md",
+            "docs/reference/components/image-preview-group.md"
+          ],
+          "note": "Sixteen Ant Design 6.6.8 UMD cases and five steps of a live group update cover preview.alt, group preview.src, absent and explicit undefined values, fallback, child configuration, empty items, and both render payloads. The group source overrides the active item's src. Other item attributes, selection, and transform state remain associated with the current item."
+        },
+        {
+          "id": "preview-native-metadata",
+          "title": "Accessible viewer names and empty image sources",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/image/ImagePreview.svelte",
+            "src/lib/image/ImagePreviewGroup.svelte",
+            "tests/browser/fixtures/ant-design-image-preview-metadata-reference.json",
+            "tests/browser/image/image-preview-metadata.spec.ts",
+            "docs/reference/components/image.md",
+            "docs/reference/components/image-preview-group.md"
+          ],
+          "note": "Ant Design 6.6.8 at 984592267de88fbf9cdaecc96a56629e721c709d drops the active group's item alt when preview.alt is omitted, so the image and dialog lose the label in the group-default reference case. Svelte keeps the item text and the localized native dialog label when the effective alt is empty or absent. An empty effective source produces no DOM src attribute, while render snippets keep the empty string."
+        },
+        {
           "id": "extended-api",
           "title": "Preview fade and transform-origin motion",
           "state": "supported",

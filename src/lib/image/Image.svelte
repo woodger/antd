@@ -95,6 +95,7 @@
     height === undefined ? undefined : `height:${dimension(height)}`
   ]));
   let previewSource = $derived(config.src ?? src ?? undefined);
+  const previewAlt = $derived(Object.hasOwn(config, 'alt') ? config.alt : alt ?? undefined);
   let previewOrigin = $state.raw<ImagePoint>();
   let internalOpen = $state(untrack(() => Boolean(config.open)));
   let actualOpen = $derived(config.open ?? internalOpen);
@@ -284,7 +285,7 @@
 {/if}
 {#if canPreview && !group}
   <ImagePreview imagePrefix={componentPrefix} previewPrefix={previewPrefixCls}
-    open={actualOpen} image={{ url: previewSource, alt: alt ?? undefined, width, height }}
+    open={actualOpen} image={{ url: previewSource, alt: previewAlt, width, height }}
     {config} motionName={effectivePreview.motionName} origin={previewOrigin} {appearance}
     classNames={semantics.classes.popup} styles={semantics.styles.popup}
     fallback={resolvedFallback} imageAttributes={common} onClose={() => requestOpen(false)} />

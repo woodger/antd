@@ -32,6 +32,16 @@ index 0 as the fallback. Items do not render thumbnails automatically. The group
 fallback applies to the viewer. Individual Image.fallback is excluded from
 registration data.
 
+`preview.src` overrides the active item's source for the entire group. An
+explicit `undefined` or empty string clears the item source and lets the
+group's fallback apply. The active item still supplies its other native image
+attributes. `preview.alt` sets the viewer image's description and takes
+precedence over the active item's alt. When the property is omitted, Svelte
+keeps the item's description. An empty or absent resulting alt gives the
+dialog its localized preview label. The image and action snippets receive
+these effective values, while navigation continues to use the active item
+index. [React measurements](../../../tests/browser/fixtures/ant-design-image-preview-metadata-reference.json)
+
 Preview configuration supports open and onOpenChange, current and onChange,
 countRender, and shared viewer, transform, and render snippet settings. Current
 is zero-based and defaults to 0. Prev, next, and the physical Left and Right keys

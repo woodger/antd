@@ -12,6 +12,7 @@
   } from './image-preview-group.types';
   import type { ImageGroupEntry } from './image-group-context';
   import type { ImagePoint } from './image-preview.engine';
+  import type { ImageInfo } from './image.types';
   import { provideImageGroup } from './image-group-context';
   import { getImagePreviewItems, getImagePreviewIndex } from './image-preview-group.engine';
   import { resolveImagePreviewAppearance, resolveImageSemantics } from './image-semantic.engine';
@@ -41,6 +42,10 @@
   let innerOpen = $state(untrack(() => Boolean(config.open)));
   let opened = $derived(config.open ?? innerOpen);
   let data = $derived(entries[current]?.data ?? {});
+  const previewImage = $derived<ImageInfo>({
+    url: Object.hasOwn(config, 'src') ? config.src : data.src ?? undefined,
+    alt: Object.hasOwn(config, 'alt') ? config.alt : data.alt ?? undefined
+  });
   const viewerConfig = $derived({ ...config, onOpenChange: undefined });
   const motionName = $derived.by(() => {
     if (preview === false) return undefined;
@@ -102,7 +107,8 @@
   provideImageGroup({ register, preview: fromImage });
 </script>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}`} />{/if}{#if children}{@render children()}{/if}<ImagePreview imagePrefix={componentPrefix} open={opened} image={{ url: data.src ?? undefined, alt: data.alt ?? undefined }} config={viewerConfig}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`image-prefix:${componentPrefix}`} />{/if}{#if children}{@render children()}{/if}<ImagePreview imagePrefix={componentPrefix}
+  open={opened} image={previewImage} config={viewerConfig}
   {motionName} inheritContainer={preview !== false} icons={viewerIcons}
   origin={previewOrigin} {appearance} classNames={semantics.classes.popup} styles={semantics.styles.popup} {fallback}
   imageAttributes={data} onClose={close} {current} count={entries.length} group onChange={change} countRender={config.countRender} />

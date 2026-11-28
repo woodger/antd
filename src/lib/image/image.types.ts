@@ -75,7 +75,10 @@ export interface ImagePreviewRenderInfo {
 }
 /** Viewer settings: visibility, conversions, focus trap and render snippets. */
 export interface ImagePreviewConfig {
+  /** Overrides the image source in the viewer. */
   src?: string;
+  /** Overrides the preview image description. A nonempty value also names the viewer. */
+  alt?: string;
   /** Managed visibility; onOpenChange requests its change from the owner. */
   open?: boolean;
   /** Overrides the provider's popup container. Browser getters receive no arguments. */

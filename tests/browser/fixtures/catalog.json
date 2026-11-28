@@ -971,6 +971,11 @@
     "root": "image-motion-fixture"
   },
   {
+    "id": "image-preview-metadata",
+    "module": "./ImagePreviewMetadataFixtures.svelte",
+    "root": "image-preview-metadata-fixture"
+  },
+  {
     "id": "image-preview-group",
     "module": "./ImageGroupFixtures.svelte",
     "root": "image-group-fixture"

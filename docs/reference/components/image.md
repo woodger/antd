@@ -58,14 +58,22 @@ For indeterminate progress, the render snippet receives `0`. The `root`,
 The progress root takes `width`, `height`, `styles.root`, and `style`, followed
 by `styles.placeholder.progress.root`. [React measurements](../../../tests/browser/fixtures/ant-design-image-progress-reference.json)
 
-Preview configuration includes src, open, onOpenChange, afterOpenChange, motionName,
-cover, closeIcon, mask, focusTrap, movable, wheel, scaleStep, minScale, maxScale,
-and onTransform. Preview.src can differ from the thumbnail. Open remains controlled
-when onOpenChange is omitted. Without open, the component owns state.
+Preview configuration includes src, alt, open, onOpenChange, afterOpenChange,
+motionName, cover, closeIcon, mask, focusTrap, movable, wheel, scaleStep, minScale,
+maxScale, and onTransform. Open remains controlled when onOpenChange is omitted.
+Without open, the component owns state.
 Programmatic open changes leave onOpenChange untouched. Cover accepts a boolean,
 snippet, or { coverNode, placement }, with top, bottom, and center placement.
 As in the 6.6.8 runtime, default cover=true creates an empty hover surface.
 CloseIcon accepts a boolean, null, or snippet. False and null hide the button.
+
+`preview.src` and `preview.alt` set the preview source and description. The
+thumbnail keeps its own source and description. Omit `preview.alt` to reuse
+the thumbnail's `alt`. An explicit `undefined` removes the preview image's
+alt attribute, and an empty string leaves it empty. The viewer uses the
+localized preview label when its alternative text is absent or empty.
+`imageRender` and `actionsRender` receive the configured image metadata
+even when the visible image uses a fallback. [React measurements](../../../tests/browser/fixtures/ant-design-image-preview-metadata-reference.json)
 
 The viewer is a native dialog and opens only after SSR. Its DOM stays mounted
 after the first opening. FocusTrap defaults to true. False allows focus outside
