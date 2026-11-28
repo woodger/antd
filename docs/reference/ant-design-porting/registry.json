@@ -8940,6 +8940,23 @@
           "note": "FormItem.noStyle убирает ItemHolder/layout, label/help/extra/class/style, сохраняя native binding, registration, initialValue, validation, controlRef и reset. Hidden имеет приоритет и сохраняет скрытый ItemHolder. Private onMetaChange activates collectors в порядке первых metadata events; parent list: own errors/warnings, затем children с dedup по typed NamePath. Parent visual status и useFormItemStatus остаются собственными, как source; noStyle без собственного status/metadata наследует visual status ближайшего Item. Вложенные noStyle передают сообщения ближайшему styled Item; FormList live paths/keyed metadata следуют move/insert/remove, очистка и async unmount освобождают отчёт. Help=false отключает report. Двадцать raw UMD-состояний и event-order/transition observations закреплены на 6.6.8; hidden/nameless/standalone, inherited/explicit statuses и parent-owned hook metadata сопоставлены с source. Native обязательность сохраняет required вместо исходного aria-required; visual error сохраняет прежний aria-invalid. Source defects не повторены: dangling собственные help/extra descriptions заменены реальным parent list или отсутствуют; dynamic noStyle/help не оставляют stale parent messages. Смена render branch/remount и reset сохраняют значения/metadata; native focus/selection восстанавливаются через field ref без DOM wrapper, caller-moved focus приоритетнее. SSR собирает model-owned errors и connected parent description, публичные типы не требуют DOM. Прежние native model-owned metadata/reset/trigger semantics не изменены. Полный feedback, dependencies и field adapters остаются отдельными пробелами."
         },
         {
+          "id": "choice-control-layout-context",
+          "title": "Styled FormItem wrapper context for Checkbox, Radio, and RadioButton",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/checkbox/Checkbox.svelte",
+            "src/lib/radio/Radio.svelte",
+            "src/lib/form/form-feedback-context.ts",
+            "tests/browser/fixtures/FormChoiceMembershipFixtures.svelte",
+            "tests/browser/fixtures/ant-design-form-choice-membership-reference.json",
+            "tests/browser/form/form-choice-membership.spec.ts",
+            "tests/package/form/form-choice-membership.ssr.test.ts"
+          ],
+          "note": "Eighteen server-rendered Ant Design 6.6.8 cases cover standalone controls, named and nameless styled items, standalone and nested noStyle fields, and hidden noStyle items. The earlier Svelte build gave standalone noStyle controls a styled item class. The wrappers now follow FormItem layout context. Browser checks also switch the global prefix and verify the same named, checked, focused checkbox input remains mounted."
+        },
+        {
           "id": "rule-transform",
           "title": "ValidationRule.transform: значение для отдельного правила",
           "state": "supported",

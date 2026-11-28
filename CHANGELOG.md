@@ -64,6 +64,8 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
 - FormItem passes native attributes, events, and Grid settings to the inner row.
 - Form scrolls to Upload and UploadDragger fields and connects their file inputs
   to field labels and validation messages.
+- Checkbox, Radio, and RadioButton follow the styled FormItem context for their
+  form-item wrapper classes.
 
 ## [0.1.1]
 

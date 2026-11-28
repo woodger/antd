@@ -10,6 +10,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useWave } from '../wave/wave.svelte';
   import { useForm, useFormField } from '../form/form-context';
+  import { useFormFeedback } from '../form/form-feedback-context';
   import { useCheckboxGroup } from './checkbox-context';
   import { createCheckableClickLock } from '../checkable.dom';
   import { getCheckboxPrefixCss } from './checkbox-prefix.engine';
@@ -32,6 +33,7 @@
   const wave = useWave('Checkbox', () => resolvedDisabled);
   const form = useForm();
   const field = useFormField(() => ref);
+  const formFeedback = useFormFeedback();
   const group = useCheckboxGroup();
   const initialDefault = untrack(() => props.defaultChecked ?? false);
   const clickLock = createCheckableClickLock();
@@ -191,7 +193,7 @@
   resolvedChecked && `${prefix}-wrapper-checked`,
   resolvedDisabled && `${prefix}-wrapper-disabled`,
   config.direction === 'rtl' && `${prefix}-rtl`,
-  field && `${prefix}-wrapper-in-form-item`,
+  formFeedback.isFormItemInput && `${prefix}-wrapper-in-form-item`,
   config.checkbox?.class,
   props.class,
   contextClasses?.root,

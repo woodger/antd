@@ -209,6 +209,11 @@
     "root": "form-rich-validation-fixture"
   },
   {
+    "id": "form-choice-membership",
+    "module": "./FormChoiceMembershipFixtures.svelte",
+    "root": "form-choice-membership-fixture"
+  },
+  {
     "id": "form-item-row",
     "module": "./FormItemRowFixtures.svelte",
     "root": "form-item-row-fixture"

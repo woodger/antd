@@ -1367,6 +1367,10 @@ reordered. The parent's status and useFormItemStatus describe its own field.
 NoStyle inherits the parent's visual status when it has no status, errors,
 warnings, pending validation, or touched state of its own.
 
+Checkbox, Radio, and RadioButton get their form-item wrapper class from a
+styled FormItem. A nested noStyle item inherits that class context. A standalone
+noStyle item still supplies the native field name and registration.
+
 ### Styles and themes
 
 Form and FormItem accept rootClassName. FormItem also accepts string style.

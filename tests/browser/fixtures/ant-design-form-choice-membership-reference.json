@@ -1,0 +1,49 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1"
+  },
+  "svelteRevision": "3b4dcd659aa4183bc07de9fbe12150ea9657e888",
+  "react": {
+    "checkbox:outside": false,
+    "checkbox:named": true,
+    "checkbox:nameless": true,
+    "checkbox:bare-no-style": false,
+    "checkbox:nested-no-style": true,
+    "checkbox:hidden-no-style": true,
+    "radio:outside": false,
+    "radio:named": true,
+    "radio:nameless": true,
+    "radio:bare-no-style": false,
+    "radio:nested-no-style": true,
+    "radio:hidden-no-style": true,
+    "radio-button:outside": false,
+    "radio-button:named": true,
+    "radio-button:nameless": true,
+    "radio-button:bare-no-style": false,
+    "radio-button:nested-no-style": true,
+    "radio-button:hidden-no-style": true
+  },
+  "svelteBefore": {
+    "checkbox:outside": false,
+    "checkbox:named": true,
+    "checkbox:nameless": true,
+    "checkbox:bare-no-style": true,
+    "checkbox:nested-no-style": true,
+    "checkbox:hidden-no-style": true,
+    "radio:outside": false,
+    "radio:named": true,
+    "radio:nameless": true,
+    "radio:bare-no-style": true,
+    "radio:nested-no-style": true,
+    "radio:hidden-no-style": true,
+    "radio-button:outside": false,
+    "radio-button:named": true,
+    "radio-button:nameless": true,
+    "radio-button:bare-no-style": true,
+    "radio-button:nested-no-style": true,
+    "radio-button:hidden-no-style": true
+  }
+}

@@ -6,6 +6,7 @@
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useWave } from '../wave/wave.svelte';
   import { useForm, useFormField } from '../form/form-context';
+  import { useFormFeedback } from '../form/form-feedback-context';
   import { useRadioGroup, useRadioOptionType } from './radio-context';
   import { connectRadio, syncRadioPeers } from './radio.dom';
   import { createCheckableClickLock } from '../checkable.dom';
@@ -27,6 +28,7 @@
   const wave = useWave('Radio', () => resolvedDisabled);
   const form = useForm();
   const field = useFormField(() => ref);
+  const formFeedback = useFormFeedback();
   const group = useRadioGroup();
   const optionType = useRadioOptionType();
   const initialDefault = untrack(() => props.defaultChecked ?? false);
@@ -225,7 +227,7 @@
     resolvedDisabled && `${prefix}-wrapper-disabled`,
     config.direction === 'rtl' && `${prefix}-wrapper-rtl`,
     group?.block && `${prefix}-wrapper-block`,
-    field && `${prefix}-wrapper-in-form-item`,
+    formFeedback.isFormItemInput && `${prefix}-wrapper-in-form-item`,
     config.radio?.class,
     props.class,
     props.rootClassName,
