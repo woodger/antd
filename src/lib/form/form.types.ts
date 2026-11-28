@@ -1,7 +1,9 @@
-import type { Snippet } from 'svelte';
-import type { HTMLFormAttributes } from 'svelte/elements';
+import type { Component, Snippet } from 'svelte';
+import type { HTMLAttributes, HTMLFormAttributes } from 'svelte/elements';
 import type { FormValidationError } from './FormValidationError';
-import type { FormFieldData, FormFieldSnapshot, FormInstance } from './form.model.svelte.js';
+import type {
+  FormFieldData, FormFieldSnapshot, FormInstance, SubmissionResult
+} from './form.model.svelte.js';
 import type { FormValueProjection, PartialFormValues } from './form-store.engine';
 import type { ColProps } from '../grid/grid.types';
 import type { FormValues } from './validation.engine';
@@ -140,6 +142,29 @@ export interface FormProviderProps {
   onFormFinish?: (name: string | undefined, info: FormProviderFinishInfo) => void;
 }
 
+/** The whole form store and its live model, supplied to the form's render snippet. */
+export interface FormRenderContext<Values extends FormValues = FormValues> {
+  readonly values: Readonly<Values>;
+  readonly form: FormInstance<Values>;
+}
+
+/** Root attributes and content forwarded to a custom Svelte component. */
+export interface FormRootProps extends Omit<HTMLAttributes<HTMLElement>, 'children' | 'class'>,
+  Omit<HTMLFormAttributes, keyof HTMLAttributes<HTMLFormElement>> {
+  children: Snippet;
+  class?: string;
+  /** Forward with a bindable prop and bind:this on the custom host. */
+  nativeElement?: HTMLElement;
+}
+
+/** A mounted Form's imperative handle. It follows changes to the active model and host. */
+export interface FormRef<Values extends FormValues = FormValues> extends FormInstance<Values> {
+  readonly nativeElement: HTMLElement | undefined;
+  /** Runs the mounted Form's submit callbacks, including when there is no native host. */
+  submit(): void;
+  submit(onFinish: (values: Values) => void | Promise<void>): Promise<SubmissionResult<Values>>;
+}
+
 /** Native form for reactive model, validation and asynchronous onFinish. */
 export interface FormProps<Values extends FormValues> extends Omit<
   HTMLFormAttributes,
@@ -154,6 +179,10 @@ export interface FormProps<Values extends FormValues> extends Omit<
   /** CSS prefix root Form; empty/undefined inherit ConfigProvider regardless of FormItem. */
   prefixCls?: string;
   children: Snippet;
+  /** Renders content from the full current store in place of the children snippet. */
+  render?: Snippet<[FormRenderContext<Values>]>;
+  /** Binds the mounted form handle until the component unmounts. */
+  ref?: FormRef<Values>;
   /** @defaultValue 'vertical' */
   layout?: 'vertical' | 'horizontal' | 'inline';
   /** Adds colon to the horizontal label; undefined inherits ConfigProvider.form, then true. */
@@ -184,8 +213,10 @@ export interface FormProps<Values extends FormValues> extends Omit<
   preserve?: boolean;
   /** Clears model values when the last Form using this model detaches. */
   clearOnDestroy?: boolean;
-  /** By default, form; false leaves context without native wrapper and DOM attributes. */
-  component?: 'form' | false;
+  /** Native tag, Svelte component, or false to render without a wrapper. Defaults to form. */
+  component?: keyof HTMLElementTagNameMap | Component<FormRootProps> | false;
+  /** Handles a native reset after the form model has been reset. */
+  onreset?: FormRootProps['onreset'];
   /** Defaults disabled for children; the nearest ConfigProvider and prop control priority. */
   disabled?: boolean;
   /** A control edit supplies the changed path and the values of the registered fields. */
@@ -214,6 +245,11 @@ export interface FormProps<Values extends FormValues> extends Omit<
   rootClassName?: string;
   class?: string;
 }
+
+/** Actual Form component props also allow an empty form or a render-only form. */
+export type FormComponentProps<Values extends FormValues> = Omit<FormProps<Values>, 'children'> & {
+  children?: Snippet;
+};
 
 /** Defaults Form; undefined inherits parent record, {} replaces it. */
 export type FormConfig = Pick<

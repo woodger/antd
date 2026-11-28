@@ -1,5 +1,5 @@
 <script lang="ts" generics="Values extends FormValues">
-  import { onDestroy, tick, untrack } from 'svelte';
+  import { onDestroy, onMount, tick, untrack } from 'svelte';
   import { provideConfig, useConfig, type ConfigContext } from '../config-provider/config-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
   import { useDesignTokenContext, useRuntimeStyles } from '../theme/theme-context.svelte';
@@ -11,8 +11,9 @@
   import { provideFormList } from './form-list-context';
   import { provideFormItemStatus, useFormItemStatusContext } from './form-item-status';
   import { provideFormFeedback, useFormFeedback } from './form-feedback-context';
-  import type { FormProps, FormSemanticSlots } from './form.types';
+  import type { FormComponentProps, FormProps, FormRootProps, FormSemanticSlots } from './form.types';
   import { copyFormValue, sameFormValue } from './form-store.engine';
+  import { createFormRef } from './form-ref.engine';
   import {
     createForm, type FormFieldData, type FormFieldSnapshot, type FormInstance
   } from './form.model.svelte';
@@ -20,13 +21,14 @@
   import { mergeComponentSemantics } from '../style/semantic-style.engine';
   import { mergeValidationMessages } from './validation-message.engine';
 
-  let props: FormProps<Values> = $props();
+  let { ref = $bindable(), ...props }: FormComponentProps<Values> = $props();
   let {
     form: suppliedForm,
     initialValues,
     fields,
     prefixCls: customizePrefixCls,
-    children,
+    children = emptyContent,
+    render,
     layout = 'vertical',
     colon,
     labelAlign,
@@ -48,6 +50,7 @@
     onFieldsChange,
     onFinish,
     onFinishFailed,
+    onreset,
     scrollToFirstError,
     onError,
     rootClassName,
@@ -141,7 +144,7 @@
   let resolvedRequiredMark = $derived(requiredMark ?? config.form?.requiredMark ?? true);
   let resolvedTooltip = $derived({ ...config.form?.tooltip, ...tooltip });
   let semanticProps: FormProps<Values> = $derived({
-    ...props, classNames, styles, layout, size: resolvedSize,
+    ...props, children, classNames, styles, layout, size: resolvedSize,
     disabled: disabled ?? config.componentDisabled,
     colon: colon ?? config.form?.colon, labelAlign: labelAlign ?? config.form?.labelAlign,
     labelWrap: labelWrap ?? config.form?.labelWrap, requiredMark: resolvedRequiredMark
@@ -150,8 +153,13 @@
     config.form, semanticProps, ['root', 'label', 'content', 'help', 'helpItem', 'extra']
   ));
   let active = true;
+  let nativeElement = $state<HTMLElement>();
   const provider = useFormProvider();
 
+  onMount(() => {
+    ref = createFormRef(() => form, () => active ? nativeElement : undefined, submitAttachedForm);
+    return () => { ref = undefined; };
+  });
   onDestroy(() => {
     active = false;
   });
@@ -169,7 +177,8 @@
       return {
         onValuesChange,
         onFieldsChange: provider || onFieldsChange ? notifyFieldsChange : undefined,
-        onProviderFinish: provider ? notifyProviderFinish : undefined
+        onProviderFinish: provider ? notifyProviderFinish : undefined,
+        submit: submitAttachedForm
       };
     });
   });
@@ -296,15 +305,20 @@
     provider?.notifyFinish(formName, values);
   }
 
-  async function handleSubmit(
-    event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement; }
-  ) {
+  function handleSubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLElement; }) {
     event.preventDefault();
-    const element = event.currentTarget;
-
-    if (disabled ?? config.componentDisabled) {
-      return;
+    event.stopPropagation();
+    if (!(disabled ?? config.componentDisabled)) {
+      void submitForm(event.currentTarget);
     }
+  }
+
+  function submitAttachedForm() {
+    void submitForm(nativeElement);
+  }
+
+  async function submitForm(element?: HTMLElement) {
+    if (!active) return;
 
     const submittedForm = form;
     const hasModelHooks = Boolean(getFormHooks(submittedForm));
@@ -342,7 +356,8 @@
           }
         }
         else {
-          element.querySelector<HTMLElement>(
+          const root = element?.isConnected ? element : nativeElement;
+          root?.querySelector<HTMLElement>(
             '[data-ant-form-invalid="true"], [aria-invalid="true"]'
           )?.focus();
         }
@@ -353,36 +368,70 @@
     }
   }
 
-  function handleReset(event: Event) {
+  function handleReset(event: Event & { currentTarget: EventTarget & HTMLElement; }) {
     event.preventDefault();
     form.resetFields();
+    onreset?.(event);
   }
+
+  const rootProps = $derived({
+    id: formName,
+    ...attributes,
+    novalidate: true,
+    'data-ant-form-prefix': prefixScope,
+    class: [
+      `${componentPrefix} ant-form-css-var ${componentPrefix}-${layout}`,
+      resolvedRequiredMark === false && `${componentPrefix}-hide-required-mark`,
+      resolvedSize === 'small' && `${componentPrefix}-small`,
+      resolvedSize === 'large' && `${componentPrefix}-large`,
+      config.direction === 'rtl' && `${componentPrefix}-rtl`, componentTheme.className,
+      config.form?.class, className, rootClassName, semantic.classes.root
+    ].filter(Boolean).join(' '),
+    style: componentTheme.style || semantic.styles.root
+      ? [componentTheme.style, semantic.styles.root].filter(Boolean).join(';') : style,
+    'aria-busy': form.isSubmitting || undefined,
+    onsubmit: handleSubmit,
+    onreset: handleReset
+  });
+  // The non-form attributes of an intrinsic replacement are shared by all native tags.
+  const tag = $derived<string | undefined>(typeof component === 'string' ? component : undefined);
+  const Root = $derived(typeof component === 'function' ? component : undefined);
+  // Custom hosts receive the same attributes as the native form. The optional ref is an
+  // accessor so forwarding it requires a binding, while ordinary DOM spreads omit it.
+  const customProps = $derived(Object.defineProperty({ ...rootProps, children: rootContent },
+    'nativeElement', {
+      get: () => nativeElement,
+      set: (element: HTMLElement | undefined) => { nativeElement = element; },
+      configurable: true
+    }) as unknown as FormRootProps);
 </script>
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`form-prefix:${prefixScope}`} />{/if}{#if component === false}
-  {@render children()}
-{:else}
-<form
-  {...attributes}
-  novalidate
-  data-ant-form-prefix={prefixScope}
-  class={[`${componentPrefix} ant-form-css-var ${componentPrefix}-${layout}`,
-    resolvedRequiredMark === false && `${componentPrefix}-hide-required-mark`,
-    resolvedSize === 'small' && `${componentPrefix}-small`,
-    resolvedSize === 'large' && `${componentPrefix}-large`,
-    config.direction === 'rtl' && `${componentPrefix}-rtl`,
-    componentTheme.className, config.form?.class, className, rootClassName,
-    semantic.classes.root].filter(Boolean).join(' ')}
-  style={componentTheme.style || semantic.styles.root
-    ? [componentTheme.style, semantic.styles.root].filter(Boolean).join(';') : style}
-  aria-busy={form.isSubmitting || undefined}
-  onsubmit={handleSubmit}
-  onreset={handleReset}
->
+{#snippet emptyContent()}{/snippet}
+
+{#snippet formContent()}
+  {#if render}
+    {@render render({ values: form.getFieldsValue(true), form })}
+  {:else}
+    {@render children()}
+  {/if}
+{/snippet}
+
+{#snippet rootContent()}
   {#if form.submissionError}
     <p role="alert" data-ant-form-prefix={prefixScope}
       class={`${componentPrefix}-item-explain-error`}>{config.locale.submitErrorText}</p>
   {/if}
-  {@render children()}
-</form>
+  {@render formContent()}
+{/snippet}
+
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`form-prefix:${prefixScope}`} />{/if}{#if component === false}
+  {@render formContent()}
+{:else if component === 'form'}
+  <form {...rootProps} bind:this={nativeElement}>{@render rootContent()}</form>
+{:else if tag}
+  <svelte:element this={tag} {...rootProps} bind:this={nativeElement}>
+    {@render rootContent()}
+  </svelte:element>
+{:else if Root}
+  <Root {...customProps} />
 {/if}

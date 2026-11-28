@@ -14,6 +14,7 @@ handles arrays of fields.
 - [Validation](#validation)
 - [Change events and FormProvider](#change-events-and-formprovider)
 - [External field state](#external-field-state)
+- [Form wrappers and refs](#form-wrappers-and-refs)
 - [Submission](#submission)
 - [Reset](#reset)
 - [Field arrays with FormList](#formlist)
@@ -220,6 +221,24 @@ Validation requested by that editor checks the registered rules at the
 shared path. [React observations](../../tests/browser/fixtures/ant-design-form-control-adapters-observation.json)
 
 ## Conditional rendering
+
+A `Form` can receive a named `render` snippet. It supplies the live
+`FormRenderContext` with `values` from the full store, including unregistered
+values, and the active `form` model. The snippet takes precedence when both
+`render` and ordinary children are supplied.
+
+```svelte
+<Form initialValues={{ word: 'Draft' }}>
+  {#snippet render({ values, form })}
+    <output>{values.word}</output>
+    <button type="button" onclick={() => form.resetFields()}>Reset</button>
+  {/snippet}
+</Form>
+```
+
+The snippet can read defaults during SSR. Its values update after control
+edits, programmatic writes, reset, and model replacement. Use
+`FormComponentProps` when declaring props for an empty or render-only form.
 
 A nameless FormItem can render a section from a selected snapshot of the
 form. The `render` snippet receives `values` for that display and `form` for
@@ -568,6 +587,36 @@ replacement, and feeding that snapshot back replaces the external error. Form
 keeps the newer external message when the obsolete validation settles.
 [React observations](../../tests/browser/fixtures/ant-design-form-controlled-fields-observation.json)
 
+## Form wrappers and refs
+
+`component` defaults to the native `form` tag and accepts another HTML tag or
+a Svelte component. The host receives the root classes, styles, attributes,
+and submit and reset handlers. The `name` prop also supplies the host ID
+when no `id` prop is present. Fields keep their own generated IDs and label
+associations.
+
+A custom wrapper can spread `FormRootProps` onto its host. Bind the optional
+`nativeElement` prop to forward that host through the form ref.
+
+```svelte
+<script lang="ts">
+  import type { FormRootProps } from '@woodger/antd';
+
+  let { children, nativeElement = $bindable(), ...attributes }: FormRootProps = $props();
+</script>
+
+<section {...attributes} bind:this={nativeElement}>
+  {@render children()}
+</section>
+```
+
+`bind:ref` exposes a `FormRef` with the model's methods and its current
+`nativeElement`. The handle stays mounted when the form changes its host or
+model. A `Form` with `component={false}` renders only the content and supplies
+the form context and ref. Its `nativeElement` is undefined, as it is for a custom
+component that omits native ref forwarding. Unmounting clears the ref binding.
+[React observations](../../tests/browser/fixtures/ant-design-form-host-observation.json)
+
 ## Submission
 
 `form.submit(onFinish)` prevents duplicate submission and returns an object
@@ -586,13 +635,23 @@ const result = await form.submit(({ profile }) => {
 });
 ```
 
+`ref.submit()` and the zero-argument `submit()` on a model from
+`createForm()` run the attached Form's callbacks, including when it has no
+wrapper. Both calls return void. The overload with an explicit callback
+continues to return a submission result. A detached model can run validation
+with `submit()`.
+
 Submitting with `<Button htmlType="submit">` inside Form calls onFinish after
 successful validation. Field errors go to onFinishFailed. Errors from
 onFinish go to onError and appear in a shared message. Form sets novalidate
-so its own rules control validation. Implement server-side validation in the
-application.
+so its own rules control validation. Native submit is intercepted at the
+owning Form and respects its disabled state. A programmatic submission still
+runs on a disabled Form. Implement server-side validation in the application.
 
 ## Reset
+
+A native reset restores the form model before calling the supplied
+`onreset` handler. That handler receives the original, cancelled DOM event.
 
 `resetFields(names?)` restores initial values at the selected paths.
 Omitting the argument resets the entire model. An empty array changes

@@ -204,6 +204,11 @@
     "root": "form-initial-values-fixture"
   },
   {
+    "id": "form-host",
+    "module": "./FormHostFixtures.svelte",
+    "root": "form-host-fixture"
+  },
+  {
     "id": "form-reset-fields",
     "module": "./FormResetFieldsFixtures.svelte",
     "root": "form-reset-fields-fixture"

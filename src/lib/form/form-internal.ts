@@ -37,6 +37,7 @@ export interface FormFieldRegistration extends Omit<FormItemValueAdapter, 'getVa
 export type FormCallbackProvider<Values extends FormValues> = () => (
   Pick<FormProps<Values>, 'onValuesChange' | 'onFieldsChange'> & {
     onProviderFinish?: (values: Values) => void;
+    submit?: () => void;
   }
 ) | undefined;
 

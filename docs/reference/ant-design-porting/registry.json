@@ -7957,7 +7957,7 @@
             "tests/browser/fixtures/ant-design-form-validation-concurrency-observation.json",
             "tests/package/form/form-validation-options.ssr.test.ts"
           ],
-          "note": "NamePath и FormList core перенесены: массивы, add/remove/move, stable keys, вложенный prefix, initialValue/reset и custom validators, warningOnly и FormErrorList с prefixCls списка, validateOnly/recursive/dirty. Полный API остаётся partial: полный набор правил и field lifecycle, field adapters и остальные настройки Form ещё не перенесены."
+          "note": "NamePath, list operations, validation, field lifecycle and adapters, and Form root APIs are tracked in the individual features below. The full audit remains open, including the scroll margin behavior and feedback renderer coverage."
         },
         {
           "id": "change-events-and-provider",
@@ -8105,6 +8105,24 @@
             "tests/package/form/form-initial-values.types.ts"
           ],
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): automatic model, Form and Item or List default precedence, pre-existing model values, nested merge and whole arrays, silent default changes, selective and full reset, preserve=false restoration, dirty validation and reattachment with detached writes. Initial values, focus and input identity are measured on SSR and hydration. Svelte keeps createForm defaults as fallbacks and follows the live form prop. Dropping that prop returns to the same local model within an attachment. The control snippet forwards edits to the Svelte model."
+        },
+        {
+          "id": "form-host-render-and-ref",
+          "title": "Form root component, render callback, ref and submission events",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/form-ref.engine.ts",
+            "src/lib/form/form.types.ts",
+            "src/lib/form/form.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-form-host-observation.json",
+            "tests/browser/form/form-host.spec.ts",
+            "tests/package/form/form-host.ssr.test.ts",
+            "tests/package/form/form-host.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): native, intrinsic, custom and omitted roots, optional native ref forwarding, root ID and explicit overrides, full-store render callback, ref and model submit with the same mounted callbacks, native submit interception and reset callback order. Svelte uses a named render snippet, a nativeElement binding for custom hosts, and a stable FormRef that follows the active model and host. It retains the native name, generated field IDs, full-store submission snapshot, asynchronous submission guard and explicit submit callback overload. SSR, hydration, native and custom submit/reset events, model replacement and detachment are verified."
         },
         {
           "id": "dayjs-values",

@@ -42,6 +42,9 @@ Versioning. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semanti
   `render` snippet.
 - Form creates a model when none is supplied and accepts reactive
   `initialValues` for initialization and reset.
+- Form supports custom hosts, `bind:ref`, and a `render` snippet for the full
+  store. Native resets call `onreset` after restoring values. Attached models
+  and refs accept `submit()` to run the form's callbacks.
 
 ### Fixed
 

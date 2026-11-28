@@ -1,0 +1,34 @@
+{
+  "upstream": {"version":"6.6.8","reactVersion":"18.3.1","revision":"984592267de88fbf9cdaecc96a56629e721c709d","archiveSha256":"8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa"},
+  "ssr": {
+    "named": {"tag":"FORM","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start"},
+    "customId": {"tag":"FORM","id":"given","name":null,"fieldId":"named-owner_word","value":"start"},
+    "emptyId": {"tag":"FORM","id":"","name":null,"fieldId":"named-owner_word","value":"start"},
+    "nullId": {"tag":"FORM","id":null,"name":null,"fieldId":"named-owner_word","value":"start"},
+    "undefinedId": {"tag":"FORM","id":null,"name":null,"fieldId":"named-owner_word","value":"start"},
+    "unwrapped": {"tag":null,"id":null,"name":null,"fieldId":"named-owner_word","value":"start"},
+    "tag": {"tag":"SECTION","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start"},
+    "custom": {"tag":"ARTICLE","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start"},
+    "render": {"tag":"SECTION","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","rendered":"{\"values\":{\"word\":\"start\",\"untouched\":\"extra\"},\"word\":\"start\"}"},
+    "empty": {"tag":"FORM","id":"named-owner","name":null,"fieldId":null,"value":null}
+  },
+  "stages": {
+    "native": {"tag":"FORM","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":"FORM","nativeMatches":true,"store":{"word":"start","untouched":"extra"},"rendered":null,"events":[]},
+    "imperative": {"tag":"FORM","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":"FORM","nativeMatches":true,"store":{"word":"start","untouched":"extra"},"rendered":null,"events":[{"type":"finish","values":{"word":"start"}}],"returnType":"undefined"},
+    "reset": {"tag":"FORM","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":"FORM","nativeMatches":true,"store":{"word":"start","untouched":"extra"},"rendered":null,"events":[{"type":"reset","prevented":true,"values":{"word":"start","untouched":"extra"}},{"type":"outer-reset","prevented":true}],"defaultPrevented":true},
+    "invalid": {"tag":"FORM","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"","refTag":"FORM","nativeMatches":true,"store":{"word":"","untouched":"extra"},"rendered":null,"events":[{"type":"failed","names":[["word"]]}],"defaultPrevented":true},
+    "unwrapped": {"tag":null,"id":null,"name":null,"fieldId":"named-owner_word","value":"","refTag":null,"nativeMatches":false,"store":{"word":"","untouched":"extra"},"rendered":null,"events":[],"originalRefConnected":false},
+    "unwrappedSubmit": {"tag":null,"id":null,"name":null,"fieldId":"named-owner_word","value":"context value","refTag":null,"nativeMatches":false,"store":{"word":"context value","untouched":"extra"},"rendered":null,"events":[{"type":"finish","values":{"word":"context value"}}],"returnType":"undefined"},
+    "modelSubmit": {"tag":null,"id":null,"name":null,"fieldId":"named-owner_word","value":"context value","refTag":null,"nativeMatches":false,"store":{"word":"context value","untouched":"extra"},"rendered":null,"events":[{"type":"finish","values":{"word":"context value"}}],"returnType":"undefined"},
+    "render": {"tag":null,"id":null,"name":null,"fieldId":"named-owner_word","value":"context value","refTag":null,"nativeMatches":false,"store":{"word":"context value","untouched":"extra"},"rendered":"{\"word\":\"context value\",\"untouched\":\"extra\"}","events":[]},
+    "renderWrite": {"tag":null,"id":null,"name":null,"fieldId":"named-owner_word","value":"written","refTag":null,"nativeMatches":false,"store":{"word":"written","untouched":"extra"},"rendered":"{\"word\":\"written\",\"untouched\":\"extra\"}","events":[]},
+    "custom": {"tag":"ARTICLE","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"written","refTag":"ARTICLE","nativeMatches":true,"store":{"word":"written","untouched":"extra"},"rendered":"{\"word\":\"written\",\"untouched\":\"extra\"}","events":[]},
+    "renderReset": {"tag":"ARTICLE","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":"ARTICLE","nativeMatches":true,"store":{"word":"start","untouched":"extra"},"rendered":"{\"word\":\"start\",\"untouched\":\"extra\"}","events":[]},
+    "customSubmit": {"tag":"ARTICLE","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"custom edit","refTag":"ARTICLE","nativeMatches":true,"store":{"word":"custom edit","untouched":"extra"},"rendered":"{\"word\":\"custom edit\",\"untouched\":\"extra\"}","events":[{"type":"finish","values":{"word":"custom edit"}}],"defaultPrevented":true},
+    "customReset": {"tag":"ARTICLE","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":"ARTICLE","nativeMatches":true,"store":{"word":"start","untouched":"extra"},"rendered":"{\"word\":\"start\",\"untouched\":\"extra\"}","events":[{"type":"reset","prevented":true,"values":{"word":"start","untouched":"extra"}},{"type":"outer-reset","prevented":true}],"defaultPrevented":true},
+    "tag": {"tag":"SECTION","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":"SECTION","nativeMatches":true,"store":{"word":"start","untouched":"extra"},"rendered":"{\"word\":\"start\",\"untouched\":\"extra\"}","events":[]},
+    "customWithoutNative": {"tag":"ASIDE","id":"named-owner","name":null,"fieldId":"named-owner_word","value":"start","refTag":null,"nativeMatches":false,"store":{"word":"start","untouched":"extra"},"rendered":"{\"word\":\"start\",\"untouched\":\"extra\"}","events":[]}
+  },
+  "renders": [{"values":{"word":"context value","untouched":"extra"},"known":"context value"},{"values":{"word":"written","untouched":"extra"},"known":"written"},{"values":{"word":"written","untouched":"extra"},"known":"written"},{"values":{"word":"start","untouched":"extra"},"known":"start"},{"values":{"word":"custom edit","untouched":"extra"},"known":"custom edit"},{"values":{"word":"custom edit","untouched":"extra"},"known":"custom edit"},{"values":{"word":"start","untouched":"extra"},"known":"start"},{"values":{"word":"start","untouched":"extra"},"known":"start"},{"values":{"word":"start","untouched":"extra"},"known":"start"}],
+  "detachedRef": null
+}

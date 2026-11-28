@@ -152,8 +152,19 @@ export interface FormInstance<Values extends FormValues> {
   submit(onFinish: (values: Values) => void | Promise<void>): Promise<SubmissionResult<Values>>;
 }
 
+type FormSubmitHandler<Values extends FormValues> = Parameters<FormInstance<Values>['submit']>[0];
+
+interface FormModelSubmit<Values extends FormValues> {
+  (): void;
+  (onFinish: FormSubmitHandler<Values>): Promise<SubmissionResult<Values>>;
+}
+
 /** The model created by createForm, with an explicit entry point for control events. */
 export interface FormModel<Values extends FormValues> extends FormInstance<Values> {
+  /** Validates and runs the attached Form's submission callbacks. */
+  get submit(): FormModelSubmit<Values>;
+  /** Allows the callback-based submission operation to be wrapped. */
+  set submit(run: FormInstance<Values>['submit']);
   /** Records a control edit and runs validation for the event. The default is onChange. */
   changeFieldValue<const Path extends NamePath>(
     name: Path,
@@ -1244,6 +1255,74 @@ export function createForm<Values extends FormValues>({
     });
   }
 
+  let submit = wrapSubmission(submitWithFinish);
+
+  /** Each read keeps its delegate when a caller wraps the callback-based submission method. */
+  function wrapSubmission(run: FormInstance<Values>['submit']): FormModelSubmit<Values> {
+    function submit(): void;
+    function submit(onFinish: FormSubmitHandler<Values>): Promise<SubmissionResult<Values>>;
+    function submit(onFinish?: FormSubmitHandler<Values>) {
+      if (onFinish) {
+        return run.call(form, onFinish);
+      }
+      const provider = currentCallbackProvider();
+      const attachedSubmit = provider?.()?.submit;
+      if (attachedSubmit) {
+        attachedSubmit();
+      }
+      else {
+        void run.call(form, () => {});
+      }
+    }
+    return submit;
+  }
+
+  async function submitWithFinish(onFinish: FormSubmitHandler<Values>): Promise<SubmissionResult<Values>> {
+    if (isSubmitting) {
+      return { status: 'busy' };
+    }
+
+    const callbacks = currentCallbackProvider();
+    const revision = ++submissionRevision;
+    isSubmitting = true;
+    submissionError = undefined;
+
+    for (const field of fields) {
+      field.touched = true;
+      notifyFieldMeta(field);
+    }
+
+    try {
+      const result = await validateFields();
+      if (revision !== submissionRevision) {
+        const error = new FormValidationError<Values>(result, {}, true);
+        return { status: 'invalid', error };
+      }
+      if (callbacks && callbacks === currentCallbackProvider()) {
+        callbacks()?.onProviderFinish?.(result);
+      }
+      await onFinish(result);
+
+      return { status: 'success' };
+    }
+    catch (error) {
+      if (error instanceof FormValidationError) {
+        return { status: 'invalid', error };
+      }
+
+      if (revision === submissionRevision) {
+        submissionError = error;
+      }
+
+      return { status: 'failed', error };
+    }
+    finally {
+      if (revision === submissionRevision) {
+        isSubmitting = false;
+      }
+    }
+  }
+
   const form: FormModel<Values> = {
     get values() {
       void valuesRevision;
@@ -1447,49 +1526,11 @@ export function createForm<Values extends FormValues>({
       notifyStoreUpdate(previous, { type: 'reset', names });
     },
     validateFields,
-    async submit(onFinish) {
-      if (isSubmitting) {
-        return { status: 'busy' };
-      }
-
-      const callbacks = currentCallbackProvider();
-      const revision = ++submissionRevision;
-      isSubmitting = true;
-      submissionError = undefined;
-
-      for (const field of fields) {
-        field.touched = true;
-        notifyFieldMeta(field);
-      }
-
-      try {
-        const result = await validateFields();
-        if (revision !== submissionRevision) {
-          const error = new FormValidationError(result, {}, true);
-          return { status: 'invalid', error };
-        }
-        if (callbacks && callbacks === currentCallbackProvider()) {
-          callbacks()?.onProviderFinish?.(result);
-        }
-        await onFinish(result);
-
-        return { status: 'success' };
-      }
-      catch (error) {
-        if (error instanceof FormValidationError) {
-          return { status: 'invalid', error };
-        }
-
-        if (revision === submissionRevision) {
-          submissionError = error;
-        }
-
-        return { status: 'failed', error };
-      } finally {
-        if (revision === submissionRevision) {
-          isSubmitting = false;
-        }
-      }
+    get submit() {
+      return submit;
+    },
+    set submit(run) {
+      submit = wrapSubmission(run);
     }
   };
 

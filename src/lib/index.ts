@@ -1040,7 +1040,8 @@ export type {
 export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select/select-icons.types';
 export type { SelectComponents, SelectRootAttributes, SelectInputAttributes, SelectInputOwnProps, SelectRootRegistration, SelectInputRegistration, SelectRootContext, SelectInputContext, SelectRootComponent, SelectInputComponent } from './select/select-components.types';
 export type {
-  FormProps, FormConfig, FormScrollOptions, FormRequiredMark, FormRequiredMarkInfo, FormLocale,
+  FormProps, FormComponentProps, FormRootProps, FormRef, FormRenderContext, FormConfig, FormScrollOptions,
+  FormRequiredMark, FormRequiredMarkInfo, FormLocale,
   FormProviderProps, FormProviderForms, FormProviderChangeInfo, FormProviderFinishInfo, FormValidateTrigger,
   FormSemanticSlots, FormSemantic, FormTooltipProps, FormItemTooltip, FormFeedbackIcons, FormFeedbackInfo
 } from './form/form.types';

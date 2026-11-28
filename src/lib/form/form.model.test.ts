@@ -46,6 +46,27 @@ describe('createForm', () => {
     expect(form.isSubmitting).toBe(false);
   });
 
+  it('validates a detached model through the wrapped callback overload', async () => {
+    const form = createForm({
+      initialValues: { email: '' },
+      rules: { email: [{ required: true, message: 'Email required' }] }
+    });
+    const original = form.submit;
+    let submissions = 0;
+    form.submit = (onFinish) => {
+      submissions++;
+      return original(onFinish);
+    };
+
+    const result = form.submit();
+
+    expect(result).toBeUndefined();
+    expect(submissions).toBe(1);
+    await expect.poll(() => form.isSubmitting).toBe(false);
+    expect(form.getFieldError('email')).toEqual(['Email required']);
+    expect(form.isFieldTouched('email')).toBe(true);
+  });
+
   it('submits validated values once while an earlier submission is pending', async () => {
     const form = createForm({ initialValues: { name: 'Anna' } });
     const pending = deferred<void>();
