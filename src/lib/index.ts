@@ -1060,8 +1060,11 @@ export type {
   WaveEffectInfo,
   ShowWaveEffect
 } from './wave/wave.types';
-export type { FormItemProps, FormItemControlProps } from './form/FormItem.svelte';
-export type { FormItemControl, FormItemValueAdapter } from './form/form.types';
+export type { FormItemProps, FormItemControlProps, FormItemRenderProps } from './form/FormItem.svelte';
+export type {
+  FormItemControl, FormItemValueAdapter, FormItemRenderContext, FormItemShouldUpdate,
+  FormItemUpdateInfo
+} from './form/form.types';
 export type { ValidateMessage, ValidateMessages } from './form/validation-messages.types';
 export { useFormItemStatus } from './form/form-item-status';
 export { useFormInstance, type FormInstanceRef } from './form/form-context';

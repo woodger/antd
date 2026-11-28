@@ -96,6 +96,26 @@ export interface FormItemControl {
   emit(event: string, ...args: unknown[]): void;
 }
 
+/** Identifies value writes while metadata, reset and validation notifications omit the source. */
+export interface FormItemUpdateInfo {
+  readonly source?: 'internal' | 'external';
+}
+
+/** Selects render updates from ordered snapshots of the form store. */
+export type FormItemShouldUpdate = boolean | {
+  compare(
+    previous: Readonly<FormValues>,
+    current: Readonly<FormValues>,
+    info: FormItemUpdateInfo
+  ): boolean;
+}['compare'];
+
+/** Values observed by the render snippet and the live model for form actions. */
+export interface FormItemRenderContext {
+  readonly values: Readonly<FormValues>;
+  readonly form: FormInstance<FormValues> | undefined;
+}
+
 /** The currently mounted named models in a FormProvider subtree. */
 export type FormProviderForms = Readonly<Partial<Record<string, FormInstance<FormValues>>>>;
 

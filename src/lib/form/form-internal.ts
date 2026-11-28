@@ -3,6 +3,7 @@ import type { FormValueProjection, NamePath } from './form-store.engine';
 import type { FormRule, FormValues } from './validation.engine';
 import type { FormFieldData, FormFieldMeta, FormInstance } from './form.model.svelte';
 import type { FormItemValueAdapter, FormProps, FormValidateTrigger } from './form.types';
+import type { FormStoreListener } from './form-update.engine';
 import type { ValidateMessages } from './validation-messages.types';
 
 /** Resolves a removed row field against the model that owned its registration. */
@@ -44,6 +45,7 @@ export interface FormHooks<Values extends FormValues> {
   attachForm(getClearOnDestroy: () => boolean | undefined): () => void;
   registerValidateMessages(getMessages: () => ValidateMessages | undefined): () => void;
   registerCallbacks(getCallbacks: FormCallbackProvider<Values>): () => void;
+  subscribeStoreUpdates(listener: FormStoreListener): () => void;
   setControlledFields(updates: readonly FormFieldData[]): void;
   getWatchValues(): FormValueProjection<Values>;
   getFieldMeta(name: NamePath): FormFieldMeta | undefined;

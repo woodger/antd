@@ -2,7 +2,7 @@
   // Registers the field and gathers its metadata, label, and help text. Descendant signals belong
   // to the current registration.
   import { onDestroy, onMount, tick, untrack, type Snippet } from 'svelte';
-  import type { FormFieldRegistration } from './form-internal';
+  import { getFormHooks, type FormFieldRegistration } from './form-internal';
   import type { FormFieldMeta } from './form.model.svelte';
   import { useForm, type FormFieldContext } from './form-context';
   import { useConfig } from '../config-provider/config-context';
@@ -11,8 +11,11 @@
   import ThemeScopeStyle from '../theme/ThemeScopeStyle.svelte';
   import { provideFormPrefix, useFormPrefix } from './form-prefix-context';
   import { useComponentTheme } from '../theme/theme-component.svelte';
-  import { formNamePath, type NamePath } from './form-store.engine';
-  import type { FormRule } from './validation.engine';
+  import { copyFormValue, formNamePath, sameFormValue, type NamePath } from './form-store.engine';
+  import {
+    acceptsFormItemUpdate, resetsFormItem, type FormStoreUpdate
+  } from './form-update.engine';
+  import type { FormRule, FormValues } from './validation.engine';
   import { useFormList } from './form-list-context';
   import { captureFormControlResetFocus, captureFormResetFocus } from './form-reset.dom';
   import { getFormFieldElement } from './form-field.dom';
@@ -24,8 +27,8 @@
   import type { ColProps } from '../grid/grid.types';
   import { resolveFormWrapperCol } from './form-columns.engine';
   import type {
-    FormFeedbackIcons, FormItemControl, FormItemTooltip as FormItemTooltipContent,
-    FormItemValueAdapter, FormValidateTrigger
+    FormFeedbackIcons, FormItemControl, FormItemRenderContext, FormItemShouldUpdate,
+    FormItemTooltip as FormItemTooltipContent, FormItemValueAdapter, FormValidateTrigger
   } from './form.types';
   import type { FormValidateStatus } from './form-error-list.types';
   import { resolveFormStatus } from './form-status.engine';
@@ -55,6 +58,7 @@
     children: Snippet;
     /** Renders an editor with mapped props and explicit event forwarding. Replaces children. */
     control?: Snippet<[FormItemControl]>;
+    render?: undefined;
     /** Help text for fields without errors or warnings. Supports rich content and resets with the field. */
     help?: RenderEmptyContent;
     /** Help text next to errors or warnings. Reset recreates the content. false, null, undefined, and '' hide it. */
@@ -78,6 +82,8 @@
     rules?: readonly FormRule[];
     /** Absolute paths whose control edits can revalidate this field. */
     dependencies?: readonly NamePath[];
+    /** Observes every form update or applies a predicate to ordered store snapshots. */
+    shouldUpdate?: FormItemShouldUpdate;
     /** Overrides the Form's value retention when this field is removed. */
     preserve?: boolean;
     /** Overrides the Form's validation events. Empty or false disables control-triggered checks. */
@@ -114,6 +120,16 @@
     control: Snippet<[FormItemControl]>;
   }
 
+  /** A nameless FormItem can render a snapshot selected by shouldUpdate or dependencies. */
+  export interface FormItemRenderProps
+    extends Omit<FormItemProps, 'name' | 'children' | 'control' | 'render'> {
+    name?: never;
+    children?: Snippet;
+    control?: never;
+    /** Receives the accepted full store snapshot, including unregistered values. */
+    render: Snippet<[FormItemRenderContext]>;
+  }
+
   let {
     name,
     initialValue,
@@ -121,6 +137,7 @@
     tooltip,
     children,
     control,
+    render,
     trigger,
     valuePropName = 'value',
     getValueProps,
@@ -139,6 +156,7 @@
     colon,
     rules,
     dependencies,
+    shouldUpdate,
     preserve,
     validateTrigger,
     messageVariables,
@@ -151,7 +169,7 @@
     rootClassName,
     style,
     class: className = ''
-  }: FormItemProps | FormItemControlProps = $props();
+  }: FormItemProps | FormItemControlProps | FormItemRenderProps = $props();
 
   const form = useForm();
   const config = useConfig();
@@ -183,7 +201,9 @@
   });
   let id = $derived(htmlFor ?? `ant-field-${generatedId}`);
   let path = $derived([...(list?.prefixName ?? []), ...formNamePath(name ?? [])]);
+  let updateVersion = $state.raw<object>({});
   const editorProps = $derived.by(() => {
+    void updateVersion;
     if (!hasName || !form) {
       return {};
     }
@@ -256,6 +276,19 @@
   let extraId = $derived(hasLayout && hasName && hasExtra ? `${id}_extra` : undefined);
   let resetKey = $state.raw<object>({});
   let content: HTMLDivElement | undefined = $state();
+  let hasExternalMeta = false;
+  const observesUpdates = $derived(hasName
+    ? Boolean(shouldUpdate) : Boolean(render && (shouldUpdate || dependencies)));
+  const renderSnapshot = $derived.by<FormItemRenderContext>(() => {
+    void updateVersion;
+    void render;
+    void shouldUpdate;
+    void dependencies;
+    const model = form?.model;
+    // Read after the write batch has finished. A rejected later record still belongs to that render.
+    const values = model ? untrack(() => copyFormValue(model.getFieldsValue(true))) : {};
+    return { values, form: model };
+  });
   const controls = new Set<() => unknown>();
   let registration: FormFieldRegistration | undefined;
   let hasMetaEvent = false;
@@ -325,6 +358,14 @@
   });
 
   onDestroy(releaseReport);
+
+  $effect.pre(() => {
+    const model = form?.model;
+    if (model && observesUpdates) {
+      hasExternalMeta = false;
+      return getFormHooks(model)?.subscribeStoreUpdates(updateRenderContent);
+    }
+  });
 
   $effect.pre(() => {
     const active = noStyle && hasName && help !== false;
@@ -430,6 +471,39 @@
     get warnings() { return warnings; }
   };
 
+  function updateRenderContent(
+    previous: Readonly<FormValues>,
+    current: Readonly<FormValues>,
+    update: FormStoreUpdate
+  ) {
+    const name = hasName ? path : undefined;
+    const reset = !hasName && resetsFormItem(update, []);
+    if (reset) {
+      hasExternalMeta = false;
+    }
+
+    // The source publishes new touched metadata on the first changed external store.
+    const metaChanged = !hasName && !hasExternalMeta && update.type === 'valueUpdate'
+      && update.source === 'external' && !sameFormValue(previous, current);
+    if (metaChanged) {
+      hasExternalMeta = true;
+    }
+
+    const accepted = acceptsFormItemUpdate(previous, current, update, {
+      path: name, dependencies, shouldUpdate
+    });
+    if (!accepted && !metaChanged) {
+      return;
+    }
+
+    updateVersion = {};
+    if (reset) {
+      const restoreFocus = captureFormControlResetFocus(() => content);
+      resetKey = {};
+      if (restoreFocus) void tick().then(restoreFocus);
+    }
+  }
+
   function dispatchControlEvent(event: string, args: readonly unknown[]) {
     const mountKey = registration?.mountKey;
     if (!mountKey) {
@@ -505,6 +579,7 @@
 {#snippet renderControl()}
   {#if control}
     <FormItemControlBinding {control} valueProps={editorProps} onEvent={dispatchControlEvent} />
+  {:else if render}{@render render(renderSnapshot)}
   {:else}{@render children?.()}{/if}
 {/snippet}
 

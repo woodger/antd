@@ -7,6 +7,7 @@ import {
 } from './form-internal';
 import { focusFormField, getFormFieldElement, scrollFormField } from './form-field.dom';
 import { readFormControlValue } from './form-control.engine';
+import type { FormStoreListener, FormStoreUpdate } from './form-update.engine';
 import type { FormScrollOptions, FormValidateTrigger } from './form.types';
 import type { ValidateMessages } from './validation-messages.types';
 import { mergeValidationMessages } from './validation-message.engine';
@@ -274,6 +275,8 @@ export function createForm<Values extends FormValues>({
   const validationDelays = new Map<StoredField, () => void>();
   const messageProviders = new Set<() => ValidateMessages | undefined>();
   const callbackProviders = new Set<FormCallbackProvider<Values>>();
+  const storeListeners = new Set<FormStoreListener>();
+  let storeSnapshot: Readonly<Values> | undefined;
   const controlDrivenFields = new WeakSet<StoredField>();
   let fields = $state.raw<StoredField[]>([]);
   let isSubmitting = $state(false);
@@ -550,6 +553,31 @@ export function createForm<Values extends FormValues>({
   // All mounted observers can read the same projection without subscribing to validation metadata.
   const watchValues = $derived(getFieldsValue());
 
+  // Share one immutable root per write without copying the store when there are no observers.
+  function readStoreSnapshot(): Readonly<Values> | undefined {
+    if (storeListeners.size) {
+      storeSnapshot ??= untrack(() => ({ ...values }));
+      return storeSnapshot;
+    }
+  }
+
+  // Predicates run in store order. Reads in a predicate cannot subscribe the writer's effect.
+  function notifyStoreUpdate(previous: Readonly<Values> | undefined, update: FormStoreUpdate) {
+    if (!previous) {
+      return;
+    }
+
+    const current = readStoreSnapshot();
+    if (current) {
+      const listeners = [...storeListeners];
+      untrack(() => {
+        for (const listener of listeners) {
+          listener(previous, current, update);
+        }
+      });
+    }
+  }
+
   // The last attached Form owns callbacks for this model until its registration is released.
   function currentCallbackProvider() {
     return [...callbackProviders].at(-1);
@@ -718,16 +746,24 @@ export function createForm<Values extends FormValues>({
       results = await Promise.all(entries.map(validateEntry));
     }
 
-    if (callbacks && valuesRevision === snapshotRevision) {
+    if ((callbacks || storeListeners.size) && valuesRevision === snapshotRevision) {
+      const validatedPaths: NamePath[] = [];
       const completed: NamePath[] = [];
-      for (const [index, { field, path, run, publishes }] of entries.entries()) {
-        if (publishes && !results[index].cancelled && field.run === (validateOnly ? run : validationRun)
+      for (const [index, entry] of entries.entries()) {
+        const { field, path, run, hasRules, publishes } = entry;
+        if (hasRules && !results[index].cancelled && field.run === (validateOnly ? run : validationRun)
           && fields.includes(field) && sameFormPath(path, fieldPath(field))) {
-          completed.push(path);
+          validatedPaths.push(path);
+          if (publishes) completed.push(path);
         }
       }
 
-      publishFieldsChange(completed, callbacks);
+      if (storeListeners.size && (validatedPaths.length || entries.every(entry => !entry.hasRules))) {
+        notifyStoreUpdate(readStoreSnapshot(), { type: 'validateFinish', names: validatedPaths });
+      }
+      if (callbacks && valuesRevision === snapshotRevision) {
+        publishFieldsChange(completed, callbacks);
+      }
     }
 
     const nextErrors = results.filter((field) => field.errors.length);
@@ -938,8 +974,10 @@ export function createForm<Values extends FormValues>({
   }
 
   // Dependent fields enter validation before either value-change callback sees the new store.
-  function publishControlEdit(name: NamePath) {
+  function publishControlEdit(name: NamePath, previous: Readonly<Values> | undefined) {
+    notifyStoreUpdate(previous, { type: 'valueUpdate', source: 'internal', names: [name] });
     const dependents = startDependentValidation([name]);
+    notifyStoreUpdate(previous, { type: 'dependenciesUpdate', names: [name, ...dependents] });
     publishValueChange(name, dependents);
   }
 
@@ -982,15 +1020,17 @@ export function createForm<Values extends FormValues>({
       return;
     }
 
+    const previousStore = readStoreSnapshot();
     const next = setFormValue(values, name, nextValue) as Values;
     updateValues(next);
     valuesRevision++;
     submissionError = undefined;
-    publishControlEdit(name);
+    publishControlEdit(name, previousStore);
   }
 
   // Updates the current proxy keys by saving the model’s reader links.
   function updateValues(next: Values) {
+    storeSnapshot = undefined;
     // Svelte lists inherited names only in the presence of own property in the original target.
     if (Object.keys(next).some((name) => !Object.hasOwn(values, name)
       && Object.hasOwn(Object.prototype, name))) {
@@ -1010,15 +1050,20 @@ export function createForm<Values extends FormValues>({
 
   // A field batch applies values and metadata in the caller's order without validating.
   function applyFieldUpdates(updates: readonly FormFieldData[], controlled: boolean) {
+    const previousStore = readStoreSnapshot();
     for (const update of updates) {
       const { name, ...data } = update;
+      const hasValue = 'value' in data;
 
-      if ('value' in data) {
+      if (hasValue) {
         const next = setFormValue(values, name, data.value) as Values;
         const changed = !sameFormValue(values, next);
         // Equal controlled echoes can read their data from the store itself.
         if (!controlled || changed) {
           updateValues(next);
+        }
+        else {
+          storeSnapshot = undefined;
         }
 
         if (changed) {
@@ -1056,6 +1101,8 @@ export function createForm<Values extends FormValues>({
         field.dirty = true;
         notifyFieldMeta(field);
       }
+
+      notifyStoreUpdate(previousStore, { type: 'setField', name, hasValue });
     }
   }
 
@@ -1144,11 +1191,15 @@ export function createForm<Values extends FormValues>({
       return;
     }
 
+    const previous = readStoreSnapshot();
     updateValues(next);
     valuesRevision++;
     submissionError = undefined;
+    notifyStoreUpdate(previous, { type: 'remove', names: restored });
     if (mountedForms) {
-      startDependentValidation(ordered.map(({ path }) => path));
+      const names = ordered.map(({ path }) => path);
+      const dependents = startDependentValidation(names);
+      notifyStoreUpdate(previous, { type: 'dependenciesUpdate', names: [...names, ...dependents] });
     }
   }
 
@@ -1161,6 +1212,7 @@ export function createForm<Values extends FormValues>({
       resetFieldMetadata(field);
     }
 
+    storeSnapshot = undefined;
     values = {} as Values;
     valuesRevision++;
     submissionRevision++;
@@ -1245,10 +1297,14 @@ export function createForm<Values extends FormValues>({
       }
     },
     setFieldValue(name, value) {
+      const previous = readStoreSnapshot();
       if (Object.is(getFormValue(values, name), value)) {
         const field = findField(name);
         if (field) field.dirty = true;
 
+        // A single field record carries a fresh store root even when its value compares equal.
+        storeSnapshot = undefined;
+        notifyStoreUpdate(previous, { type: 'setField', name, hasValue: true });
         return;
       }
 
@@ -1263,9 +1319,11 @@ export function createForm<Values extends FormValues>({
 
       valuesRevision++;
       submissionError = undefined;
+      notifyStoreUpdate(previous, { type: 'setField', name, hasValue: true });
       revalidateTouched();
     },
     setFieldsValue(next) {
+      const previous = readStoreSnapshot();
       const merged = mergeFormValues(values, next);
 
       for (const field of fields) {
@@ -1288,6 +1346,7 @@ export function createForm<Values extends FormValues>({
       updateValues(merged);
       valuesRevision++;
       submissionError = undefined;
+      notifyStoreUpdate(previous, { type: 'valueUpdate', source: 'external' });
       revalidateTouched();
     },
     setFields(updates) {
@@ -1299,7 +1358,9 @@ export function createForm<Values extends FormValues>({
       revalidateTouched({ explicitTouch: true });
     },
     resetFields(names) {
+      const previous = readStoreSnapshot();
       if (names?.length === 0) {
+        notifyStoreUpdate(previous, { type: 'reset', names });
         return;
       }
 
@@ -1340,6 +1401,7 @@ export function createForm<Values extends FormValues>({
       }
       else {
         valuesRevision++;
+        storeSnapshot = undefined;
         values = next;
         resetKey = {};
       }
@@ -1355,6 +1417,7 @@ export function createForm<Values extends FormValues>({
         (first.registrationOrder ?? 0) - (second.registrationOrder ?? 0)
       );
       for (const field of selected) field.registration?.onReset?.();
+      notifyStoreUpdate(previous, { type: 'reset', names });
     },
     validateFields,
     async submit(onFinish) {
@@ -1421,6 +1484,7 @@ export function createForm<Values extends FormValues>({
       untrack(() => {
         mountedForms++;
         if (restoreDefaultsOnMount) {
+          storeSnapshot = undefined;
           values = mergeFormValues(defaults, values);
           valuesRevision++;
           restoreDefaultsOnMount = false;
@@ -1441,6 +1505,13 @@ export function createForm<Values extends FormValues>({
     registerCallbacks(getCallbacks) {
       callbackProviders.add(getCallbacks);
       return () => { callbackProviders.delete(getCallbacks); };
+    },
+    subscribeStoreUpdates(listener) {
+      storeListeners.add(listener);
+      return () => {
+        storeListeners.delete(listener);
+        if (!storeListeners.size) storeSnapshot = undefined;
+      };
     },
     setControlledFields: (updates) => applyFieldUpdates(updates, true),
     getWatchValues: () => watchValues,
@@ -1467,6 +1538,7 @@ export function createForm<Values extends FormValues>({
       if (field) field.initialValueOrder = ++initialValueOrder;
     },
     changeList(name, next) {
+      const previous = readStoreSnapshot();
       updateValues(setFormValue(values, name, next) as Values);
       valuesRevision++;
       submissionError = undefined;
@@ -1491,7 +1563,7 @@ export function createForm<Values extends FormValues>({
         }
       }
 
-      publishControlEdit(name);
+      publishControlEdit(name, previous);
 
       // The names of keyed rows will be updated with flush; the metadata remains with the previous line instance.
       void tick().then(() => revalidateTouched({ changedList: list }));
@@ -1513,6 +1585,12 @@ export function createForm<Values extends FormValues>({
         if (registered.touched || registered.validating || registered.validated
           || registered.errors?.length || registered.warnings?.length) {
           notifyFieldMeta(registered);
+        }
+
+        if (registration.initialValue !== undefined) {
+          notifyStoreUpdate(readStoreSnapshot(), {
+            type: 'valueUpdate', source: 'internal', names: [registration.name]
+          });
         }
 
         return () => {

@@ -8,6 +8,7 @@ handles arrays of fields.
 
 - [Values and fields](#values-and-fields)
 - [Control adapters](#control-adapters)
+- [Conditional rendering](#conditional-rendering)
 - [Watching values](#watching-values)
 - [Validation](#validation)
 - [Change events and FormProvider](#change-events-and-formprovider)
@@ -186,6 +187,45 @@ when both `control` and `children` are supplied.
 Editors sharing a path use the adapter of the editor that emitted the event.
 Validation requested by that editor checks the registered rules at the
 shared path. [React observations](../../tests/browser/fixtures/ant-design-form-control-adapters-observation.json)
+
+## Conditional rendering
+
+A nameless FormItem can render a section from a selected snapshot of the
+form. The `render` snippet receives `values` for that display and `form` for
+actions on the live model.
+
+```svelte
+<FormItem noStyle shouldUpdate={(previous, current) => previous.delivery !== current.delivery}>
+  {#snippet render({ values })}
+    {#if values.delivery === 'courier'}
+      <FormItem name="address" label="Delivery address">
+        {#snippet control(editor)}
+          <Input {...editor.props} onChange={(event) => editor.emit('onChange', event)} />
+        {/snippet}
+      </FormItem>
+    {/if}
+  {/snippet}
+</FormItem>
+```
+
+`shouldUpdate={true}` accepts all store notifications. A function receives
+the previous and current store values in write order. Its third argument
+has `source: 'internal'` for a control write and `source: 'external'` for
+`setFieldsValue`. A batch of `setFields` records shares one previous snapshot
+and supplies each intermediate store. The rendered section uses the final
+snapshot when any record in the batch is accepted. Metadata-only records
+and validation completion can notify a predicate with the same store.
+
+Use `dependencies` instead of a predicate to refresh a section when the form
+notifies those paths of a control edit. The first changed external store can
+also refresh a nameless section when its touched metadata first changes.
+Named fields keep their usual value bindings. Accepted updates refresh the
+mapped properties of a named field's `control` editor.
+
+The initial snapshot includes all current values during SSR and hydration.
+Ordinary updates preserve the rendered nodes. Full reset recreates the
+section and restores the initial snapshot. Resetting another field keeps the
+section mounted. [React observations](../../tests/browser/fixtures/ant-design-form-item-update-observation.json)
 
 ## Watching values
 
