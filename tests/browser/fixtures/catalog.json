@@ -1838,6 +1838,11 @@
     "root": "config-provider-fixture"
   },
   {
+    "id": "config-use-config",
+    "module": "./ConfigProviderUseConfigFixtures.svelte",
+    "root": "config-use-config-fixture"
+  },
+  {
     "id": "input-select",
     "module": "./InputSelectFixtures.svelte",
     "root": "input-select-fixture"

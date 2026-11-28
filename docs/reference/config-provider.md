@@ -112,6 +112,29 @@ creating DOM containers. [Reference data](../../tests/browser/fixtures/ant-desig
 [Browser tests](../../tests/browser/popup/popup-prefix.spec.ts) ·
 [SSR tests](../../tests/package/popup/popup-prefix.ssr.test.ts)
 
+## Reading size and disabled settings
+
+Call `ConfigProvider.useConfig()` when initializing a child component.
+The result exposes reactive getters for `componentSize` and
+`componentDisabled`. Read the getters in markup or through `$derived`
+to follow changes to the nearest scope.
+
+```svelte
+<script lang="ts">
+  import { ConfigProvider } from '@woodger/antd';
+
+  const settings = ConfigProvider.useConfig();
+  const { componentSize, componentDisabled } = $derived(settings);
+</script>
+```
+
+Without a configured size, `componentSize` is `undefined`. The shared
+disabled setting defaults to `false`. Nested providers and Form supply
+their own settings or inherit the parent values. Inside a pending Form
+submission, the hook still reports the configured state while native
+controls follow the submission lock. The ordinary Modal footer has an
+enabled scope that inherits the configured size. [React measurements](../../tests/browser/fixtures/ant-design-config-use-config-reference.json)
+
 ## Style nonce
 
 Pass `csp={{ nonce }}` to ConfigProvider to apply the document policy nonce to

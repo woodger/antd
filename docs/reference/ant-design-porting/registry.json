@@ -24416,7 +24416,7 @@
             "tests/browser/modal/modal-actions-hydration.spec.ts",
             "tests/package/modal/modal-actions.ssr.test.ts"
           ],
-          "note": "Два независимых прогона 41 профиля UMD 6.6.8 проверяют okType, подписи, button props, порядок действий, футер, aria и disabled закрытия, настройки иконок и локальные close callbacks. Svelte использует snippets для штатной группы и отдельных кнопок, сохраняет вызовы onOk/onCancel без аргумента у обычного Modal и разрешает handle при запросе закрытия. Сохранены нативный disabled при loading и прежнее наследование componentDisabled у OK обычного Modal. Проверены update действий и фокуса, ссылка с нативным событием, повторное нажатие при Promise, SSR и гидратация."
+          "note": "Два независимых прогона 41 профиля UMD 6.6.8 проверяют okType, подписи, button props, порядок действий, футер, aria и disabled закрытия, настройки иконок и локальные close callbacks. Svelte использует snippets для штатной группы и отдельных кнопок, сохраняет вызовы onOk/onCancel без аргумента у обычного Modal и разрешает handle при запросе закрытия. Сохранён нативный disabled при loading. Наследуемый componentDisabled в футере обычного Modal сбрасывается. Проверены update действий и фокуса, ссылка с нативным событием, повторное нажатие при Promise, SSR и гидратация."
         },
         {
           "id": "modal-semantic-dom",
@@ -24456,6 +24456,21 @@
             "tests/package/modal/modal-static.ssr.test.ts"
           ],
           "note": "21 профиль UMD 6.6.8 в двух прогонах. Пять глобальных методов возвращают destroy/update, рендерятся с отложенным применением настроек и завершают отдельный корень. Покрыты ConfigProvider.config, holderRender, локаль, direction/type, контейнер, полная функциональная замена настроек, скрытие и повторный показ, loading, исходный afterClose и разный порядок отмены с кнопки и Escape. destroyAll снимает контекстные панели без событий закрытия, сохраняя Svelte-завершение await с false. При SSR глобальных корней и таймеров нет. После повторного открытия старое async-действие не закрывает актуальную панель. Диалог получает вычисленные CSS-переменные скрытого корня после переноса в body. Цвета панели, заголовка и кнопки сверены с обычным окном в legacy dark и dark с CSS variables, с holderRender и пользовательским контейнером. Проверены живая смена акцента, фокус и очистка корня."
+        },
+        {
+          "id": "footer-disabled-context",
+          "title": "The ordinary Modal footer resets inherited disabled state",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/modal/Modal.svelte",
+            "src/lib/modal/ModalFooterScope.svelte",
+            "tests/browser/fixtures/ant-design-config-use-config-reference.json",
+            "tests/browser/config-provider/config-use-config.spec.ts",
+            "tests/package/config-provider/config-use-config.ssr.test.ts",
+            "docs/reference/components/modal.md"
+          ],
+          "note": "Under a disabled small ConfigProvider, the Ant Design 6.6.8 body control remains disabled and the footer inherits the size with disabled set to false. Custom and standard actions use the enabled scope, while explicit disabled controls stay disabled. The context boundary adds no DOM wrapper."
         },
         {
           "id": "native-zero-title",
@@ -27224,6 +27239,24 @@
             "tests/package/modal/modal-static.ssr.test.ts"
           ],
           "note": "prefixCls, iconPrefixCls и theme применяются при отложенном рендере. Holder snippet захватывается в момент вызова, а его локальный провайдер управляет настройками собственных детей. Проверены общий префикс кнопок, пространство имён иконки, RTL, частичные локали с удалением провайдера и изоляция обычного App. На сервере глобальная конфигурация не меняется."
+        },
+        {
+          "id": "use-config",
+          "title": "ConfigProvider.useConfig for inherited size and disabled settings",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/config-provider/config-provider.component.ts",
+            "src/lib/config-provider/config-context.ts",
+            "src/lib/config-provider/ConfigProvider.svelte",
+            "src/lib/form/Form.svelte",
+            "src/lib/modal/ModalFooterScope.svelte",
+            "tests/browser/fixtures/ant-design-config-use-config-reference.json",
+            "tests/browser/config-provider/config-use-config.spec.ts",
+            "tests/package/config-provider/config-use-config.ssr.test.ts",
+            "docs/reference/config-provider.md"
+          ],
+          "note": "Ant Design 6.6.8 reports false and an undefined size outside providers. Three states across seven scopes distinguish explicit medium, inherited small, explicit false, and Form overrides. The hook keeps the configured disabled value during submission, including nested providers in Form help. Svelte retains native submission blocking for controls. Modal body and footer report their respective disabled settings with the inherited size. The Svelte getters follow scope updates on the same mounted consumer."
         },
         {
           "id": "image-component-config",

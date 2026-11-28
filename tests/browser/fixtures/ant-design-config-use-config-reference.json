@@ -1,0 +1,300 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js"
+  },
+  "phases": [
+    {
+      "name": "initial",
+      "scopes": {
+        "outside": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "outer": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "inherited": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "inner-explicit": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "large",
+          "componentDisabled": false
+        },
+        "inner-medium": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "medium",
+          "componentDisabled": false
+        },
+        "form-inherits-size": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "form-explicit": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "large",
+          "componentDisabled": true
+        }
+      }
+    },
+    {
+      "name": "inherit",
+      "scopes": {
+        "outside": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "outer": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "small",
+          "componentDisabled": true
+        },
+        "inherited": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "small",
+          "componentDisabled": true
+        },
+        "inner-explicit": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "large",
+          "componentDisabled": false
+        },
+        "inner-medium": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "medium",
+          "componentDisabled": true
+        },
+        "form-inherits-size": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "small",
+          "componentDisabled": false
+        },
+        "form-explicit": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "large",
+          "componentDisabled": true
+        }
+      }
+    },
+    {
+      "name": "remove",
+      "scopes": {
+        "outside": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "outer": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "inherited": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "inner-explicit": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "large",
+          "componentDisabled": false
+        },
+        "inner-medium": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "medium",
+          "componentDisabled": false
+        },
+        "form-inherits-size": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": true,
+          "componentSize": null,
+          "componentDisabled": false
+        },
+        "form-explicit": {
+          "fields": [
+            "componentDisabled",
+            "componentSize"
+          ],
+          "sizeIsUndefined": false,
+          "componentSize": "large",
+          "componentDisabled": true
+        }
+      }
+    }
+  ],
+  "submission": {
+    "before": {
+      "form-submit": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": true,
+        "componentSize": null,
+        "componentDisabled": false
+      },
+      "form-help": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": true,
+        "componentSize": null,
+        "componentDisabled": false
+      },
+      "form-help-provider": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": true,
+        "componentSize": null,
+        "componentDisabled": false
+      }
+    },
+    "during": {
+      "form-submit": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": true,
+        "componentSize": null,
+        "componentDisabled": false
+      },
+      "form-help": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": true,
+        "componentSize": null,
+        "componentDisabled": false
+      },
+      "form-help-provider": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": true,
+        "componentSize": null,
+        "componentDisabled": false
+      }
+    },
+    "helpButtonDisabled": false
+  },
+  "modal": {
+    "scopes": {
+      "modal-body": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": false,
+        "componentSize": "small",
+        "componentDisabled": true
+      },
+      "modal-footer": {
+        "fields": [
+          "componentDisabled",
+          "componentSize"
+        ],
+        "sizeIsUndefined": false,
+        "componentSize": "small",
+        "componentDisabled": false
+      }
+    },
+    "bodyButtonDisabled": true,
+    "footerButtonDisabled": false,
+    "explicitButtonDisabled": true
+  }
+}

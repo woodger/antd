@@ -94,6 +94,7 @@
   const fieldConfig: ConfigContext = Object.create(config, {
     componentSize: { get: () => size ?? config.componentSize },
     explicitComponentSize: { get: () => resolvedSize },
+    configuredComponentDisabled: { get: () => disabled ?? config.configuredComponentDisabled },
     componentDisabled: { get: () => disabled ?? config.componentDisabled }
   });
   provideConfig(fieldConfig);

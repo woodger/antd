@@ -178,7 +178,6 @@ for (const row of reference.overrides) {
     const expected = row.initial.buttons.map(button => ({
       ...button,
       disabled: button.disabled
-        || (row.profile.id === 'ordinary-component-disabled' && button.text === 'OK')
         || (row.profile.loading === true && button.text === 'Cancel')
     }));
     expect(initial.buttons.map(button => ({

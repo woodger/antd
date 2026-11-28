@@ -166,8 +166,10 @@ export interface ConfigContext {
   readonly floatButton?: FloatButtonConfig;
   readonly floatButtonGroup?: FloatButtonGroupConfig;
   readonly componentSize: ComponentSize;
-  // Divider distinguishes an explicit size from the shared medium fallback.
+  /** Size configured in the current scope, before controls apply their own defaults. */
   readonly explicitComponentSize?: ComponentSize;
+  /** The setting exposed by useConfig, independent of temporary submission blocking. */
+  readonly configuredComponentDisabled: boolean;
   readonly componentDisabled: boolean;
   readonly direction: 'ltr' | 'rtl';
   readonly theme: ResolvedThemeConfig;
@@ -181,6 +183,7 @@ const defaultConfig: ConfigContext = {
   getPrefixCls: (suffix, custom) => custom || (suffix ? `ant-${suffix}` : 'ant'),
   iconPrefixCls: 'anticon',
   componentSize: 'medium',
+  configuredComponentDisabled: false,
   componentDisabled: false,
   direction: 'ltr',
   theme: { mode: 'light', primary: 'blue', compact: false },

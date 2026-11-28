@@ -606,6 +606,9 @@
     get explicitComponentSize() {
       return componentSize ?? parent.explicitComponentSize;
     },
+    get configuredComponentDisabled() {
+      return componentDisabled ?? parent.configuredComponentDisabled;
+    },
     get componentDisabled() {
       return componentDisabled ?? parent.componentDisabled;
     },

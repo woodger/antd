@@ -27,6 +27,7 @@
   import { getPopupActiveElement, isPopupFocusWithin } from '../popup/popup.dom';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
   import ModalActionButton from './ModalActionButton.svelte';
+  import ModalFooterScope from './ModalFooterScope.svelte';
   import Icon from '../icon/Icon.svelte';
   import Skeleton from '../skeleton/Skeleton.svelte';
 
@@ -763,11 +764,13 @@
     {#if footer !== null && !loading}
       <div data-ant-modal-footer class={[`${componentPrefix}-footer`, classes.footer]}
         style={styles.footer}>
-        {#if footer}
-          {@render footer(defaultFooter, { OkBtn, CancelBtn })}
-        {:else}
-          {@render defaultFooter()}
-        {/if}
+        <ModalFooterScope>
+          {#if footer}
+            {@render footer(defaultFooter, { OkBtn, CancelBtn })}
+          {:else}
+            {@render defaultFooter()}
+          {/if}
+        </ModalFooterScope>
       </div>
     {/if}
   </div>

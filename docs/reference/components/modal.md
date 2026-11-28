@@ -258,6 +258,10 @@ element with class suffix `-confirm-btns`. When rendering the
 buttons individually, the Snippet supplies the group markup.
 Cancel appears when `okCancel` allows it.
 
+The ordinary Modal footer resets the inherited disabled setting and
+keeps the configured size. Explicit Button `disabled` and Modal button
+options still apply. [ConfigProvider.useConfig](../config-provider.md#reading-size-and-disabled-settings)
+
 `closable` accepts a boolean or an object with `closeIcon`,
 `disabled`, ARIA attributes, `role`, `onClose`, and `afterClose`.
 `disabled` applies to the close button. Escape and backdrop
@@ -279,8 +283,7 @@ availability.
 In upstream, `confirmLoading` blocks Cancel through the callback.
 Svelte also retains disabled styling and behavior for Cancel and
 the close button. While loading, Button itself uses native
-`disabled`. In an ordinary Modal, OK inherits
-`componentDisabled` if its button settings omit `disabled`.
+`disabled`.
 [Ant Design 6.6.8 reference](../../../tests/browser/fixtures/ant-design-modal-actions-reference.json) · [Chromium](../../../tests/browser/modal/modal-actions.spec.ts)
 · [SSR and types](../../../tests/package/modal/modal-actions.ssr.test.ts) · [Hydration](../../../tests/browser/modal/modal-actions-hydration.spec.ts)
 
