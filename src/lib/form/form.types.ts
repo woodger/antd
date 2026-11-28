@@ -116,19 +116,26 @@ export type FormItemShouldUpdate = boolean | {
 export interface FormItemRenderContext {
   readonly values: Readonly<FormValues>;
   readonly form: FormInstance<FormValues> | undefined;
+  /** The nearest Form's mounted handle, when the item has an owner. */
+  readonly ref?: FormRef<FormValues>;
 }
 
 /** The currently mounted named models in a FormProvider subtree. */
 export type FormProviderForms = Readonly<Partial<Record<string, FormInstance<FormValues>>>>;
 
+/** Imperative handles for the same named registrations as the model snapshot. */
+export type FormProviderRefs = Readonly<Partial<Record<string, FormRef<FormValues>>>>;
+
 export interface FormProviderChangeInfo {
   changedFields: FormFieldSnapshot[];
   forms: FormProviderForms;
+  readonly refs?: FormProviderRefs;
 }
 
 export interface FormProviderFinishInfo {
   values: FormValues;
   forms: FormProviderForms;
+  readonly refs?: FormProviderRefs;
 }
 
 /** Observes descendant forms without adding a DOM wrapper. */
@@ -146,6 +153,8 @@ export interface FormProviderProps {
 export interface FormRenderContext<Values extends FormValues = FormValues> {
   readonly values: Readonly<Values>;
   readonly form: FormInstance<Values>;
+  /** The Form's imperative handle after mount. */
+  readonly ref?: FormRef<Values>;
 }
 
 /** Root attributes and content forwarded to a custom Svelte component. */

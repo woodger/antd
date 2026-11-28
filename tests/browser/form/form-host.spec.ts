@@ -187,6 +187,7 @@ test('Form hydrates a custom host and retains the focused SSR editor', async ({ 
     }, { head, body });
 
     const input = page.locator('input[data-editor]');
+    await expect(page.locator('#render-handle-bound')).toHaveText('false');
     await input.focus();
     await page.addScriptTag({ type: 'module', url: '/form-host-hydration.client.ts' });
     await page.waitForFunction(() => window.formHostHydration !== undefined);
@@ -195,8 +196,13 @@ test('Form hydrates a custom host and retains the focused SSR editor', async ({ 
     });
     expect(await input.evaluate(node => node === window.formHostHydration?.input)).toBe(true);
     expect(await input.evaluate(node => node === document.activeElement)).toBe(true);
+    await expect(page.locator('#render-handle-bound')).toHaveText('true');
     await input.fill('hydrated edit');
     await expect(page.locator('#root-value')).toHaveText('{"word":"hydrated edit","untouched":"extra"}');
+    await page.locator('#submit-from-render').click();
+    await expect.poll(() => snapshot(page)).toMatchObject({
+      events: [{ type: 'finish', values: { word: 'hydrated edit', untouched: 'extra' } }]
+    });
     await page.evaluate(() => window.formHostHydration?.dispose());
     await expect(page.locator('article[data-owner]')).toHaveCount(0);
   }

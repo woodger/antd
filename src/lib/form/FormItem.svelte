@@ -335,7 +335,7 @@
     const model = form?.model;
     // Read after the write batch has finished. A rejected later record still belongs to that render.
     const values = model ? untrack(() => copyFormValue(model.getFieldsValue(true))) : {};
-    return { values, form: model };
+    return { values, form: model, get ref() { return form?.ref; } };
   });
   const controls = new Set<() => unknown>();
   let registration: FormFieldRegistration | undefined;

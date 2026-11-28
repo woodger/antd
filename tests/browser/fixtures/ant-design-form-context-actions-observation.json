@@ -1,0 +1,95 @@
+{
+  "upstream": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "reactVersion": "18.3.1",
+    "chromium": "158.0.8127.36"
+  },
+  "submits": [
+    {
+      "id": "context",
+      "sameModel": true,
+      "directClick": false,
+      "returnType": "undefined",
+      "events": [
+        [
+          "provider",
+          "checkout",
+          {
+            "name": "Ada"
+          }
+        ],
+        [
+          "finish",
+          {
+            "name": "Ada"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "render",
+      "sameModel": true,
+      "directClick": false,
+      "returnType": "undefined",
+      "events": [
+        [
+          "provider",
+          "checkout",
+          {
+            "name": "Ada"
+          }
+        ],
+        [
+          "finish",
+          {
+            "name": "Ada"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "item",
+      "sameModel": false,
+      "directClick": true,
+      "returnType": "undefined",
+      "events": [
+        [
+          "provider",
+          "checkout",
+          {
+            "name": "Ada"
+          }
+        ],
+        [
+          "finish",
+          {
+            "name": "Ada"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "provider",
+      "sameModel": true,
+      "directClick": false,
+      "returnType": "undefined",
+      "events": [
+        [
+          "provider",
+          "checkout",
+          {
+            "name": "Ada"
+          }
+        ],
+        [
+          "finish",
+          {
+            "name": "Ada"
+          }
+        ]
+      ]
+    }
+  ]
+}

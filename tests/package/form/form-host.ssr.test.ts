@@ -51,6 +51,7 @@ describe('Form host SSR', () => {
       const { values, word } = JSON.parse(expected.rendered);
       expect(body).toContain(`<output id="root-value">${JSON.stringify(values)}</output>`);
       expect(body).toContain(`<output id="render-model-word">${word}</output>`);
+      expect(body).toContain('<output id="render-handle-bound">false</output>');
     }
   });
 });

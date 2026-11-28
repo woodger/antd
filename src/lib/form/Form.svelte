@@ -155,17 +155,25 @@
   let active = true;
   let nativeElement = $state<HTMLElement>();
   const provider = useFormProvider();
+  const formHandle = createFormRef(
+    () => form, () => active ? nativeElement : undefined, submitAttachedForm
+  );
+  let mountedRef = $state.raw<typeof formHandle>();
 
   onMount(() => {
-    ref = createFormRef(() => form, () => active ? nativeElement : undefined, submitAttachedForm);
-    return () => { ref = undefined; };
+    mountedRef = formHandle;
+    ref = formHandle;
+    return () => {
+      mountedRef = undefined;
+      ref = undefined;
+    };
   });
   onDestroy(() => {
     active = false;
   });
 
   const formName = $derived(attributes.name ?? undefined);
-  $effect(() => provider?.registerForm(formName, form));
+  $effect(() => provider?.registerForm(formName, form, formHandle));
 
   $effect(() => {
     const boundForm = form;
@@ -204,6 +212,9 @@
   provideForm({
     get model() {
       return form;
+    },
+    get ref() {
+      return mountedRef;
     },
     get variant() {
       return variant;
@@ -410,7 +421,11 @@
 
 {#snippet formContent()}
   {#if render}
-    {@render render({ values: form.getFieldsValue(true), form })}
+    {@render render({
+      values: form.getFieldsValue(true),
+      form,
+      get ref() { return mountedRef; }
+    })}
   {:else}
     {@render children()}
   {/if}

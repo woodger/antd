@@ -8125,6 +8125,27 @@
           "note": "Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/form 1.8.6): native, intrinsic, custom and omitted roots, optional native ref forwarding, root ID and explicit overrides, full-store render callback, ref and model submit with the same mounted callbacks, native submit interception and reset callback order. Svelte uses a named render snippet, a nativeElement binding for custom hosts, and a stable FormRef that follows the active model and host. It retains the native name, generated field IDs, full-store submission snapshot, asynchronous submission guard and explicit submit callback overload. SSR, hydration, native and custom submit/reset events, model replacement and detachment are verified."
         },
         {
+          "id": "contextual-form-refs",
+          "title": "Mounted Form submission handles in context, render snippets, and providers",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/forms.md",
+            "src/lib/form/Form.svelte",
+            "src/lib/form/FormItem.svelte",
+            "src/lib/form/form-context.ts",
+            "src/lib/form/form-provider-context.ts",
+            "src/lib/form/form-ref.engine.ts",
+            "src/lib/form/form.types.ts",
+            "tests/browser/fixtures/ant-design-form-context-actions-observation.json",
+            "tests/browser/form/form-context-actions.spec.ts",
+            "tests/browser/form/form-host.spec.ts",
+            "tests/package/form/form-host.ssr.test.ts",
+            "tests/package/form/form-host.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 submits through the form context, Form and Item render callbacks, and the provider's map. All four captures return void and call the provider before the form's finish callback. The React Item render callback receives a separate form object. Svelte supplies the current model and the same mounted FormRef used by bind:ref. Context and snippets expose ref, and provider events expose refs keyed alongside forms. A callback-only structural model can submit through the handle with its original receiver. Runtime checks cover a frozen model, model replacement, duplicate names, retained registry snapshots, detached refs, SSR, and strict hydration. A directly assigned click handler uses the zero-argument overload."
+        },
+        {
           "id": "item-row-attributes",
           "title": "FormItem Grid row attributes, events, and layout",
           "state": "supported",

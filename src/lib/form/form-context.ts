@@ -2,7 +2,8 @@
 import { getContext, onDestroy, onMount, setContext } from 'svelte';
 import type { FormFieldRegistration } from './form-internal';
 import type {
-  FormFeedbackIcons, FormRequiredMark, FormSemanticSlots, FormTooltipProps, FormValidateTrigger
+  FormFeedbackIcons, FormRef, FormRequiredMark, FormSemanticSlots, FormTooltipProps,
+  FormValidateTrigger
 } from './form.types';
 import type { FormValidateStatus } from './form-error-list.types';
 import type { FormFieldMeta, FormInstance } from './form.model.svelte';
@@ -14,6 +15,7 @@ import type { FormRule, FormValues } from './validation.engine';
 
 export interface FormContext {
   readonly model: FormInstance<FormValues>;
+  readonly ref: FormRef<FormValues> | undefined;
   readonly variant?: Variant;
   readonly disabled: boolean;
   readonly submitting: boolean;
@@ -69,15 +71,20 @@ const fieldKey = Symbol('ant-design-form-field');
 /** A reactive reference to the model of the nearest Form. */
 export interface FormInstanceRef<Values extends FormValues> {
   readonly current: FormInstance<Values> | undefined;
+  /** The nearest Form's imperative handle after it mounts. */
+  readonly ref?: FormRef<Values>;
 }
 
 /** Captures the nearest Form during component initialization and follows model replacement. */
 export function useFormInstance<Values extends FormValues = FormValues>(): FormInstanceRef<Values> {
+  // The context erases the schema. Both getters use the caller's schema for the nearest Form.
   const context = getContext<FormContext | undefined>(formKey);
   return {
     get current() {
-      // Context erases the value schema. The caller knows the schema supplied to the nearest Form.
       return context?.model as FormInstance<Values> | undefined;
+    },
+    get ref() {
+      return context?.ref as FormRef<Values> | undefined;
     }
   };
 }

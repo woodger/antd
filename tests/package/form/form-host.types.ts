@@ -1,6 +1,7 @@
 import type { Component, Snippet } from 'svelte';
 import {
-  createForm, type FormComponentProps, type FormInstance, type FormProps, type FormRef,
+  createForm, useFormInstance, type FormComponentProps, type FormInstance, type FormInstanceRef,
+  type FormItemRenderContext, type FormProps, type FormProviderFinishInfo, type FormRef,
   type FormRenderContext, type FormRootProps, type SubmissionResult
 } from '@woodger/antd';
 
@@ -26,4 +27,27 @@ export function formHostTypes(
   ref.setFieldValue('count', 'wrong');
 
   return { previous, standalone, custom, submitted, explicit, submittedModel, element };
+}
+
+export function contextualFormSubmissions(
+  model: FormInstance<Values>, view: FormRenderContext<Values>, item: FormItemRenderContext,
+  info: FormProviderFinishInfo
+) {
+  const context = useFormInstance<Values>();
+  const contextSubmit: void | undefined = context.ref?.submit();
+  const renderSubmit: void | undefined = view.ref?.submit();
+  const itemSubmit: void | undefined = item.ref?.submit();
+  const providerSubmit: void | undefined = info.refs?.checkout?.submit();
+  const explicit: Promise<SubmissionResult<Values>> | undefined = view.ref?.submit(values => {
+    view.form.setFieldValue('count', values.count + 1);
+  });
+  const current: FormInstance<Values> | undefined = context.current;
+  const contextSnapshot: FormInstanceRef<Values> = { current: model };
+  const renderSnapshot: FormRenderContext<Values> = { values: model.values, form: model };
+  const providerSnapshot: FormProviderFinishInfo = { values: model.values, forms: {} };
+
+  return {
+    contextSubmit, renderSubmit, itemSubmit, providerSubmit, explicit, current, contextSnapshot,
+    renderSnapshot, providerSnapshot
+  };
 }

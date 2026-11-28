@@ -535,6 +535,10 @@ with the `Form` name or its model, and models leave the registry when the form
 unmounts. A name shared by several mounted forms points to the most recent
 registration. When that registration leaves, the previous live form is restored.
 
+Both provider events include `refs` for the same names as `forms`.
+For example, `info.refs?.checkout?.submit()` submits the mounted checkout form.
+The handle follows the form through model and host changes.
+
 Events reach the nearest provider first, then enclosing providers, then the
 form's own callback. Successful submission uses the same values snapshot for
 these callbacks, including any unregistered values kept by the Svelte model.
@@ -642,6 +646,13 @@ continues to return a submission result. A detached model can run validation
 with `submit()`.
 
 The model and ref methods can also be used directly as click handlers.
+
+After mount, `useFormInstance().ref` and the `ref` in Form and FormItem
+render snippets expose the same handle as `bind:ref`. Call `ref?.submit()`
+to run the owner's callbacks, including when the form uses an external
+model that requires an explicit submission callback. Read the supplied model
+from `current` or the snippet's `form`. Before mount and outside a Form, the
+contextual handle is undefined.
 
 Submitting with `<Button htmlType="submit">` inside Form calls onFinish after
 successful validation. Field errors go to onFinishFailed. Errors from

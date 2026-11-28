@@ -82,6 +82,8 @@
   {#if includeField}{@render field()}{/if}
   <output id="root-value">{JSON.stringify(view.values)}</output>
   <output id="render-model-word">{view.form.getFieldValue('word')}</output>
+  <output id="render-handle-bound">{Boolean(view.ref && view.ref === ref)}</output>
+  <button id="submit-from-render" type="button" onclick={view.ref?.submit}>Submit from render</button>
   <button id="reset-from-render" type="button" onclick={() => view.form.resetFields()}>
     Reset from render
   </button>
