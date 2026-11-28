@@ -6,9 +6,12 @@ export function snapshotGridRowPrefix() {
   // Saves individual computed declarations. Serialized image is compared by property names.
   const style = (node: Element, properties: string[]) => {
     const computed = getComputedStyle(node);
-    return Object.fromEntries(properties.map(property => [
-      property, computed.getPropertyValue(property)
-    ]));
+    return Object.fromEntries(properties.map(property => {
+      const value = computed.getPropertyValue(property);
+      // Some Chromium versions serialize flex-end as flow-end. Keep the capture's keyword.
+      const normalized = property === 'align-items' && value === 'flow-end' ? 'flex-end' : value;
+      return [property, normalized];
+    }));
   };
 
   return Object.fromEntries(
